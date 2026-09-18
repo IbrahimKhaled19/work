@@ -1,4 +1,11 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
+import { FileText } from '@phosphor-icons/react/FileText'
+import { Clock } from '@phosphor-icons/react/Clock'
+import { Buildings } from '@phosphor-icons/react/Buildings'
+import { FireExtinguisher } from '@phosphor-icons/react/FireExtinguisher'
+import { Lightning } from '@phosphor-icons/react/Lightning'
 
 const stats = [
   { value: '35+', label: 'Years of Experience' },
@@ -7,63 +14,75 @@ const stats = [
   { value: '24/7', label: 'Emergency Support' },
 ]
 
-const featuredServices = [
+const serviceGroups = [
   {
-    title: 'Fire Fighting Systems',
-    desc: 'Sprinkler, hydrant, hose reel and fire pump systems. Designed, installed and commissioned to NFPA & UAE Fire Code.',
-    anchor: 'fire-fighting-systems',
-    link: 'View detail →',
+    id: 'detection',
+    label: 'Detection',
+    services: [
+      {
+        title: 'Fire Alarm Systems',
+        desc: 'Addressable and conventional detection, call points and monitoring for complete protection.',
+        anchor: 'fire-alarm-systems',
+      },
+      {
+        title: 'Emergency Lighting',
+        desc: 'Exit and emergency lighting for safe evacuation during power failure.',
+        anchor: 'emergency-lighting',
+      },
+    ],
   },
   {
-    title: 'Fire Alarm Systems',
-    desc: 'Addressable and conventional detection, call points and monitoring for complete protection.',
-    anchor: 'fire-alarm-systems',
-    link: 'View detail →',
+    id: 'suppression',
+    label: 'Suppression',
+    services: [
+      {
+        title: 'Fire Fighting Systems',
+        desc: 'Sprinkler, hydrant, hose reel and fire pump systems. Designed, installed and commissioned to NFPA & UAE Fire Code.',
+        anchor: 'fire-fighting-systems',
+      },
+      {
+        title: 'Fire Suppression',
+        desc: 'FM200, Novec and CO2 clean-agent systems for server rooms and sensitive assets.',
+        anchor: 'fire-suppression',
+      },
+    ],
   },
   {
-    title: 'Annual Maintenance Contract (AMC)',
-    desc: 'Monthly inspections, 24/7 support and full Civil Defense compliance.',
-    anchor: 'amc',
-    link: 'View detail →',
-  },
-]
-
-const moreServices = [
-  {
-    title: 'Fire Extinguishers',
-    tag: 'Refilling, hydro testing & certification',
-    anchor: 'fire-extinguishers',
-  },
-  {
-    title: 'Emergency Lighting',
-    tag: 'Exit systems for power failure & evacuation',
-    anchor: 'emergency-lighting',
-  },
-  {
-    title: 'Fire Suppression',
-    tag: 'FM200, Novec, CO2 & kitchen hood',
-    anchor: 'fire-suppression',
+    id: 'maintenance',
+    label: 'Maintenance',
+    services: [
+      {
+        title: 'Fire Extinguishers',
+        desc: 'Supply, refilling, hydro testing and certification of all portable types.',
+        anchor: 'fire-extinguishers',
+      },
+      {
+        title: 'Annual Maintenance Contract (AMC)',
+        desc: 'Monthly inspections, 24/7 support and full Civil Defense compliance.',
+        anchor: 'amc',
+      },
+    ],
   },
 ]
 
 const whyUs = [
   {
-    icon: 'shield',
+    icon: ShieldCheck,
     title: 'DCD Approved',
     desc: 'Fully licensed and approved by Dubai Civil Defense for all fire protection works.',
   },
   {
-    icon: 'building',
+    icon: Buildings,
     title: 'End-to-End Solutions',
     desc: 'From survey and design to installation, testing, commissioning and maintenance.',
   },
   {
-    icon: 'extinguisher',
+    icon: FireExtinguisher,
     title: 'All Equipment Types',
     desc: 'Single source for supply of complete fire and life safety equipment.',
   },
   {
-    icon: 'bolt',
+    icon: Lightning,
     title: 'Fast Response',
     desc: 'Get an inspection, quote or emergency call-out. Our engineers respond fast.',
   },
@@ -92,52 +111,43 @@ const pathSteps = [
   },
 ]
 
-function WhyIcon({ name }) {
-  const common = {
-    width: 38,
-    height: 38,
-    viewBox: '0 0 24 24',
-    fill: 'none',
-    stroke: 'currentColor',
-    strokeWidth: 1.8,
-    strokeLinecap: 'round',
-    strokeLinejoin: 'round',
-    'aria-hidden': true,
-  }
-  if (name === 'shield') {
-    return (
-      <svg {...common}>
-        <path d="M12 3l7 2.8v5.4c0 4.4-2.9 8.3-7 9.8-4.1-1.5-7-5.4-7-9.8V5.8L12 3z" />
-        <path d="M9.2 11.8l2 2 3.6-3.8" />
-      </svg>
-    )
-  }
-  if (name === 'building') {
-    return (
-      <svg {...common}>
-        <path d="M4 21h16" />
-        <path d="M6 21V5.5L12 3l6 2.5V21" />
-        <path d="M12 3v18" />
-        <path d="M8.2 8h1.4M8.2 11.5h1.4M8.2 15h1.4M14.4 8h1.4M14.4 11.5h1.4M14.4 15h1.4" />
-      </svg>
-    )
-  }
-  if (name === 'extinguisher') {
-    return (
-      <svg {...common}>
-        <path d="M9.5 10h5.5v9.2a2 2 0 0 1-2 2h-1.5a2 2 0 0 1-2-2V10z" />
-        <path d="M10.5 10V7.5h4V10" />
-        <path d="M10.5 7.5L8 5.5M14.5 7.5l2.5-2" />
-        <path d="M14.5 5.5h2.8" />
-        <path d="M15 10.5c2.2 0 3.5 1.8 3.5 4v1.5" />
-        <path d="M11 14h3" />
-      </svg>
-    )
-  }
+function ServicesTabs() {
+  const [active, setActive] = useState(serviceGroups[0].id)
+  const group = serviceGroups.find((g) => g.id === active)
+
   return (
-    <svg {...common}>
-      <path d="M13 2.5L4.5 13.5H10l-1 8 8.5-11H12l1-8z" />
-    </svg>
+    <div className="services-tabs">
+      <div className="tab-list" role="tablist" aria-label="Service disciplines">
+        {serviceGroups.map((g) => (
+          <button
+            key={g.id}
+            type="button"
+            role="tab"
+            id={`tab-${g.id}`}
+            aria-selected={active === g.id}
+            aria-controls={`panel-${g.id}`}
+            className="tab-btn"
+            onClick={() => setActive(g.id)}
+          >
+            {g.label}
+          </button>
+        ))}
+      </div>
+      <div
+        className="tab-panel"
+        role="tabpanel"
+        id={`panel-${group.id}`}
+        aria-labelledby={`tab-${group.id}`}
+      >
+        {group.services.map((s) => (
+          <Link to={`/services#${s.anchor}`} className="tab-service" key={s.title}>
+            <h3>{s.title}</h3>
+            <p>{s.desc}</p>
+            <span className="card-link">View detail →</span>
+          </Link>
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -145,9 +155,9 @@ function Home() {
   return (
     <>
       <section className="hero">
+        {/* TODO: hero visual, 1600x1200 photographic, pump room or suppression install */}
         <div className="hero-overlay"></div>
         <div className="container hero-content">
-          <p className="hero-eyebrow">Fire Safety &amp; Fire Fighting Company</p>
           <h1>
             Protecting Lives &amp; Assets
             <br />
@@ -163,25 +173,15 @@ function Home() {
           </div>
           <ul className="hero-proof" aria-label="Compliance and availability">
             <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M12 3l7 2.8v5.4c0 4.4-2.9 8.3-7 9.8-4.1-1.5-7-5.4-7-9.8V5.8L12 3z" />
-                <path d="M9.2 11.8l2 2 3.6-3.8" />
-              </svg>
+              <ShieldCheck size={16} aria-hidden="true" />
               <span>DCD Approved</span>
             </li>
             <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M6 3h9l4 4v14H6V3z" />
-                <path d="M14 3v5h5" />
-                <path d="M9 13h6M9 16.5h6" />
-              </svg>
+              <FileText size={16} aria-hidden="true" />
               <span>NFPA &amp; UAE Fire Code</span>
             </li>
             <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="8.5" />
-                <path d="M12 7.5V12l3 2" />
-              </svg>
+              <Clock size={16} aria-hidden="true" />
               <a href="tel:+97125512311">Mon-Sat 8-6 · 24/7 Emergency: +971 2 5512 311</a>
             </li>
           </ul>
@@ -209,7 +209,6 @@ function Home() {
       <section className="section proof-band" aria-label="Compliance proof">
         <div className="container">
           <div className="section-head">
-            <p className="eyebrow">DCD Approval</p>
             <h2>Compliance you can point to</h2>
             <p>
               A DCD-approved partner from survey to maintenance, delivering
@@ -219,10 +218,7 @@ function Home() {
           <div className="proof-grid">
             <div className="proof-seal">
               <span className="proof-seal-badge" aria-hidden="true">
-                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 3l7 2.8v5.4c0 4.4-2.9 8.3-7 9.8-4.1-1.5-7-5.4-7-9.8V5.8L12 3z" />
-                  <path d="M9.2 11.8l2 2 3.6-3.8" />
-                </svg>
+                <ShieldCheck size={44} />
               </span>
               <p className="proof-seal-kicker">Dubai Civil Defense</p>
               <h3>Approved Partner</h3>
@@ -288,51 +284,28 @@ function Home() {
               Survey, design, install and maintain to NFPA and UAE Fire Code.
             </p>
           </div>
-          <div className="card-grid">
-            {featuredServices.map((s) => (
-              <Link to={`/services#${s.anchor}`} className="card" key={s.title}>
-                <h3>{s.title}</h3>
-                <p>{s.desc}</p>
-                <span className="card-link">{s.link}</span>
-              </Link>
-            ))}
-          </div>
-          <div className="services-more">
-            <p className="services-more-label">
-              Also covered:
-            </p>
-            <ul className="services-more-list">
-              {moreServices.map((s) => (
-                <li key={s.title}>
-                  <Link to={`/services#${s.anchor}`}>
-                    <span className="services-more-title">{s.title}</span>
-                    <span className="services-more-tag">{s.tag}</span>
-                    <span className="services-more-arrow" aria-hidden="true">→</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ServicesTabs />
         </div>
       </section>
 
       <section className="section section-alt why">
         <div className="container">
           <div className="section-head">
-            <p className="eyebrow">Why Choose Us</p>
             <h2>Reliable Protection, Backed by Experience</h2>
           </div>
-          <div className="card-grid">
+          <ul className="why-list">
             {whyUs.map((w) => (
-              <div className="card card-center" key={w.title}>
-                <span className="why-icon" aria-hidden="true">
-                  <WhyIcon name={w.icon} />
+              <li className="why-row" key={w.title}>
+                <span className="why-row-icon" aria-hidden="true">
+                  <w.icon size={28} />
                 </span>
-                <h3>{w.title}</h3>
-                <p>{w.desc}</p>
-              </div>
+                <div>
+                  <h3>{w.title}</h3>
+                  <p>{w.desc}</p>
+                </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
