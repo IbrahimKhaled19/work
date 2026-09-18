@@ -171,7 +171,7 @@ textarea:focus-visible {
 
 .nav-links a:not(.btn):focus-visible,
 .btn:focus-visible,
-.card:focus-visible,
+.tab-service:focus-visible,
 .gallery-item:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 3px;
@@ -610,38 +610,7 @@ textarea:focus-visible {
   outline-offset: -2px;
 }
 
-/* Cards */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.card {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 30px;
-  transition: 0.2s ease;
-  display: block;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--red);
-}
-
-.card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 10px;
-}
-
-.card p {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
+/* Shared link affordance (tab panels) */
 .card-link {
   display: inline-block;
   margin-top: 16px;
@@ -650,34 +619,9 @@ textarea:focus-visible {
   font-size: 0.9rem;
 }
 
-.card-center {
-  text-align: center;
-}
-
-.card-center h3 {
-  margin: 12px 0 8px;
-}
-
+/* Contact success icon (emoji replaced in Contact taste pass) */
 .card-icon {
   font-size: 2rem;
-}
-
-.why-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  background: var(--bg-alt);
-  border: 1px solid var(--line);
-  color: var(--red);
-  display: grid;
-  place-items: center;
-  margin: 0 auto 18px;
-}
-
-.why-icon svg {
-  width: 26px;
-  height: 26px;
-  display: block;
 }
 
 /* Proof band */
@@ -1245,10 +1189,6 @@ textarea:focus-visible {
   font-size: 0.95rem;
 }
 
-.about-card .card-icon {
-  font-size: 2.6rem;
-}
-
 /* Milestones */
 .milestones {
   display: grid;
@@ -1540,7 +1480,6 @@ textarea:focus-visible {
     border-bottom: 1px solid var(--line);
   }
 
-  .card-grid,
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1647,7 +1586,6 @@ textarea:focus-visible {
 }
 
 @media (max-width: 720px) {
-  .card-grid,
   .gallery-grid,
   .milestones,
   .proof-facts,

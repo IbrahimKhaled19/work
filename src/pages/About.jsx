@@ -1,4 +1,8 @@
 import { Link } from 'react-router-dom'
+import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
+import { FileText } from '@phosphor-icons/react/FileText'
+import { FireExtinguisher } from '@phosphor-icons/react/FireExtinguisher'
+import { Phone } from '@phosphor-icons/react/Phone'
 import PageHero from '../components/PageHero'
 
 const milestones = [
@@ -18,59 +22,11 @@ const coverage = [
 ]
 
 const values = [
-  { title: 'Safety First', desc: 'Every system we touch is engineered to protect lives and property.', icon: 'shield' },
-  { title: 'Compliance', desc: 'All works follow NFPA, UAE Fire Code and Civil Defense requirements.', icon: 'doc' },
-  { title: 'Quality Products', desc: 'We deliver trusted brands and certified, code-compliant equipment.', icon: 'extinguisher' },
-  { title: 'Dedicated Support', desc: 'Responsive service teams backed by 24/7 emergency support.', icon: 'phone' },
+  { title: 'Safety First', desc: 'Every system we touch is engineered to protect lives and property.', Icon: ShieldCheck },
+  { title: 'Compliance', desc: 'All works follow NFPA, UAE Fire Code and Civil Defense requirements.', Icon: FileText },
+  { title: 'Quality Products', desc: 'We deliver trusted brands and certified, code-compliant equipment.', Icon: FireExtinguisher },
+  { title: 'Dedicated Support', desc: 'Responsive service teams backed by 24/7 emergency support.', Icon: Phone },
 ]
-
-function ValueIcon({ name }) {
-  const common = {
-    width: 38,
-    height: 38,
-    viewBox: '0 0 24 24',
-    fill: 'none',
-    stroke: 'currentColor',
-    strokeWidth: 1.8,
-    strokeLinecap: 'round',
-    strokeLinejoin: 'round',
-    'aria-hidden': true,
-  }
-  if (name === 'shield') {
-    return (
-      <svg {...common}>
-        <path d="M12 3l7 2.8v5.4c0 4.4-2.9 8.3-7 9.8-4.1-1.5-7-5.4-7-9.8V5.8L12 3z" />
-        <path d="M9.2 11.8l2 2 3.6-3.8" />
-      </svg>
-    )
-  }
-  if (name === 'doc') {
-    return (
-      <svg {...common}>
-        <path d="M6 3h9l4 4v14H6V3z" />
-        <path d="M14 3v5h5" />
-        <path d="M9 13h6M9 16.5h6" />
-      </svg>
-    )
-  }
-  if (name === 'extinguisher') {
-    return (
-      <svg {...common}>
-        <path d="M9.5 10h5.5v9.2a2 2 0 0 1-2 2h-1.5a2 2 0 0 1-2-2V10z" />
-        <path d="M10.5 10V7.5h4V10" />
-        <path d="M10.5 7.5L8 5.5M14.5 7.5l2.5-2" />
-        <path d="M14.5 5.5h2.8" />
-        <path d="M15 10.5c2.2 0 3.5 1.8 3.5 4v1.5" />
-        <path d="M11 14h3" />
-      </svg>
-    )
-  }
-  return (
-    <svg {...common}>
-      <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.25a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z" />
-    </svg>
-  )
-}
 
 function About() {
   return (
@@ -108,11 +64,9 @@ function About() {
             </ul>
           </div>
           <div className="about-card">
+            {/* TODO: company visual, 800x1000 photographic, team or facility */}
             <span className="proof-seal-badge" aria-hidden="true">
-              <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 3l7 2.8v5.4c0 4.4-2.9 8.3-7 9.8-4.1-1.5-7-5.4-7-9.8V5.8L12 3z" />
-                <path d="M9.2 11.8l2 2 3.6-3.8" />
-              </svg>
+              <ShieldCheck size={44} />
             </span>
             <h3>35+ Years of Experience</h3>
             <p>
@@ -147,20 +101,21 @@ function About() {
       <section className="section">
         <div className="container">
           <div className="section-head">
-            <p className="eyebrow">Our Values</p>
             <h2>What We Stand For</h2>
           </div>
-          <div className="card-grid">
+          <ul className="why-list">
             {values.map((v) => (
-              <div className="card card-center" key={v.title}>
-                <span className="why-icon" aria-hidden="true">
-                  <ValueIcon name={v.icon} />
+              <li className="why-row" key={v.title}>
+                <span className="why-row-icon" aria-hidden="true">
+                  <v.Icon size={28} />
                 </span>
-                <h3>{v.title}</h3>
-                <p>{v.desc}</p>
-              </div>
+                <div>
+                  <h3>{v.title}</h3>
+                  <p>{v.desc}</p>
+                </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -180,9 +135,7 @@ function About() {
               className="btn btn-outline cta-emergency"
               aria-label="Call 24/7 Emergency: +971 2 5512 311"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.25a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z" />
-              </svg>
+              <Phone size={16} aria-hidden="true" />
               Call 24/7 Emergency
             </a>
           </div>
