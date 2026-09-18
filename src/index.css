@@ -619,11 +619,6 @@ textarea:focus-visible {
   font-size: 0.9rem;
 }
 
-/* Contact success icon (emoji replaced in Contact taste pass) */
-.card-icon {
-  font-size: 2rem;
-}
-
 /* Proof band */
 .proof-band {
   background: #fff;
@@ -1343,9 +1338,9 @@ textarea:focus-visible {
   height: 48px;
   border-radius: 12px;
   background: rgba(200, 16, 46, 0.08);
+  color: var(--red);
   display: grid;
   place-items: center;
-  font-size: 1.3rem;
 }
 
 .contact-list strong {
@@ -1421,6 +1416,17 @@ textarea:focus-visible {
   padding: 48px 36px;
   text-align: center;
   box-shadow: var(--shadow);
+}
+
+.form-success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(200, 16, 46, 0.08);
+  color: var(--red);
+  display: grid;
+  place-items: center;
+  margin: 0 auto;
 }
 
 .form-success h3 {

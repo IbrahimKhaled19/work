@@ -1,4 +1,9 @@
 import { useState } from 'react'
+import { MapPin } from '@phosphor-icons/react/MapPin'
+import { Phone } from '@phosphor-icons/react/Phone'
+import { Envelope } from '@phosphor-icons/react/Envelope'
+import { Clock } from '@phosphor-icons/react/Clock'
+import { CheckCircle } from '@phosphor-icons/react/CheckCircle'
 import PageHero from '../components/PageHero'
 
 const initialForm = {
@@ -38,14 +43,14 @@ function Contact() {
             <h2>We Are Ready to Help</h2>
             <ul className="contact-list">
               <li>
-                <span className="contact-icon">📍</span>
+                <span className="contact-icon" aria-hidden="true"><MapPin size={24} /></span>
                 <div>
                   <strong>Address</strong>
                   <p>P.O. Box 113112, Mussafah 32/1, Abu Dhabi, UAE</p>
                 </div>
               </li>
               <li>
-                <span className="contact-icon">📞</span>
+                <span className="contact-icon" aria-hidden="true"><Phone size={24} /></span>
                 <div>
                   <strong>Phone</strong>
                   <p>
@@ -55,7 +60,7 @@ function Contact() {
                 </div>
               </li>
               <li>
-                <span className="contact-icon">✉️</span>
+                <span className="contact-icon" aria-hidden="true"><Envelope size={24} /></span>
                 <div>
                   <strong>Email</strong>
                   <p>
@@ -66,7 +71,7 @@ function Contact() {
                 </div>
               </li>
               <li>
-                <span className="contact-icon">🕗</span>
+                <span className="contact-icon" aria-hidden="true"><Clock size={24} /></span>
                 <div>
                   <strong>Working Hours</strong>
                   <p>Mon-Sat: 8:00 AM-6:00 PM · 24/7 Emergency</p>
@@ -78,7 +83,7 @@ function Contact() {
           <div className="contact-form-wrap">
             {submitted ? (
               <div className="form-success">
-                <span className="card-icon">✅</span>
+                <span className="form-success-icon" aria-hidden="true"><CheckCircle size={40} /></span>
                 <h3>Thank You!</h3>
                 <p>
                   Your quote request has been received. Our engineers will
@@ -168,7 +173,7 @@ function Contact() {
                   ></textarea>
                 </label>
                 <button type="submit" className="btn btn-solid btn-block">
-                  Submit Quote Request
+                  Get a Free Quote
                 </button>
               </form>
             )}
