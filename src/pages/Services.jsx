@@ -258,7 +258,7 @@ function Services() {
           </p>
           <div className="cta-actions">
             <Link to="/contact" className="btn btn-solid btn-light">
-              Contact Us
+              Get a Free Quote
             </Link>
             <a
               href="tel:+97125512311"

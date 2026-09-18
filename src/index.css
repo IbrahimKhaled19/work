@@ -1269,7 +1269,7 @@ textarea:focus-visible {
   gap: 14px;
 }
 
-.gallery-item figcaption {
+.gallery-item .gallery-caption {
   padding: 18px 20px 22px;
 }
 
