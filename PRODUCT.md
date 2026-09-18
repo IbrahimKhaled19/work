@@ -32,7 +32,7 @@ Explicitly undecided / missing: no backend or delivery path for quote submission
 
 ## Brand Commitments
 
-Name: Universal Fire Fighting (UFS). Voice: factual, compliance-focused, safety-first. Binding facts carried from the incumbent implementation: DCD-approved partner claims, NFPA/UAE Fire Code language, theme-color `#C8102E`, contact facts (P.O. Box 113112, Mussafah 32/1, Abu Dhabi, UAE; +971 2 5512 311 · +971 2 5575 527; info@universalfirefighting.com; Mon–Sat 8:00 AM–6:00 PM · 24/7 Emergency). Assets on hand: `public/favicon.svg` only. No binding visual direction was volunteered during init.
+Name: Universal Fire Fighting (UFS). Voice: factual, compliance-focused, safety-first. Binding facts carried from the incumbent implementation: DCD-approved partner claims, NFPA/UAE Fire Code language, theme-color `#C8102E`, contact facts (P.O. Box 113112, Mussafah 32/1, Abu Dhabi, UAE; WhatsApp +20 109 543 8894 via https://wa.me/201095438894; info@universalfirefighting.com; Mon–Sat 8:00 AM–6:00 PM · 24/7 Emergency). Assets on hand: `public/favicon.svg` only. No binding visual direction was volunteered during init.
 
 ## Evidence on Hand
 

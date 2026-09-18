@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
 import { FileText } from '@phosphor-icons/react/FileText'
 import { Clock } from '@phosphor-icons/react/Clock'
+import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import { Buildings } from '@phosphor-icons/react/Buildings'
 import { FireExtinguisher } from '@phosphor-icons/react/FireExtinguisher'
 import { Lightning } from '@phosphor-icons/react/Lightning'
@@ -182,7 +183,7 @@ function Home() {
             </li>
             <li>
               <Clock size={16} aria-hidden="true" />
-              <a href="tel:+97125512311">Mon-Sat 8-6 · 24/7 Emergency: +971 2 5512 311</a>
+              <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer">Mon-Sat 8-6 · WhatsApp: +20 109 543 8894</a>
             </li>
           </ul>
         </div>
@@ -321,14 +322,14 @@ function Home() {
               Get a Free Quote
             </Link>
             <a
-              href="tel:+97125512311"
+              href="https://wa.me/201095438894"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-outline cta-emergency"
-              aria-label="Call 24/7 Emergency: +971 2 5512 311"
+              aria-label="Chat on WhatsApp: +20 109 543 8894"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.25a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z" />
-              </svg>
-              Call 24/7 Emergency
+              <WhatsappLogo size={16} aria-hidden="true" />
+              Chat on WhatsApp
             </a>
           </div>
           <p className="cta-note">

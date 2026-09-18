@@ -17,7 +17,7 @@ function NotFound() {
             <h2>We could not find that page</h2>
             <p>
               Check the address, or use one of these recovery links. For an
-              urgent fire-protection need, call us directly.
+              urgent fire-protection need, message us directly.
             </p>
           </div>
           <div className="notfound-actions">
@@ -30,8 +30,8 @@ function NotFound() {
             <Link to="/contact" className="btn btn-solid btn-ghost-dark">
               Request a Quote
             </Link>
-            <a href="tel:+97125512311" className="btn btn-outline btn-outline-dark">
-              Call +971 2 5512 311
+            <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-outline-dark">
+              WhatsApp +20 109 543 8894
             </a>
           </div>
         </div>

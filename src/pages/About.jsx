@@ -3,6 +3,7 @@ import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
 import { FileText } from '@phosphor-icons/react/FileText'
 import { FireExtinguisher } from '@phosphor-icons/react/FireExtinguisher'
 import { Phone } from '@phosphor-icons/react/Phone'
+import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import PageHero from '../components/PageHero'
 
 const milestones = [
@@ -131,12 +132,14 @@ function About() {
               Get a Free Quote
             </Link>
             <a
-              href="tel:+97125512311"
+              href="https://wa.me/201095438894"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-outline cta-emergency"
-              aria-label="Call 24/7 Emergency: +971 2 5512 311"
+              aria-label="Chat on WhatsApp: +20 109 543 8894"
             >
-              <Phone size={16} aria-hidden="true" />
-              Call 24/7 Emergency
+              <WhatsappLogo size={16} aria-hidden="true" />
+              Chat on WhatsApp
             </a>
           </div>
           <p className="cta-note">

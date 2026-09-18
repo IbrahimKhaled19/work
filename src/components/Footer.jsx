@@ -40,8 +40,9 @@ function Footer() {
           <ul className="footer-contact">
             <li>P.O. Box 113112, Mussafah 32/1, Abu Dhabi, UAE</li>
             <li>
-              <a href="tel:+97125512311">+971 2 5512 311</a> ·{' '}
-              <a href="tel:+97125575527">+971 2 5575 527</a>
+              <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer">
+                WhatsApp: +20 109 543 8894
+              </a>
             </li>
             <li>
               <a href="mailto:info@universalfirefighting.com">

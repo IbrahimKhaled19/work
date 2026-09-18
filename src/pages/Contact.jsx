@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { MapPin } from '@phosphor-icons/react/MapPin'
-import { Phone } from '@phosphor-icons/react/Phone'
+import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import { Envelope } from '@phosphor-icons/react/Envelope'
 import { Clock } from '@phosphor-icons/react/Clock'
 import { CheckCircle } from '@phosphor-icons/react/CheckCircle'
@@ -50,12 +50,13 @@ function Contact() {
                 </div>
               </li>
               <li>
-                <span className="contact-icon" aria-hidden="true"><Phone size={24} /></span>
+                <span className="contact-icon" aria-hidden="true"><WhatsappLogo size={24} /></span>
                 <div>
-                  <strong>Phone</strong>
+                  <strong>WhatsApp</strong>
                   <p>
-                    <a href="tel:+97125512311">+971 2 5512 311</a> ·{' '}
-                    <a href="tel:+97125575527">+971 2 5575 527</a>
+                    <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer">
+                      +20 109 543 8894
+                    </a>
                   </p>
                 </div>
               </li>
@@ -123,7 +124,7 @@ function Contact() {
                       required
                       value={form.phone}
                       onChange={handleChange}
-                      placeholder="+971 ..."
+                      placeholder="+20 ..."
                     />
                   </label>
                 </div>

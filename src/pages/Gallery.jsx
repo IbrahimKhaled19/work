@@ -6,7 +6,7 @@ import { FireExtinguisher } from '@phosphor-icons/react/FireExtinguisher'
 import { Lamp } from '@phosphor-icons/react/Lamp'
 import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
 import { CalendarCheck } from '@phosphor-icons/react/CalendarCheck'
-import { Phone } from '@phosphor-icons/react/Phone'
+import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import PageHero from '../components/PageHero'
 
 const galleryVisuals = {
@@ -115,8 +115,8 @@ function Gallery() {
           <p className="gallery-note">
             Project photography in progress. Panels above are illustrative, not
             site photos. For recent references or a site visit,{' '}
-            <Link to="/contact">contact our engineers</Link> or call{' '}
-            <a href="tel:+97125512311">+971 2 5512 311</a>.
+            <Link to="/contact">contact our engineers</Link> or WhatsApp{' '}
+            <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer">+20 109 543 8894</a>.
           </p>
         </div>
       </section>
@@ -133,16 +133,18 @@ function Gallery() {
               Get a Free Quote
             </Link>
             <a
-              href="tel:+97125512311"
+              href="https://wa.me/201095438894"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn-outline cta-emergency"
-              aria-label="Call 24/7 Emergency: +971 2 5512 311"
+              aria-label="Chat on WhatsApp: +20 109 543 8894"
             >
-              <Phone size={16} aria-hidden="true" />
-              Call 24/7 Emergency
+              <WhatsappLogo size={16} aria-hidden="true" />
+              Chat on WhatsApp
             </a>
           </div>
           <p className="cta-note">
-            24/7 emergency: <a href="tel:+97125512311" style={{ color: 'inherit', fontWeight: 700 }}>+971 2 5512 311</a> · <a href="tel:+97125575527" style={{ color: 'inherit', fontWeight: 700 }}>+971 2 5575 527</a> · Dubai Civil Defense-approved partner.
+            WhatsApp 24/7: <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', fontWeight: 700 }}>+20 109 543 8894</a> · Dubai Civil Defense-approved partner.
           </p>
         </div>
       </section>
