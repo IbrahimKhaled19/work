@@ -3,28 +3,39 @@ import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
 import { FileText } from '@phosphor-icons/react/FileText'
 import { FireExtinguisher } from '@phosphor-icons/react/FireExtinguisher'
 import { Phone } from '@phosphor-icons/react/Phone'
-import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import PageHero from '../components/PageHero'
+import Reveal from '../components/Reveal'
+import SectionHead from '../components/SectionHead'
+import WhyList from '../components/WhyList'
+import Milestones from '../components/Milestones'
+import CTA from '../components/CTA'
 
 const milestones = [
-  { year: '1989', text: 'Founded: the start of 35+ years of fire protection experience.' },
-  { year: '2007', text: 'Established full-service UAE operation covering design, installation and maintenance.' },
+  { year: '1993', text: 'Founded: the start of our fire protection experience.' },
+  { year: '2007', text: 'Established full-service operation covering design, installation and maintenance.' },
   { year: '2015', text: 'Expanded services to cover complete Annual Maintenance Contract (AMC) and suppression systems.' },
-  { year: 'Today', text: 'Trusted by 500+ clients across commercial, industrial and residential sectors.' },
+  { year: 'Today', text: 'Trusted by 500+ clients across commercial, industrial and residential sectors in Egypt.' },
 ]
 
 const coverage = [
-  { label: 'Fire Fighting Systems', anchor: 'fire-fighting-systems' },
-  { label: 'Fire Alarm Systems', anchor: 'fire-alarm-systems' },
-  { label: 'Fire Extinguishers', anchor: 'fire-extinguishers' },
-  { label: 'Emergency & Exit Lighting', anchor: 'emergency-lighting' },
-  { label: 'Fire Suppression Systems', anchor: 'fire-suppression' },
-  { label: 'Annual Maintenance Contract (AMC)', anchor: 'amc' },
+  { label: 'Design & Engineering', anchor: 'design-engineering' },
+  { label: 'Fire Pump Systems', anchor: 'fire-pump-systems' },
+  { label: 'Sprinkler Systems', anchor: 'sprinkler-systems' },
+  { label: 'Standpipe & Hose Systems', anchor: 'standpipe-hose-systems' },
+  { label: 'Fire Alarm & Detection', anchor: 'fire-alarm-detection' },
+  { label: 'Portable Fire Extinguishers', anchor: 'portable-extinguishers' },
+  { label: 'Special Hazard & Suppression', anchor: 'special-hazard-suppression' },
+  { label: 'Passive Fire Protection', anchor: 'passive-fire-protection' },
+  { label: 'Inspection, Testing & Maintenance', anchor: 'inspection-testing-maintenance' },
+  { label: 'Civil Defense Compliance & Permitting', anchor: 'civil-defense-compliance' },
+  { label: 'Retrofit & Upgrade', anchor: 'retrofit-upgrade' },
+  { label: 'Emergency & Repair Services', anchor: 'emergency-repair-services' },
+  { label: 'Training & Consulting', anchor: 'training-consulting' },
 ]
 
 const values = [
   { title: 'Safety First', desc: 'Every system we touch is engineered to protect lives and property.', Icon: ShieldCheck },
-  { title: 'Compliance', desc: 'All works follow NFPA, UAE Fire Code and Civil Defense requirements.', Icon: FileText },
+  { title: 'Compliance', desc: 'All works follow NFPA, Egyptian Fire Protection Code and Civil Defense requirements.', Icon: FileText },
   { title: 'Quality Products', desc: 'We deliver trusted brands and certified, code-compliant equipment.', Icon: FireExtinguisher },
   { title: 'Dedicated Support', desc: 'Responsive service teams backed by 24/7 emergency support.', Icon: Phone },
 ]
@@ -34,21 +45,21 @@ function About() {
     <>
       <PageHero
         crumb="About Us"
-        title="About Universal Fire Fighting"
-        subtitle="Over 35 years of experience designing, installing and maintaining fire protection and life safety systems to Dubai Civil Defense standards."
+        title="About ALNANDA Contracting"
+        subtitle="Over 25 years of experience designing, installing and maintaining fire protection and life safety systems to Civil Defense standards and the Egyptian Fire Protection Code."
       />
 
       <section className="section">
-        <div className="container about-layout">
+        <Reveal className="container about-layout">
           <div className="about-text">
             <p className="eyebrow">Who We Are</p>
-            <h2>35+ Years of Fire Protection Experience</h2>
+            <h2>25+ Years of Fire Protection Experience</h2>
             <p>
-              Universal Fire Fighting is a Dubai Civil Defense-approved fire
-              protection company in the UAE with 35+ years of experience. We
+              ALNANDA Contracting is a Civil Defense-approved fire
+              protection company in Egypt with 25+ years of experience. We
               deliver end-to-end solutions (survey, design, supply,
               installation, testing, commissioning and maintenance, including
-              AMC) to NFPA and UAE Fire Code standards.
+              AMC) to NFPA and Egyptian Fire Protection Code standards.
             </p>
             <p>
               Our engineers and technicians certify and maintain complete fire
@@ -59,7 +70,7 @@ function About() {
             <ul className="check-list" aria-label="Fire protection coverage">
               {coverage.map((c) => (
                 <li key={c.anchor}>
-                  <Link to={`/services#${c.anchor}`}>{c.label}</Link>
+                  <Link to={`/services/${c.anchor}`}>{c.label}</Link>
                 </li>
               ))}
             </ul>
@@ -69,84 +80,40 @@ function About() {
             <span className="proof-seal-badge" aria-hidden="true">
               <ShieldCheck size={44} />
             </span>
-            <h3>35+ Years of Experience</h3>
+            <h3>25+ Years of Experience</h3>
             <p>
-              Dubai Civil Defense approved contractor for fire fighting and life
-              safety systems across the UAE.
+              Civil Defense approved contractor for fire fighting and life
+              safety systems across Egypt.
             </p>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       <section className="section section-alt">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">Our Journey</p>
-            <h2>Milestones</h2>
-            <p>
-              From 1989 to today: 35+ years of DCD-approved survey, design,
-              installation and maintenance across the UAE.
-            </p>
-          </div>
-          <div className="milestones">
-            {milestones.map((m) => (
-              <div className="milestone" key={m.year}>
-                <strong>{m.year}</strong>
-                <p>{m.text}</p>
-              </div>
-            ))}
-          </div>
+          <Milestones
+            header={{
+              eyebrow: 'Our Journey',
+              title: 'Milestones',
+              text: '25 years of Civil Defense-approved survey, design, installation and maintenance across Egypt.',
+            }}
+            items={milestones}
+          />
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          <div className="section-head">
-            <h2>What We Stand For</h2>
-          </div>
-          <ul className="why-list">
-            {values.map((v) => (
-              <li className="why-row" key={v.title}>
-                <span className="why-row-icon" aria-hidden="true">
-                  <v.Icon size={28} />
-                </span>
-                <div>
-                  <h3>{v.title}</h3>
-                  <p>{v.desc}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <SectionHead title="What We Stand For" />
+          <WhyList items={values} />
         </div>
       </section>
 
-      <section className="cta">
-        <div className="container cta-inner">
-          <h2>Talk to a fire-protection engineer within 1 hour</h2>
-          <p>
-            Send a quote request during working hours (Mon-Sat, 8:00 AM-6:00 PM),
-            and a UFS engineer will call you back within 1 hour.
-          </p>
-          <div className="cta-actions">
-            <Link to="/contact" className="btn btn-solid btn-light">
-              Get a Free Quote
-            </Link>
-            <a
-              href="https://wa.me/201095438894"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline cta-emergency"
-              aria-label="Chat on WhatsApp: +20 109 543 8894"
-            >
-              <WhatsappLogo size={16} aria-hidden="true" />
-              Chat on WhatsApp
-            </a>
-          </div>
-          <p className="cta-note">
-            Annual Maintenance Contract (AMC) cover includes monthly inspections, 24/7 emergency support, and full Civil Defense compliance.
-          </p>
-        </div>
-      </section>
+      <CTA
+        title="Talk to a fire-protection engineer within 1 hour"
+        subtitle="Send a quote request during working hours (Mon-Sat, 8:00 AM-6:00 PM), and an ALNANDA Contracting engineer will call you back within 1 hour."
+        note="Annual Maintenance Contract (AMC) cover includes monthly inspections, 24/7 emergency support, and full Civil Defense compliance."
+      />
     </>
   )
 }

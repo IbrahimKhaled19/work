@@ -1,16 +1,37 @@
 import { Link } from 'react-router-dom'
+import { FacebookLogo } from '@phosphor-icons/react/FacebookLogo'
+import { InstagramLogo } from '@phosphor-icons/react/InstagramLogo'
+import { LinkedinLogo } from '@phosphor-icons/react/LinkedinLogo'
+import { serviceSections } from '../data/services'
 
 function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-col">
-          <h3>Universal Fire Fighting</h3>
+          <h3>ALNANDA Contracting</h3>
           <p>
-            Dubai's trusted Civil Defense approved partner for fire fighting and
+            Egypt's trusted Civil Defense approved partner for fire fighting and
             life safety systems. Design, supply, installation, testing and
             maintenance under one roof.
           </p>
+          <ul className="footer-social" aria-label="Social media">
+            <li>
+              <a href="#" aria-label="Facebook">
+                <FacebookLogo size={18} aria-hidden="true" />
+              </a>
+            </li>
+            <li>
+              <a href="#" aria-label="Instagram">
+                <InstagramLogo size={18} aria-hidden="true" />
+              </a>
+            </li>
+            <li>
+              <a href="#" aria-label="LinkedIn">
+                <LinkedinLogo size={18} aria-hidden="true" />
+              </a>
+            </li>
+          </ul>
         </div>
 
         <div className="footer-col">
@@ -26,22 +47,22 @@ function Footer() {
 
         <div className="footer-col">
           <h4>Our Services</h4>
-          <ul>
-            <li>Fire Fighting Systems</li>
-            <li>Fire Alarm Systems</li>
-            <li>Fire Extinguishers</li>
-            <li>Emergency Lighting</li>
-            <li>Annual Maintenance Contract (AMC)</li>
+          <ul className="footer-services">
+            {serviceSections.map((s) => (
+              <li key={s.id}>
+                <Link to={`/services/${s.id}`}>{s.title}</Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div className="footer-col">
           <h4>Contact Us</h4>
           <ul className="footer-contact">
-            <li>P.O. Box 113112, Mussafah 32/1, Abu Dhabi, UAE</li>
+            <li>Serving industrial and commercial facilities across Egypt</li>
             <li>
-              <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer">
-                WhatsApp: +20 109 543 8894
+              <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer">
+                WhatsApp: +20 100 362 0490
               </a>
             </li>
             <li>
@@ -55,7 +76,7 @@ function Footer() {
       </div>
 
       <div className="container footer-bottom">
-        <p>© {new Date().getFullYear()} Universal Fire Fighting. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} ALNANDA Contracting. All rights reserved.</p>
       </div>
     </footer>
   )

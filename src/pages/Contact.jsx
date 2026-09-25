@@ -5,13 +5,14 @@ import { Envelope } from '@phosphor-icons/react/Envelope'
 import { Clock } from '@phosphor-icons/react/Clock'
 import { CheckCircle } from '@phosphor-icons/react/CheckCircle'
 import PageHero from '../components/PageHero'
+import Reveal from '../components/Reveal'
 
 const initialForm = {
   name: '',
   email: '',
   phone: '',
   company: '',
-  service: 'Fire Fighting Systems',
+  service: 'Fire Pump Systems',
   message: '',
 }
 
@@ -37,16 +38,16 @@ function Contact() {
       />
 
       <section className="section">
-        <div className="container contact-layout">
+        <Reveal className="container contact-layout">
           <div className="contact-info">
             <p className="eyebrow">Get In Touch</p>
-            <h2>We Are Ready to Help</h2>
+            <h2>Contact our engineers</h2>
             <ul className="contact-list">
               <li>
                 <span className="contact-icon" aria-hidden="true"><MapPin size={24} /></span>
                 <div>
-                  <strong>Address</strong>
-                  <p>P.O. Box 113112, Mussafah 32/1, Abu Dhabi, UAE</p>
+                  <strong>Service Area</strong>
+                  <p>Industrial and commercial facilities across Egypt</p>
                 </div>
               </li>
               <li>
@@ -54,8 +55,8 @@ function Contact() {
                 <div>
                   <strong>WhatsApp</strong>
                   <p>
-                    <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer">
-                      +20 109 543 8894
+                    <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer">
+                      +20 100 362 0490
                     </a>
                   </p>
                 </div>
@@ -154,12 +155,19 @@ function Contact() {
                 <label>
                   <span>Service Required *</span>
                   <select name="service" value={form.service} onChange={handleChange}>
-                    <option>Fire Fighting Systems</option>
-                    <option>Fire Alarm Systems</option>
-                    <option>Fire Extinguishers</option>
-                    <option>Emergency Lighting</option>
-                    <option>Fire Suppression</option>
-                    <option>Annual Maintenance Contract (AMC)</option>
+                    <option>Design &amp; Engineering</option>
+                    <option>Fire Pump Systems</option>
+                    <option>Sprinkler Systems</option>
+                    <option>Standpipe &amp; Hose Systems</option>
+                    <option>Fire Alarm &amp; Detection</option>
+                    <option>Portable Fire Extinguishers</option>
+                    <option>Special Hazard &amp; Suppression</option>
+                    <option>Passive Fire Protection</option>
+                    <option>Inspection, Testing &amp; Maintenance</option>
+                    <option>Civil Defense Compliance &amp; Permitting</option>
+                    <option>Retrofit &amp; Upgrade</option>
+                    <option>Emergency &amp; Repair Services</option>
+                    <option>Training &amp; Consulting</option>
                     <option>Other / Inspection</option>
                   </select>
                 </label>
@@ -179,7 +187,7 @@ function Contact() {
               </form>
             )}
           </div>
-        </div>
+        </Reveal>
       </section>
     </>
   )

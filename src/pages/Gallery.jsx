@@ -1,40 +1,30 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Drop } from '@phosphor-icons/react/Drop'
-import { BellRinging } from '@phosphor-icons/react/BellRinging'
-import { FireExtinguisher } from '@phosphor-icons/react/FireExtinguisher'
-import { Lamp } from '@phosphor-icons/react/Lamp'
-import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
-import { CalendarCheck } from '@phosphor-icons/react/CalendarCheck'
-import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import PageHero from '../components/PageHero'
-
-const galleryVisuals = {
-  'fire-fighting-systems': { proof: 'DCD Approved, NFPA', Icon: Drop },
-  'fire-alarm-systems': { proof: 'NFPA, UAE Fire Code', Icon: BellRinging },
-  'fire-extinguishers': { proof: 'DCD Certified', Icon: FireExtinguisher },
-  'emergency-lighting': { proof: 'UAE Fire Code', Icon: Lamp },
-  'fire-suppression': { proof: 'NFPA Engineered', Icon: ShieldCheck },
-  amc: { proof: 'Monthly, 24/7', Icon: CalendarCheck },
-}
+import Reveal from '../components/Reveal'
+import SectionHead from '../components/SectionHead'
+import CTA from '../components/CTA'
+import serviceVisuals from '../data/serviceVisuals'
 
 const items = [
-  { id: 'sprinkler-installation', title: 'Sprinkler System Installation', cat: 'Fire Fighting', serviceId: 'fire-fighting-systems', group: 'suppression' },
-  { id: 'fire-pump-room', title: 'Fire Pump Room Setup', cat: 'Fire Fighting', serviceId: 'fire-fighting-systems', group: 'suppression' },
-  { id: 'addressable-panel', title: 'Addressable Fire Alarm Panel', cat: 'Fire Alarm', serviceId: 'fire-alarm-systems', group: 'detection' },
-  { id: 'conventional-network', title: 'Conventional Fire Alarm Network', cat: 'Fire Alarm', serviceId: 'fire-alarm-systems', group: 'detection' },
-  { id: 'portable-extinguisher', title: 'Portable Extinguisher Supply', cat: 'Extinguishers', serviceId: 'fire-extinguishers', group: 'maintenance' },
-  { id: 'extinguisher-service', title: 'Extinguisher Refilling & Service', cat: 'Extinguishers', serviceId: 'fire-extinguishers', group: 'maintenance' },
-  { id: 'fm200-cylinders', title: 'FM200 Suppression Cylinders', cat: 'Suppression', serviceId: 'fire-suppression', group: 'suppression' },
-  { id: 'novec-server-room', title: 'Server Room Novec Protection', cat: 'Suppression', serviceId: 'fire-suppression', group: 'suppression' },
-  { id: 'emergency-lighting', title: 'Emergency & Exit Lighting', cat: 'Life Safety', serviceId: 'emergency-lighting', group: 'detection' },
-  { id: 'hydrant-hose-reel', title: 'Fire Hydrant & Hose Reel System', cat: 'Fire Fighting', serviceId: 'fire-fighting-systems', group: 'suppression' },
-  { id: 'amc-inspection', title: 'Annual Maintenance Contract (AMC) Inspection in Progress', cat: 'Maintenance', serviceId: 'amc', group: 'maintenance' },
-  { id: 'hydro-testing', title: 'Hydro Testing Facility', cat: 'Extinguishers', serviceId: 'fire-extinguishers', group: 'maintenance' },
+  { id: 'hydraulic-design', title: 'Hydraulic Design & Shop Drawings', cat: 'Engineering', serviceId: 'design-engineering', group: 'engineering' },
+  { id: 'fire-pump-room', title: 'Electric & Diesel Pump Sets', cat: 'Fire Pumps', serviceId: 'fire-pump-systems', group: 'suppression' },
+  { id: 'sprinkler-installation', title: 'Sprinkler Network Installation', cat: 'Sprinklers', serviceId: 'sprinkler-systems', group: 'suppression' },
+  { id: 'hydrant-hose-reel', title: 'Standpipe & Hose Reel Systems', cat: 'Standpipe & Hose', serviceId: 'standpipe-hose-systems', group: 'suppression' },
+  { id: 'addressable-panel', title: 'Addressable Detection & Notification', cat: 'Fire Alarm', serviceId: 'fire-alarm-detection', group: 'detection' },
+  { id: 'fm200-cylinders', title: 'Clean Agent & Foam Suppression', cat: 'Suppression', serviceId: 'special-hazard-suppression', group: 'suppression' },
+  { id: 'fire-doors', title: 'Fire Doors & Firestopping', cat: 'Passive Protection', serviceId: 'passive-fire-protection', group: 'suppression' },
+  { id: 'portable-extinguisher', title: 'Extinguisher Supply & Service', cat: 'Extinguishers', serviceId: 'portable-extinguishers', group: 'maintenance' },
+  { id: 'amc-inspection', title: 'Inspection, Testing & Maintenance', cat: 'Maintenance', serviceId: 'inspection-testing-maintenance', group: 'maintenance' },
+  { id: 'compliance-review', title: 'Civil Defense Compliance & Permitting', cat: 'Compliance', serviceId: 'civil-defense-compliance', group: 'maintenance' },
+  { id: 'retrofit-upgrade', title: 'System Retrofit & Upgrade', cat: 'Retrofit', serviceId: 'retrofit-upgrade', group: 'maintenance' },
+  { id: 'emergency-response', title: '24/7 Emergency Response & Repair', cat: 'Emergency', serviceId: 'emergency-repair-services', group: 'maintenance' },
+  { id: 'staff-training', title: 'Staff Training & Evacuation Drills', cat: 'Training', serviceId: 'training-consulting', group: 'maintenance' },
 ]
 
 const galleryFilters = [
   { id: 'all', label: 'All' },
+  { id: 'engineering', label: 'Engineering' },
   { id: 'detection', label: 'Detection' },
   { id: 'suppression', label: 'Suppression' },
   { id: 'maintenance', label: 'Maintenance' },
@@ -53,20 +43,17 @@ function Gallery() {
       <PageHero
         crumb="Gallery"
         title="Our Work"
-        subtitle="Illustrative panels for the systems we design, install and maintain across the UAE. Filter by discipline, open a panel for system detail."
+        subtitle="Illustrative panels for the systems we design, install and maintain across Egypt. Filter by discipline, open a panel for system detail."
       />
 
       <section className="section">
         <div className="container">
-          <div className="section-head">
-            <p className="eyebrow">DCD-Approved Work</p>
-            <h2>Systems we install and maintain</h2>
-            <p>
-              Twelve illustrative panels grouped by discipline. Open any panel
-              for system detail, or contact us for recent references.
-            </p>
-          </div>
-          <div className="services-filter-wrap">
+          <SectionHead
+            eyebrow="Civil Defense-Approved Work"
+            title="Systems we install and maintain"
+            text="Thirteen illustrative panels grouped by discipline. Open any panel for system detail, or contact us for recent references."
+          />
+          <Reveal className="services-filter-wrap" delay={100}>
             <div className="services-filter" role="group" aria-label="Filter gallery by discipline">
               {galleryFilters.map((f) => (
                 <button
@@ -83,14 +70,14 @@ function Gallery() {
             <p className="services-count" aria-live="polite">
               Showing {visibleItems.length} of {items.length} panels
             </p>
-          </div>
+          </Reveal>
           {/* TODO: panel photography, 800x600 per panel, real installs */}
-          <div className="gallery-grid">
+          <Reveal className="gallery-grid" delay={150}>
             {visibleItems.map((g) => {
-              const { Icon, proof } = galleryVisuals[g.serviceId]
+              const { Icon, proof } = serviceVisuals[g.serviceId]
               return (
                 <Link
-                  to={`/services#${g.serviceId}`}
+                  to={`/services/${g.serviceId}`}
                   className="gallery-item"
                   key={g.id}
                   aria-label={`${g.title} (${g.cat}), view system detail`}
@@ -111,43 +98,21 @@ function Gallery() {
                 </Link>
               )
             })}
-          </div>
+          </Reveal>
           <p className="gallery-note">
             Project photography in progress. Panels above are illustrative, not
             site photos. For recent references or a site visit,{' '}
             <Link to="/contact">contact our engineers</Link> or WhatsApp{' '}
-            <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer">+20 109 543 8894</a>.
+            <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer">+20 100 362 0490</a>.
           </p>
         </div>
       </section>
 
-      <section className="cta">
-        <div className="container cta-inner">
-          <h2>Need a Quote or Site Inspection?</h2>
-          <p>
-            Send a quote request during working hours (Mon-Sat, 8:00 AM-6:00 PM),
-            and our engineers will contact you within 1 hour.
-          </p>
-          <div className="cta-actions">
-            <Link to="/contact" className="btn btn-solid btn-light">
-              Get a Free Quote
-            </Link>
-            <a
-              href="https://wa.me/201095438894"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline cta-emergency"
-              aria-label="Chat on WhatsApp: +20 109 543 8894"
-            >
-              <WhatsappLogo size={16} aria-hidden="true" />
-              Chat on WhatsApp
-            </a>
-          </div>
-          <p className="cta-note">
-            WhatsApp 24/7: <a href="https://wa.me/201095438894" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', fontWeight: 700 }}>+20 109 543 8894</a> · Dubai Civil Defense-approved partner.
-          </p>
-        </div>
-      </section>
+      <CTA
+        title="Need a Quote or Site Inspection?"
+        subtitle="Send a quote request during working hours (Mon-Sat, 8:00 AM-6:00 PM), and our engineers will contact you within 1 hour."
+        note="WhatsApp 24/7: +20 100 362 0490 · Civil Defense-approved partner."
+      />
     </>
   )
 }

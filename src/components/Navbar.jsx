@@ -1,19 +1,34 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
+import { CaretDown } from '@phosphor-icons/react/CaretDown'
+import { serviceSections, disciplines } from '../data/services'
 
 const links = [
   { to: '/', label: 'Home' },
   { to: '/services', label: 'Services' },
   { to: '/about', label: 'About Us' },
   { to: '/gallery', label: 'Gallery' },
+  { to: '/contact', label: 'Contact' },
 ]
+
+const serviceGroups = disciplines.map((d) => ({
+  ...d,
+  services: serviceSections.filter((s) => s.category === d.id),
+}))
 
 const NAV_ID = 'primary-navigation'
 
 function Navbar() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const toggleRef = useRef(null)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const closeMenu = (returnFocus = false) => {
     setOpen(false)
@@ -42,22 +57,10 @@ function Navbar() {
 
   return (
     <>
-    <header className="navbar">
+    <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container nav-inner">
-        <Link to="/" className="brand" onClick={() => setOpen(false)}>
-          <span className="brand-seal" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 2.6 19.6 5.4v6.1c0 4.9-3.3 8.4-7.6 9.9-4.3-1.5-7.6-5-7.6-9.9V5.4L12 2.6Z" />
-              <path d="M12 7.2c-1.3 1.7-2.6 2.8-2.6 4.7a2.6 2.6 0 0 0 5.2 0c0-1.9-1.3-3-2.6-4.7Z" fill="currentColor" stroke="none" />
-            </svg>
-          </span>
-          <span className="brand-text">
-            <strong>Universal Fire Fighting</strong>
-            <small>Fire Safety &amp; Fire Fighting Systems</small>
-            <span className="brand-dcd">
-              <span className="brand-dcd-dot" aria-hidden="true"></span>DCD Approved
-            </span>
-          </span>
+        <Link to="/" className="brand" aria-label="ALNANDA Contracting, home" onClick={() => setOpen(false)}>
+            <img src="/logo.png" alt="" width="120" height="50" />
         </Link>
 
         <button
@@ -75,33 +78,47 @@ function Navbar() {
         </button>
 
         <nav id={NAV_ID} aria-label="Primary" className={`nav-links ${open ? 'open' : ''}`}>
-          {links.map((l) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              end={l.to === '/'}
-              className={({ isActive }) => (isActive ? 'active' : '')}
-              onClick={() => setOpen(false)}
-            >
-              {l.label}
-            </NavLink>
-          ))}
-          <div className="nav-actions">
-            <a
-              href="https://wa.me/201095438894"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline-dark nav-call"
-              aria-label="Chat on WhatsApp: +20 109 543 8894"
-              onClick={() => setOpen(false)}
-            >
-              <WhatsappLogo size={15} aria-hidden="true" />
-              WhatsApp
-            </a>
-            <Link to="/contact" className="btn btn-solid btn-quote" onClick={() => setOpen(false)}>
-              Get a Free Quote
-            </Link>
-          </div>
+          {links.map((l) =>
+            l.to === '/services' ? (
+              <div className="nav-item" key={l.to}>
+                <NavLink
+                  to={l.to}
+                  className={({ isActive }) => (isActive ? 'active' : '')}
+                  onClick={() => setOpen(false)}
+                  aria-haspopup="true"
+                >
+                  {l.label}
+                  <CaretDown size={14} weight="bold" aria-hidden="true" className="nav-link-caret" />
+                </NavLink>
+                <div className="nav-dropdown" aria-label="Services">
+                  {serviceGroups.map((g) => (
+                    <div className="nav-dropdown-group" key={g.id}>
+                      <p>{g.label}</p>
+                      <ul>
+                        {g.services.map((s) => (
+                          <li key={s.id}>
+                            <Link to={`/services/${s.id}`} onClick={() => setOpen(false)}>
+                              {s.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                end={l.to === '/'}
+                className={({ isActive }) => (isActive ? 'active' : '')}
+                onClick={() => setOpen(false)}
+              >
+                {l.label}
+              </NavLink>
+            )
+          )}
         </nav>
       </div>
     </header>

@@ -1,42 +1,40 @@
 ---
-name: Universal Fire Fighting
+name: ALNANDA Contracting
 description: Civil Defense-approved fire protection partner for the UAE.
 colors:
-  signal-red: "#C8102E"
-  signal-dark: "#9C0C24"
-  signal-deep: "#74081A"
-  ember-flare: "#E6452D"
-  alert-sand: "#FFD9A0"
-  ink: "#1C1C28"
-  ink-soft: "#3A3A4A"
-  muted: "#6B7280"
+  signal-red: "#CC2643"
+  signal-dark: "#B81F39"
+  signal-deep: "#000000"
+  ink: "#221F1F"
+  ink-soft: "#404040"
+  muted: "#666666"
   footer-mist: "#B9B9C6"
-  paper: "#FFFFFF"
-  paper-alt: "#F6F6F9"
+  paper: "#F6F6F9"
+  paper-alt: "#E9E9ED"
   line: "#E5E7EB"
 typography:
   display:
-    fontFamily: "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    fontFamily: "Montserrat, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
     fontSize: "clamp(2.1rem, 5vw, 3.4rem)"
     fontWeight: 800
     lineHeight: 1.2
   headline:
-    fontFamily: "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    fontFamily: "Montserrat, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
     fontSize: "clamp(1.8rem, 3.4vw, 2.4rem)"
     fontWeight: 800
     lineHeight: 1.2
   title:
-    fontFamily: "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    fontFamily: "Montserrat, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
     fontSize: "1.1rem"
     fontWeight: 800
     lineHeight: 1.2
   body:
-    fontFamily: "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    fontFamily: "Montserrat, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
     fontSize: "16px"
     fontWeight: 400
     lineHeight: 1.6
   label:
-    fontFamily: "system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+    fontFamily: "Montserrat, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
     fontSize: "0.82rem"
     fontWeight: 700
     lineHeight: 1.4
@@ -86,15 +84,15 @@ components:
     padding: "12px 14px"
 ---
 
-# Design System: Universal Fire Fighting
+# Design System: ALNANDA Contracting
 
 ## Overview
 
 **Creative North Star: "The Civil Defense Standard"**
 
-This is a confident, industrial compliance system: a white-paper base with dark ink structure, sealed by a single authoritative red. It reads like an approval stamp, not a decoration — every screen proves tenure, certification, and end-to-end accountability before asking for the quote. Density is medium and task-driven: centered section headers, three-up service grids, and alternating detail blocks that move survey → design → install → maintain without detours.
+This is a confident, industrial compliance system: a gray-paper base with white cards, dark ink structure, and black stat banding, sealed by a single authoritative red. It reads like an approval stamp, not a decoration — every screen proves tenure, certification, and end-to-end accountability before asking for the quote. Density is medium and task-driven: centered section headers, three-up service grids, and alternating detail blocks that move survey → design → install → maintain without detours.
 
-Expression lives in two places only: deep-red gradient heroes with an amber alert glow, and the red seal itself on actions and eyebrows. Everything else stays calm, engineered, and scannable so emergency numbers, compliance claims, and the quote form survive stress reading.
+White and gray carry every screen; ink carries the structure. Red is premium and rare — reserved for primary actions, eyebrows, the proof medallion, and interactive feedback. Everything else stays calm, engineered, and scannable so emergency numbers, compliance claims, and the quote form survive stress reading.
 
 **Key Characteristics:**
 - Compliance-first authority: red as seal, neutrals doing the work
@@ -107,33 +105,31 @@ Expression lives in two places only: deep-red gradient heroes with an amber aler
 A single-signal palette: authoritative Civil Defense reds over a clean ink-on-paper neutral stack, warmed only in hero gradients.
 
 ### Primary
-- **Civil Signal Red** (#C8102E): the one action and emphasis color — primary buttons, eyebrows, active nav, stat figures, card hover borders, focus rings.
-- **Signal Dark** (#9C0C24): primary button hover and pressed depth.
-- **Deep Signal Red** (#74081A): gradient anchor for heroes, CTAs, and the sticky proof card; never body text.
-- **Ember Flare** (#E6452D): hero and CTA gradient end-stop only; never a text or border token.
-- **Alert Sand** (#FFD9A0): hero headline highlight word only; the single warm contrast against deep red.
+- **Civil Signal Red** (#CC2643): the one action and emphasis color — primary buttons, eyebrows, active nav, stat figures, card hover borders, focus rings.
+- **Signal Dark** (#B81F39): primary button hover and pressed depth.
+- **Deep Signal Black** (#000000): gradient anchor for heroes, CTAs, and the sticky proof card; never body text.
 
 ### Neutral
-- **Ink** (#1C1C28): headings, footer ground, dark visual base.
-- **Ink Soft** (#3A3A4A): body-adjacent emphasis, nav links, checklist text.
-- **Muted Slate** (#6B7280): secondary copy, stat labels, section-head descriptions.
+- **Ink** (#221F1F): headings, footer ground, dark visual base.
+- **Ink Soft** (#404040): body-adjacent emphasis, nav links, checklist text.
+- **Muted Slate** (#666666): secondary copy, stat labels, section-head descriptions.
 - **Footer Mist** (#B9B9C6): footer body copy on dark ground.
-- **Paper** (#FFFFFF): default surface.
-- **Paper Alt** (#F6F6F9): alternating section bands and subtle input-code chips.
+- **Paper** (#F6F6F9): default page ground.
+- **Paper Alt** (#E9E9ED): alternating section bands and tab cards; white cards sit on top.
 - **Hairline** (#E5E7EB): borders, dividers, card outlines, form strokes.
 
 ### Named Rules
-**The One Signal Rule.** Signal Red covers ≤10% of any screen. Its rarity is the point — neutrals carry the layout, red seals the decision.
+**The One Signal Rule.** Signal Red holds to roughly 5–10% of any screen: primary actions, eyebrows, the proof medallion, and hover rewards — never a resting surface. Icon wells and proof chips rest in gray ink and earn red only on interaction. Its rarity is the point — neutrals carry the layout, red seals the decision.
 
 ## Typography
 
-**Display Font:** system-ui stack (with 'Segoe UI', Roboto, Helvetica, Arial, sans-serif fallback)
-**Body Font:** system-ui stack (with 'Segoe UI', Roboto, Helvetica, Arial, sans-serif fallback)
+**Display Font:** Montserrat (with system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif fallback)
+**Body Font:** Montserrat (with system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif fallback)
 
 **Character:** Confident and industrial — extra-bold short-line headings over a plain, highly legible body. No display serif, no geometric voice; authority comes from weight and order.
 
 ### Hierarchy
-- **Display** (800, clamp(2.1rem, 5vw, 3.4rem), 1.2): hero headline only, white on deep-red gradient with one Alert Sand highlight phrase.
+- **Display** (800, clamp(2.1rem, 5vw, 3.4rem), 1.2): hero headline only, white on the photographic hero with dark scrim.
 - **Headline** (800, clamp(1.8rem, 3.4vw, 2.4rem), 1.2): centered section titles and inner page heroes (inner heroes use clamp(2rem, 4.4vw, 2.8rem)).
 - **Title** (800, 1.1rem–1.9rem, 1.2): card titles (1.1rem), service block titles (clamp(1.4rem, 2.8vw, 1.9rem)), footer brand (1.15rem).
 - **Body** (400, 16px/1.6, Ink Soft): default reading text; muted variant for descriptions (0.9–1.05rem).
@@ -186,10 +182,10 @@ Engineered roundness with one decisive gesture: pill actions (999px) against gen
 - **Error / Disabled:** not yet systematized — do not invent; use native required behavior only.
 
 ### Navigation
-- Sticky white bar (76px) with hairline base and faint separation shadow. Links are semibold pill chips (8px 14px): Ink Soft at rest, Signal Red on a 6–8% red wash for hover and active. Quote action is the primary pill. Mobile collapses behind a three-bar toggle into a full-width dropdown panel (16px padding, surge shadow).
+- Sticky black bar (76px) with hairline base and faint separation shadow, blurring to translucent black on scroll. Links are semibold pill chips (8px 14px): mist at rest, white on a white wash for hover, white on a red wash for active. Quote action is the primary red pill; WhatsApp is a white-outline ghost. Mobile collapses behind a three-bar toggle into a full-width black dropdown panel (16px padding, surge shadow, staggered entrance).
 
 ### Stats Strip
-- Border-divided proof row (4-up desktop, 2-up tablet, stacked mobile): oversized red figures (2.3rem, 900) over semibold muted labels (0.88rem). Dividers are hairlines, never shadows.
+- Black band with hairline dividers (4-up desktop, 2-up tablet, stacked mobile): oversized white figures (2.3rem, 900) over mist labels (0.88rem); figures turn red on hover only. Dividers are hairlines, never shadows.
 
 ### Milestones
 - White cards with a 4px red top seal (14px radius, ambient lift, 24px padding): red year (1.2rem, 900) over muted copy. The top border is the brand — never remove it.
@@ -199,13 +195,13 @@ Engineered roundness with one decisive gesture: pill actions (999px) against gen
 Concrete guardrails grounded in the incumbent implementation.
 
 ### Do:
-- **Do** keep heroes on the Deep Signal → Signal → Ember gradient (135deg) with the amber radial glow and dark scrim.
+- **Do** keep heroes on the photographic visual with the dark scrim, page heroes and CTAs on near-black ink, and the proof medallion as the single red jewel on each dark surface.
 - **Do** open sections with a red eyebrow, then headline, then muted supporting line.
 - **Do** use the 14px / pill / 10px radius ladder exactly as staged in frontmatter.
 - **Do** convey placeholder imagery as dark engineered wells with a red medallion until real photos ship.
 
 ### Don't:
-- **Don't** introduce a second accent hue — Alert Sand is a hero highlight only, never buttons or links.
+- **Don't** introduce a second accent hue — white is the only highlight on red surfaces, never buttons or links.
 - **Don't** add always-on card shadows or new shadow values outside the three-step vocabulary.
 - **Don't** set body copy in red or on red except hero, CTA, and proof-card surfaces.
 - **Don't** fabricate testimonials, logos, pricing, or license imagery — mark placeholders as placeholders.

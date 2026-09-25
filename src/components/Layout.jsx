@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
-import { Link, Outlet, useLocation } from 'react-router-dom'
-import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
+import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import BackToTop from './BackToTop'
@@ -41,21 +40,6 @@ function Layout() {
       </main>
       <Footer />
       <BackToTop />
-      <div className="mobile-action-bar" role="navigation" aria-label="Quick contact">
-        <a
-          href="https://wa.me/201095438894"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mobile-action-call"
-          aria-label="Chat on WhatsApp: +20 109 543 8894"
-        >
-          <WhatsappLogo size={16} aria-hidden="true" />
-          WhatsApp
-        </a>
-        <Link to="/contact" className="mobile-action-quote">
-          Get a Free Quote
-        </Link>
-      </div>
     </>
   )
 }

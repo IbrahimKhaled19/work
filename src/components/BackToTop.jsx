@@ -7,12 +7,15 @@ function BackToTop() {
   useEffect(() => {
     const sentinel = document.getElementById('top-sentinel')
     if (!sentinel) return
-    // The sentinel sits at the very top of the page. Once the visitor
-    // scrolls more than ~600px, it leaves the (top-shrunk) observation
-    // root and the button appears. No scroll listener needed.
+    // The sentinel sits 600px down the document with a plain observer:
+    // visible while near the top (button hidden), scrolled past further
+    // down (button shown). Short pages never push it out, so the button
+    // stays hidden there too. No scroll listener needed.
+    const tallEnough = () =>
+      document.documentElement.scrollHeight > window.innerHeight + 600
     const observer = new IntersectionObserver(
-      ([entry]) => setShowTop(!entry.isIntersecting),
-      { rootMargin: '-600px 0px 0px 0px', threshold: 0 }
+      ([entry]) => setShowTop(tallEnough() && !entry.isIntersecting),
+      { threshold: 0 }
     )
     observer.observe(sentinel)
     return () => observer.disconnect()
@@ -27,8 +30,13 @@ function BackToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="Back to top"
     >
-      <ArrowUp size={16} weight="bold" aria-hidden="true" />
-      Top
+      <svg className="back-to-top-ring" viewBox="0 0 56 56" aria-hidden="true">
+        <circle className="back-to-top-track" cx="28" cy="28" r="24" pathLength="100" />
+        <circle className="back-to-top-progress" cx="28" cy="28" r="24" pathLength="100" />
+      </svg>
+      <span className="back-to-top-icon">
+        <ArrowUp size={18} weight="bold" aria-hidden="true" />
+      </span>
     </button>
   )
 }

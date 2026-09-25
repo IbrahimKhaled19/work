@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import WaveSeparator from './WaveSeparator'
 
 function PageHero({ title, subtitle, crumb }) {
   return (
@@ -10,6 +11,7 @@ function PageHero({ title, subtitle, crumb }) {
         <h1>{title}</h1>
         {subtitle ? <p className="page-subtitle">{subtitle}</p> : null}
       </div>
+      <WaveSeparator />
     </section>
   )
 }
