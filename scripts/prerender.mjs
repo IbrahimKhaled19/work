@@ -205,6 +205,17 @@ function buildDocument({ pathname, appHtml, hoisted }) {
     `<style>${css}</style>`
   )
 
+  // Vite 8 (rolldown) emits a BARE `<link rel="stylesheet">` with no href
+  // alongside the real one. It is a bundler artifact, it is still
+  // render-blocking, and the substitution above cannot match it because it has
+  // no href to match on - so it survived into every prerendered page and
+  // blocked the first paint for a stylesheet that was never requested.
+  //
+  // This was the last render-blocking resource on the site, and it was
+  // invisible: the page looked correct, Lighthouse reported the CSS as inlined,
+  // and the tag had no href to inspect.
+  html = html.replace(/<link\s+rel="stylesheet"\s*\/?>/gi, '')
+
   // Insert the generated head tags just before </head>.
   const headBlock = [...hoisted, buildHeadTags(meta, jsonLd)].join('\n    ')
   html = html.replace('</head>', `    ${headBlock}\n  </head>`)
