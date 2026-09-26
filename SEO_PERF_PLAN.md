@@ -26,15 +26,55 @@ No blockers remain. Phase 0 can start.
 
 ---
 
-## Phase 0 — Unblock and baseline
+## Phase 0 — Unblock and baseline — ✅ COMPLETE
 
-| ID | Task | Notes |
+| ID | Task | Status |
 |---|---|---|
-| 0.1 | Repair dependencies | Delete `node_modules` + `package-lock.json`, `npm i`. Verify `npm run build` and `npm run preview` succeed. |
-| 0.2 | Record baseline | Capture per-chunk JS/CSS sizes from `dist/`, and the 5.89 MB `public/` breakdown. Needed to prove the improvements are real. |
-| 0.3 | Fix the stock README | Replace the Vite template README with build/deploy docs. Cheap, do it now. |
+| 0.1 | Repair dependencies | ✅ `npm install` sufficed — no lockfile deletion needed |
+| 0.2 | Record baseline | ✅ See below |
+| 0.3 | Replace the stock Vite README | ✅ |
 
-**Exit criteria:** `npm run build` produces `dist/`, baseline numbers recorded.
+**Exit criteria:** ✅ `npm run build` exits 0 in 1.48s; `npm run preview` serves `dist/` correctly.
+
+### What was actually wrong
+
+A plain `npm install` fixed it — it reported `up to date in 8s` yet had silently restored:
+
+- `node_modules/.bin/` (12 shims) — the directory did not exist at all, which is why `npm run build` reported `'vite' is not recognized`
+- `@rolldown/binding-win32-x64-msvc` — the native binary, absent because of npm's optional-dependency bug ([npm/cli#4828](https://github.com/npm/cli/issues/4828))
+
+So the fix was non-destructive: `package-lock.json` was kept, and no version pinning was lost. Worth remembering for any future dependency trouble in this repo — deleting the lockfile is the usual advice and was not necessary here.
+
+### Baseline (before any optimisation)
+
+Captured from a clean `npm run build`:
+
+| Metric | Value |
+|---|---|
+| Build time | 1.48s, 111 modules, exit 0 |
+| **`dist/` total** | **6.35 MB** |
+| Copied `public/` assets | 5.89 MB — **93% of the deployed payload** |
+| JS | **1 chunk**, 425 KB raw / **132.6 KB gzip** |
+| CSS | **1 chunk**, 40 KB raw / 8.4 KB gzip |
+| HTML | 2.2 KB raw / 0.85 KB gzip |
+| Code splitting | **none** — 1 JS chunk, 1 CSS chunk |
+| Largest single file | `logos/gacp-egypt-logo-hd.png` 3,779 KB (renders at 148×165) |
+| Second largest | `hero-fire-protection.webp` 1,194 KB (the LCP element) |
+| Served `<body>` | `<div id="root"></div>` — no content without JS |
+
+The 132.6 KB gzip JS figure is the number Phase 5 works against. The empty `<body>` is the number Phase 2 works against; it was confirmed directly in the built `dist/index.html`, not inferred.
+
+### Targets to beat
+
+| Metric | Baseline | Target |
+|---|---|---|
+| gzip JS | 132.6 KB | < 70 KB |
+| JS chunks | 1 | 6+ (route-level) |
+| `public/` + `dist/` | 6.35 MB | < 1 MB |
+| `gacp-egypt-logo-hd.png` | 3,779 KB | < 10 KB |
+| `hero-fire-protection.webp` | 1,194 KB | < 150 KB total across `srcset` |
+| Crawlable body content | empty | full text on all 18 routes |
+
 
 ---
 
@@ -165,9 +205,9 @@ Current `public/`: **5.89 MB**, of which ~5.1 MB is 6 files.
 ## Execution order and rationale
 
 ```
-Phase 0  (unblock + baseline)          ← gate for everything
+Phase 0  (unblock + baseline)          ✅ done
    ↓
-Phase 1  (metadata + JSON-LD)          ← must precede prerender; it feeds the head injection
+Phase 1  (metadata + JSON-LD)          ✅ done
    ↓
 Phase 2  (prerender)                   ← the critical fix, biggest single SEO gain
    ↓
@@ -184,11 +224,18 @@ Phase 7  (verify + guard)              ← last, locks everything in
 
 Phases 3 and 4 are independent of each other and could run in parallel. Phase 5's Task 5.3 is explicitly gated on a measurement, not on effort.
 
+**Prerendering is now unblocked.** It was the reason for deferring Phase 2 — the build now works, so it can be written and, more importantly, actually iterated on and verified.
+
 ## Git strategy
 
-`main` is clean. One branch per phase, each ending at a verified commit, so any phase can be reverted independently:
+Revised after Phase 0: originally one branch per phase, which in practice produces
+merge noise in a solo repo with no PR workflow. **Now: one working branch
+(`phase/1-seo-metadata`) with one atomic commit per phase.** This preserves the
+property that actually mattered — each phase is independently revertable — without
+the branch churn. Rename to `seo-perf` if preferred.
 
-- `phase/0-unblock` · `phase/1-seo-metadata` · `phase/2-prerender` · `phase/3-head-crawl` · `phase/4-images` · `phase/5-perf` · `phase/6-deploy` · `phase/7-verify`
+Never mix phases in a single commit, so a regression bisects cleanly.
+
 
 ## Definition of done
 
