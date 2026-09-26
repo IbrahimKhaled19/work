@@ -138,14 +138,28 @@ files['_headers'] = `/assets/*
   Cache-Control: public, max-age=0, must-revalidate
 `
 
+// Vercel reads vercel.json from the PROJECT ROOT - the directory containing
+// package.json - not from the build output. A vercel.json inside dist/ is
+// treated as a static asset and its cleanUrls, trailingSlash and headers
+// settings are silently ignored, which is worse than having no config at all
+// because it looks like it is working.
+//
+// So it is written to the root as well as public/. The public/ copy is kept
+// because it is harmless there and keeps every host config in one place, but the
+// root copy is the one Vercel actually reads. delete the public/ one if a
+// future audit shows it being served at /vercel.json.
+const vercelJson = files['vercel.json']
+
 for (const [name, content] of Object.entries(files)) {
   fs.writeFileSync(path.join(PUBLIC, name), content, 'utf8')
 }
+fs.writeFileSync(path.join(ROOT, 'vercel.json'), vercelJson, 'utf8')
 
 console.log(`\nhost configs -> public/`)
 console.log('-'.repeat(60))
 for (const name of Object.keys(files)) {
   console.log(`  ${name.padEnd(16)} ${fs.statSync(path.join(PUBLIC, name)).size} bytes`)
 }
-console.log('\n  These are copied into dist/ by the Vite build.')
+console.log(`  ${'vercel.json'.padEnd(16)} ${vercelJson.length} bytes  -> project ROOT (where Vercel reads it)`)
+console.log('\n  The public/ copies are shipped into dist/ by the Vite build.')
 console.log('  Run `npm run verify:deploy` to check the built output against them.\n')

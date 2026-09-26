@@ -12,6 +12,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
+// Must come before site.js, which reads VITE_SITE_URL at import time. Plain
+// node does not load .env files, so without this the sitemap would be written
+// with no origin in it.
+import './load-env.mjs'
+
 import { routes, notFoundPath } from '../src/routes.manifest.js'
 import { assertSiteUrl, site } from '../src/seo/site.js'
 
@@ -51,7 +56,7 @@ fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap, 'utf8')
 // robots.txt
 // ---------------------------------------------------------------------------
 const robots = `# ${site.name} - fire safety and fire protection contractor, Egypt.
-# Civil Defense approved. https://www.alnanda.com.eg
+# Civil Defense approved. ${site.url}
 
 User-agent: *
 Allow: /

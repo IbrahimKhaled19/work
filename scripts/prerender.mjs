@@ -26,6 +26,12 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
 
+// Must come before site.js, which reads VITE_SITE_URL at import time. Plain
+// node does not load .env files, so without this the prerender ignores a
+// committed .env.production - and the prerender is the step that bakes every
+// canonical, og:url and JSON-LD @id into the static HTML.
+import './load-env.mjs'
+
 import { prerenderTargets, notFoundPath } from '../src/routes.manifest.js'
 import { getRouteMeta, notFoundMeta } from '../src/seo/routeMeta.js'
 import { jsonLdFor } from '../src/seo/jsonld.js'

@@ -53,7 +53,9 @@ export function assertSiteUrl() {
     throw new Error(
       'VITE_SITE_URL is not set.\n' +
         'Canonical URLs, og:url and sitemap.xml are all absolute and would be wrong.\n' +
-        'Set it in .env.production, e.g. VITE_SITE_URL=https://www.alnanda.com.eg\n' +
+        'Set it in .env.production, or export it for this build:\n' +
+        '  VITE_SITE_URL=https://your-domain.com npm run build\n' +
+        'Format: origin only - no path, no trailing slash.\n' +
         `(dev fallback "${DEV_ORIGIN}" is not valid for production.)`
     )
   }

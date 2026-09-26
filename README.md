@@ -99,23 +99,57 @@ Two things worth knowing before you shoot or select:
 
 ## Environment
 
-Copy `.env.example` to `.env.production` and set the deployed origin:
+The deployed origin lives in **`.env.production`**, which is committed:
 
 ```
-VITE_SITE_URL=https://www.alnanda.com.eg
+VITE_SITE_URL=https://fire-fighting-weld.vercel.app
 ```
 
 This one variable drives every absolute URL on the site — `<link rel="canonical">`,
-`og:url`, `og:image`, and the JSON-LD `@id` values. **Origin only**: no path, no
-trailing slash.
+`og:url`, `og:image`, the JSON-LD `@id` values, `sitemap.xml` and the `Sitemap:`
+line in `robots.txt`. **Origin only**: no path, no trailing slash. A trailing
+slash is harmless in practice — `src/seo/site.js` normalises through
+`new URL(raw).origin` — but the canonicals themselves are emitted without one,
+so write it that way.
 
 A wrong value here is worse than none. Canonical tags tell search engines which
 URL is authoritative, so a wrong one actively consolidates your pages onto an
 address you do not control. `assertSiteUrl()` in `src/seo/site.js` throws if it is
 missing, and the prerender step calls it before writing anything to `dist/`.
 
-Leave it unset until the production domain is confirmed — canonicals then fall
-back to root-relative paths and `verify:seo` warns instead of failing.
+### It is committed on purpose
+
+The value is a public URL that ends up baked into every page's HTML. It is not a
+secret, and gitignoring it would only mean a build that silently falls back to
+root-relative canonicals — the exact failure `assertSiteUrl()` exists to prevent.
+
+`scripts/load-env.mjs` reads it into `process.env` for the two build steps that
+run under plain Node. This is not incidental: `build:prerender` writes every
+canonical and `build:crawl` writes the sitemap, and **neither goes through Vite**,
+so without the loader a committed `.env.production` was silently ignored by
+precisely the steps that depend on it most. A real environment variable always
+wins over the file, so a Vercel project variable can override it without an edit.
+
+### When the real domain replaces the Vercel URL
+
+Change it in `.env.production`, and in the Vercel project's environment variables
+**if one is set there** — the variable wins over the file. Then rebuild:
+
+```bash
+npm run build && npm run verify
+```
+
+`verify:deploy` compares the declared origin against the canonicals actually
+baked into `dist/` and fails on a mismatch, so a build that did not pick up the
+change is caught rather than deployed.
+
+### Vercel
+
+`vercel.json` must sit in the **project root**. Vercel does not read it from the
+build output — a copy in `dist/` is served as a static file at `/vercel.json` and
+its `cleanUrls`, `trailingSlash` and `headers` settings are silently ignored.
+`npm run deploy:config` writes it to both places, and `verify:deploy` fails if
+the root copy is missing.
 
 ---
 
@@ -332,9 +366,19 @@ business in the local/Map Pack.
 ## Before every deploy
 
 ```bash
-VITE_SITE_URL=https://www.your-domain.com npm run build
-npm run verify:build && npm run verify:deploy
+npm run build     # reads .env.production - no need to pass the URL inline
+npm run verify    # 10 checks, all of which fail the build
 ```
+
+If you are deploying somewhere other than the origin in `.env.production`, pass
+it inline — a real environment variable overrides the file:
+
+```bash
+VITE_SITE_URL=https://your-domain.com npm run build
+```
+
+Then deploy the **contents of `dist/`**, and confirm `vercel.json` is in the
+project root if the target is Vercel.
 
 ## Known issues
 

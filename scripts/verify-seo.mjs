@@ -14,6 +14,12 @@
  * Exits non-zero on any failure, so it can gate the build in CI.
  */
 
+// Must precede site.js, which reads VITE_SITE_URL at import time. Without this
+// the check reported "VITE_SITE_URL is not set" while .env.production was
+// sitting in the project root - a false warning that would train everyone to
+// ignore it, and in --strict mode a false failure that blocks CI.
+import './load-env.mjs'
+
 import { getAllRoutes, getRouteMeta, notFoundMeta, TITLE_MAX, DESCRIPTION_MAX } from '../src/seo/routeMeta.js'
 import { jsonLdFor, verifiedStandards } from '../src/seo/jsonld.js'
 import site, { isSiteUrlConfigured, assertSiteUrl } from '../src/seo/site.js'
