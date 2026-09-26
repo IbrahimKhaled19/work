@@ -58,6 +58,37 @@ produces three files larger than the original; no PNG tier, since WebP has been
 universally supported since 2020 and on these logos the PNG was often the
 *largest* of the three outputs.
 
+### Replacing the placeholder photography
+
+The site currently ships stock imagery. When real project photography arrives,
+the procedure is the same for every image, and the pipeline does the rest:
+
+1. **Drop the master in `assets-src/`.** Full resolution, any format the
+   `sharp` install can read. Keep the aspect ratio roughly matching the
+   `displayWidth`/`displayHeight` in `scripts/images.mjs` `TARGETS`, or the
+   `object-fit` in CSS will crop more than intended. Do **not** put it in
+   `public/` — that directory is copied verbatim into `dist/`.
+2. **Run `npm run images`.** This writes AVIF + WebP variants to `public/img/`
+   and regenerates `src/data/images.js` with dimensions measured from the real
+   file. That manifest is what gives every `<img>` correct `width`/`height`.
+3. **If the hero changed**, run `npm run preloads`. The LCP `<link rel="preload">`
+   in `index.html` is generated from the image manifest, and it must match the
+   `<picture>` exactly. `verify:preloads` fails the build otherwise — and that
+   mismatch is not hypothetical: a `href` pointing at `.webp` with an `imagesrcset`
+   listing `.avif` made the browser download the preloaded file, discard it and
+   fetch again.
+4. **Run `npm run images:inspect`** to confirm dimensions, format and size per
+   variant, then `npm run verify` and `npm run audit`.
+
+Two things worth knowing before you shoot or select:
+
+- **The hero is the LCP element on the homepage.** It is preloaded, eager, and
+  `fetchpriority="high"`. A hero over ~250 KB will undo the image work; keep the
+  source compressible (a flat photo, not a heavily compressed JPEG).
+- **The current hero contains Chinese/Japanese signage** in the background. It
+  is visible at desktop widths and reads as a mistake to anyone who notices it.
+  Replacing it is a small task with a disproportionate effect on credibility.
+
 ### Caching
 
 `/assets/*` filenames are content-hashed, so they are safe to cache forever
@@ -185,16 +216,35 @@ seeing a stale build. All four host configs set this; the rules are in
 
 ## Verifying a build
 
-| Command | Checks |
-|---|---|
-| `npm run verify:seo` | The metadata layer: 18 unique titles/descriptions/canonicals, JSON-LD parses, and the deliberate omissions (no fabricated address, no legacy email, no unverified NFPA citations) are still absent |
-| `npm run verify:build` | `dist/` output: no empty pages, no duplicate titles, every canonical and JSON-LD present, every asset reference resolves, both URL forms byte-identical |
-| `npm run verify:deploy` | Every route present in both resolution forms, sitemap URLs backed by files, and **no host config has reintroduced an SPA rewrite** |
-| `npm run verify:contrast` | Colour tokens against WCAG AA. Reads `:root` from `src/index.css` and resolves `rgb(var(--x))` references, so it cannot drift from the stylesheet |
-| `npm run inspect-prerender` | Encoding integrity and stray markup in the generated HTML |
+```bash
+npm run verify     # lint + all 10 checks. This is the gate.
+npm test           # negative tests for the schema validator
+```
 
-All four verifiers exit non-zero on failure, so they work as CI gates. In CI,
-run `verify:seo:strict` so a missing `VITE_SITE_URL` fails rather than warns.
+Every check exits non-zero on failure, so they work as CI gates. In CI, run
+`verify:seo:strict` so a missing `VITE_SITE_URL` fails rather than warns.
+
+| Command | Prevents |
+|---|---|
+| `verify:seo` | Duplicate or missing metadata; a fabricated address, the legacy UAE email, or an unverified NFPA citation reaching production |
+| `verify:contrast` | A colour token falling below WCAG AA. Reads `:root` and resolves `rgb(var(--x))`, so it cannot drift from the stylesheet |
+| `verify:fonts` | A render-blocking font `<link>` reappearing, a third-party font origin surviving into `dist/`, an `@font-face` src that does not exist |
+| `verify:preloads` | The LCP preload drifting from the image manifest — the failure that made the hero *slower* |
+| `verify:prerender:lazy` | A route lazy in `App.jsx` but missing from the SSR table, which would prerender 19 pages with correct metadata and an empty body |
+| `verify:cv` | `content-visibility` on the hero (stops the LCP painting) or without `contain-intrinsic-size` (trades one layout shift for another) |
+| `verify:build` | Empty pages, duplicate titles, unresolved asset references, the two URL forms diverging |
+| `verify:schema` | An invented or misshapen JSON-LD property, a missing required one, a nested object with no `@type` |
+| `verify:deploy` | An SPA rewrite sneaking back into a host config, or a route missing a resolution form |
+| `lint` | — |
+
+The common thread is that each of these produces a site that **looks fine** and
+scores 100 in a spot check. An unmaintained service index drops a service from
+the navbar with no error. A stale preload downloads the wrong file. A route
+mismatch ships blank pages behind valid titles. Every guard was negative-tested
+by injecting the defect it exists to catch.
+
+`services:index -- --check` also runs inside `verify`, failing if the generated
+service index is stale.
 
 ## Measuring the scores
 
@@ -216,15 +266,54 @@ the deployed site. Measured on the same Lighthouse version:
 
 | | dev server | `npm run audit` (`dist/`) |
 |---|---|---|
-| Performance | 44 | **69** |
+| Performance | 44 | **94** |
 | Accessibility | 91 | **100** |
 | Best practices | 96 | **100** |
 | SEO | 85 | **100** |
+
+### Auditing every route
+
+```bash
+npm run audit:all
+```
+
+`npm run audit` measures one URL — the right number to quote, and the number
+most likely to hide a problem, because a template change can wreck one route and
+leave the other eighteen untouched. `audit:all` audits all 17 routes and gates
+on thresholds: the homepage at 90 performance, the rest at 70, and **100 SEO /
+95 accessibility everywhere with no allowance for either**.
+
+Current state, all 17 routes: **94 / 100 / 100 / 100 average, CLS 0 on every
+route.** The 13 service pages score marginally higher than the homepage because
+they do not carry the hero image, which localises the remaining LCP cost to one
+element on one route.
 
 Two other options: Chrome DevTools → Lighthouse tab (same engine, visual
 breakdown), or [PageSpeed Insights](https://pagespeed.web.dev/) once deployed —
 that one uses real field data from actual visitors, which is more authoritative
 than any lab test.
+
+### Known limitation: 2.5 s of LCP render delay
+
+LCP sits at ~2.9 s across the site, and the phase breakdown attributes ~85% of
+it to **render delay** on the hero image — which finishes downloading in 34 ms
+at high priority, with `lcp-discovery-insight` passing all three checks.
+
+Ruled out by measurement, not assumption: render-blocking CSS (fixed), payload
+(`unused-javascript` down to 41 KiB, all React), a double hero download (fixed,
+2 requests → 1), CSS animations and the `Reveal` opacity gate (disabled both;
+LCP unchanged), image loading, and discovery.
+
+The browser has the image almost immediately and does not paint it for ~2.5 s.
+That is a paint/compositing question and needs a real trace rather than another
+Lighthouse run. **It is unresolved and deliberately left that way rather than
+guessed at.** It affects the homepage's LCP only — the other 16 routes are
+unaffected.
+
+Structured data has the same caveat in a different form: `verify:schema`
+validates the vocabulary, not eligibility. [Google's rich-results
+test](https://search.google.com/test/rich-results) is the authority on whether a
+type earns a result, and it needs a live URL.
 
 ### What the SEO score does and does not tell you
 

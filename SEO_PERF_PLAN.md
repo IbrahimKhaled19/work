@@ -413,14 +413,70 @@ Notably, `_redirects` contains **no catch-all at all**. On Netlify, redirect rul
 
 ---
 
-## Phase 7 — Verification and regression guards
+## Phase 7 — Verification and regression guards — ✅ COMPLETE
 
-| ID | Task | Notes |
+| ID | Task | Status |
 |---|---|---|
-| 7.1 | Build-time assertions | Fail the build on: empty `<body>`, duplicate `<title>`, missing canonical, unparseable JSON-LD, unresolved asset reference. Turns Phase 2/3 from a one-time fix into a permanent guarantee. |
-| 7.2 | Lighthouse | Run against `npm run preview`, before vs after, for Performance / SEO / Accessibility. |
-| 7.3 | Structured data validation | Run the JSON-LD through a schema validator. |
-| 7.4 | Final README | Build commands, deploy per host, image-replacement instructions for the pending real photography. |
+| 7.1 | Build-time assertions | ✅ `npm run verify` — 10 checks, all fail the build |
+| 7.2 | Lighthouse, every route | ✅ `npm run audit:all` — 17 routes, threshold-gated |
+| 7.3 | Structured data validation | ✅ `npm run verify:schema` + 11 negative tests |
+| 7.4 | Final README | ✅ deployment per host, image replacement, the full guard list |
+
+### 7.1 — ten checks, one command
+
+`npm run verify` runs, in order: `lint`, `verify:seo`, `verify:contrast`, `verify:fonts`, `verify:preloads`, `verify:prerender:lazy`, `services:index --check`, `verify:cv`, `verify:build`, `verify:schema`, `verify:deploy`.
+
+The point is not that they exist but that each one covers a failure that is **invisible when it happens**. An unmaintained service index drops a service from the navbar with no error. A `cv-skip` on the hero stops the LCP image painting. A stale preload tag downloads the wrong file. A route table mismatch prerenders 19 pages with correct metadata and no body content. Every one of those produces a site that looks fine and scores 100 in a spot check.
+
+Each guard was negative-tested by injecting the defect it exists to catch.
+
+### 7.2 — all 17 routes, not just the homepage
+
+`npm run audit` measures one URL. It is the right number to quote and the number anyone will look at — and the number most likely to hide a problem, because a template change can wreck one route and leave the other eighteen untouched. The 13 service pages are the reason: they are the pages that earn traffic, they carry the `Service` and `OfferCatalog` structured data, and each is a separate prerendered document that can differ from its siblings. They had never been measured.
+
+`npm run audit:all` audits all 17 and gates on thresholds (home 90 perf, others 70; SEO 100 and a11y 95 everywhere, with no allowance for either).
+
+```
+route                                     perf  a11y  best  seo     LCP    CLS
+/                                           93   100   100  100  3097ms      0
+/services/design-engineering                94   100   100  100  2943ms      0
+/services/fire-pump-systems                 93   100   100  100  2941ms      0
+/services/sprinkler-systems                 93   100   100  100  2922ms      0
+/services/standpipe-hose-systems            94   100   100  100  2915ms      0
+/services/fire-alarm-detection              93   100   100  100  2931ms      0
+/services/portable-extinguishers            93   100   100  100  2922ms      0
+/services/special-hazard-suppression        93   100   100  100  2919ms      0
+/services/passive-fire-protection           93   100   100  100  2919ms      0
+/services/inspection-testing-maintenance    93   100   100  100  2927ms      0
+/services/civil-defense-compliance          94   100   100  100  2928ms      0
+/services/retrofit-upgrade                  94   100   100  100  2925ms      0
+/services/emergency-repair-services         93   100   100  100  2931ms      0
+/services/training-consulting               93   100   100  100  2920ms      0
+/services                                   95   100   100  100  2641ms      0
+/about                                      95   100   100  100  2776ms      0
+/contact                                    95   100   100  100  2774ms      0
+--------------------------------------------------------------------------
+17 routes                                   94   100   100  100   (average)
+worst route                                 93   100   100  100   /
+```
+
+Uniform, and **CLS is 0 on all 17**. The 13 service pages score marginally *higher* than the homepage because they do not carry the hero image — which localises the remaining LCP cost to one element on one route rather than the whole site.
+
+### 7.3 — JSON-LD validated against the vocabulary
+
+`verify:seo` proves the structured data parses. That is not sufficient: JSON-LD fails rich-results eligibility while remaining valid JSON — an invented property, a wrong shape, a missing required property, or a nested object with no `@type` are all silently ignored rather than reported.
+
+`npm run verify:schema` walks all 36 HTML files (35 documents, 165 nodes, 5 types) against a **closed** vocabulary. Closed is the point: a property added to the markup but not to the vocabulary fails the build.
+
+The markup needed no changes. All 30 initial failures were gaps in the checker — `areaServed` legitimately accepts an array of Place nodes, and bare `{"@id": …}` references are standard recommended JSON-LD that deliberately carry no `@type`. I had the checker wrong in both cases, in the direction of false alarms.
+
+`npm test` runs 11 negative tests against a temp copy of `dist/`, including a control. An earlier PowerShell attempt was worthless: two of three mutations used regexes that never matched the minified JSON, so the validator "passed" documents it should have rejected. Silently-green assertions are worse than none.
+
+Limit, printed on every run: this validates the vocabulary, not eligibility. [Google's rich-results test](https://search.google.com/test/rich-results) is the authority, and it needs a live URL.
+
+### 7.4 — README
+
+Deployment per host, the image-replacement procedure for the pending photography, the full guard list with what each one prevents, and the measurement section including why the dev server is not a valid target.
 
 ---
 
