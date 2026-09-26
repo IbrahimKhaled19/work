@@ -12,6 +12,7 @@
     "build:crawl": "node scripts/crawl.mjs",
     "deploy:config": "node scripts/deploy-config.mjs",
     "verify:deploy": "node scripts/verify-deploy.mjs",
+    "audit": "node scripts/audit.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "verify:seo": "node scripts/verify-seo.mjs",
