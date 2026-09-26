@@ -480,6 +480,45 @@ Deployment per host, the image-replacement procedure for the pending photography
 
 ---
 
+## Final state
+
+| | before | after |
+|---|---|---|
+| Lighthouse Performance | 69 | **94** |
+| Lighthouse Accessibility | 96 | **100** |
+| Lighthouse Best practices | 100 | **100** |
+| Lighthouse SEO | 0 (no crawlable content) | **100** |
+| `dist/` size | 6.35 MB | **1.79 MB** |
+| Per-visitor transfer | 6,501 KB | **725 KB** |
+| Crawlable text | 0 chars | **87,583 chars** |
+| Unused JavaScript | 155 KiB | **41 KiB** |
+| JS chunks | 3 | **11** |
+| Font payload | 530 KB / 10 files | **106 KB / 2 files** |
+| CLS | — | **0 on all 17 routes** |
+| Build-time guards | 0 | **10** |
+
+The 69 before-figure is the honest pre-work baseline on the built site. A
+Lighthouse run against `npm run dev` scored 44, but that measured unminified
+source modules, no `robots.txt` and Vite's own injected markup — it was never a
+valid measurement of the site.
+
+**Unresolved:** ~2.5 s of LCP render delay on the homepage, documented above and
+in the README with everything already ruled out. It needs a real trace. It
+affects one route.
+
+**Blocked on the business, not the code:**
+
+- No confirmed Egypt street address, which blocks `LocalBusiness` rich results
+  and the local/Map Pack — the single largest ranking lever available.
+- `info@universalfirefighting.com` in `Contact.jsx` and `Footer.jsx` belongs to
+  the previous UAE entity and is live in the UI.
+- Founded 1993 vs "25+ years" in the copy is internally inconsistent.
+- The hero stock photo contains Chinese/Japanese signage.
+- No delivery path for quote-form submissions.
+- "500+ AMC clients" is unconfirmed.
+
+---
+
 ## Execution order and rationale
 
 ```
