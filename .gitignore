@@ -2,3 +2,8 @@ node_modules/
 dist/
 *.log
 .impeccable/
+
+# Local env - VITE_SITE_URL is deployment-specific. Commit .env.example only.
+.env
+.env.local
+.env.*.local

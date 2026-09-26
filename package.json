@@ -7,7 +7,9 @@
     "dev": "vite --host",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:seo": "node scripts/verify-seo.mjs",
+    "verify:seo:strict": "node scripts/verify-seo.mjs --strict"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

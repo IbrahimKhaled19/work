@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import BackToTop from './BackToTop'
+import Seo from './Seo'
 
 function Layout() {
   const { pathname, hash } = useLocation()
@@ -33,6 +34,7 @@ function Layout() {
 
   return (
     <>
+      <Seo />
       <div id="top-sentinel" className="top-sentinel" aria-hidden="true" />
       <Navbar />
       <main>
