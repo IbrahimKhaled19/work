@@ -417,14 +417,14 @@ Notably, `_redirects` contains **no catch-all at all**. On Netlify, redirect rul
 
 | ID | Task | Status |
 |---|---|---|
-| 7.1 | Build-time assertions | ✅ `npm run verify` — 10 checks, all fail the build |
+| 7.1 | Build-time assertions | ✅ `npm run verify` — 11 checks, all fail the build |
 | 7.2 | Lighthouse, every route | ✅ `npm run audit:all` — 17 routes, threshold-gated |
 | 7.3 | Structured data validation | ✅ `npm run verify:schema` + 11 negative tests |
 | 7.4 | Final README | ✅ deployment per host, image replacement, the full guard list |
 
-### 7.1 — ten checks, one command
+### 7.1 — eleven checks, one command
 
-`npm run verify` runs, in order: `lint`, `verify:seo`, `verify:contrast`, `verify:fonts`, `verify:preloads`, `verify:prerender:lazy`, `services:index --check`, `verify:cv`, `verify:build`, `verify:schema`, `verify:deploy`.
+`npm run verify` runs, in order: `lint`, `verify:seo`, `verify:contrast`, `verify:fonts`, `verify:preloads`, `verify:prerender:lazy`, `services:index --check`, `verify:cv`, `verify:images`, `verify:build`, `verify:schema`, `verify:deploy`.
 
 The point is not that they exist but that each one covers a failure that is **invisible when it happens**. An unmaintained service index drops a service from the navbar with no error. A `cv-skip` on the hero stops the LCP image painting. A stale preload tag downloads the wrong file. A route table mismatch prerenders 19 pages with correct metadata and no body content. Every one of those produces a site that looks fine and scores 100 in a spot check.
 
@@ -495,7 +495,7 @@ Deployment per host, the image-replacement procedure for the pending photography
 | JS chunks | 3 | **11** |
 | Font payload | 530 KB / 10 files | **106 KB / 2 files** |
 | CLS | — | **0 on all 17 routes** |
-| Build-time guards | 0 | **10** |
+| Build-time guards | 0 | **11** |
 
 The 69 before-figure is the honest pre-work baseline on the built site. A
 Lighthouse run against `npm run dev` scored 44, but that measured unminified
@@ -582,6 +582,31 @@ roughly a third of the recorded size, so the original figure was inflated —
 almost certainly by the dev machine's CPU, since Lighthouse scales simulated
 render time by the benchmark index (2,871 on this desktop). Not root-caused,
 and not worth a trace on its own: one route, metric passing with room to spare.
+
+### A blind spot in the audit harness
+
+`unsized-images` ("Image elements have explicit `width` and `height`") is
+**weight 0** in the performance category, so it cannot move a category score —
+and `audit:all` gates on category scores alone. A class of real regressions is
+therefore invisible to the suite by construction, not by oversight: unsized
+images, a blocked back/forward cache, a deprecated API.
+
+`verify:images` (check 11) closes the instance that was asked about, in a way
+Lighthouse cannot: it reads the built `dist/`, so one pass covers all 19 routes
+and both resolution forms, needs no browser, and costs no Lighthouse run.
+Negative-tested by deleting `width`/`height` from `Picture.jsx` and rebuilding
+— the guard failed, exit 1, naming all 19 affected pages.
+
+**Measured: 47 images across 19 pages, 14 lazy-loaded, 0 unsized.** The built
+site already satisfied the audit. What was missing was any way to know that
+without a Lighthouse round-trip, which is the same gap that let today's
+extension-contaminated run look like a regression.
+
+The general fix is for `audit-all.mjs` to assert named weight-0 audits
+explicitly rather than only category scores. Deliberately not done here: it
+would also drag in audits nobody can act on — an extension-injected `bf-cache`
+failure, for one — so it is a change to the harness's contract and should be
+its own decision.
 
 ### Carried forward from the live report
 

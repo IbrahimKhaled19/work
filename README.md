@@ -251,7 +251,7 @@ seeing a stale build. All four host configs set this; the rules are in
 ## Verifying a build
 
 ```bash
-npm run verify     # lint + all 10 checks. This is the gate.
+npm run verify     # lint + all 11 checks. This is the gate.
 npm test           # negative tests for the schema validator
 ```
 
@@ -266,6 +266,7 @@ Every check exits non-zero on failure, so they work as CI gates. In CI, run
 | `verify:preloads` | The LCP preload drifting from the image manifest — the failure that made the hero *slower* |
 | `verify:prerender:lazy` | A route lazy in `App.jsx` but missing from the SSR table, which would prerender 19 pages with correct metadata and an empty body |
 | `verify:cv` | `content-visibility` on the hero (stops the LCP painting) or without `contain-intrinsic-size` (trades one layout shift for another) |
+| `verify:images` | An `<img>` in the built site with no explicit `width`/`height`. Lighthouse's `unsized-images` audit catches this but is **weight 0**, so `audit:all` — which gates on category scores only — can never fail on it |
 | `verify:build` | Empty pages, duplicate titles, unresolved asset references, the two URL forms diverging |
 | `verify:schema` | An invented or misshapen JSON-LD property, a missing required one, a nested object with no `@type` |
 | `verify:deploy` | An SPA rewrite sneaking back into a host config, or a route missing a resolution form |
@@ -380,7 +381,7 @@ business in the local/Map Pack.
 
 ```bash
 npm run build     # reads .env.production - no need to pass the URL inline
-npm run verify    # 10 checks, all of which fail the build
+npm run verify    # 11 checks, all of which fail the build
 ```
 
 If you are deploying somewhere other than the origin in `.env.production`, pass
