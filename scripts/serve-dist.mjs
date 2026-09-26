@@ -15,11 +15,19 @@
  *   /               -> dist/index.html
  *   /anything-else  -> dist/404.html, with HTTP 404
  *
+ * It also gzips text responses, because every real static host does. Without
+ * that, an audit measures ~360 KiB of uncompressed text crossing the wire and
+ * reports a `uses-text-compression` failure that belongs to the test harness
+ * rather than to the site - and, worse, inflates FCP and LCP by enough to
+ * change which optimisation looks like the priority. Measuring against an
+ * uncompressed server means measuring against a server nobody deploys to.
+ *
  *   node scripts/serve-dist.mjs [port]
  */
 import http from 'node:http'
 import fs from 'node:fs'
 import path from 'node:path'
+import zlib from 'node:zlib'
 
 const ROOT = path.join(process.cwd(), 'dist')
 const PORT = Number(process.argv[2] || 4174)
@@ -45,6 +53,11 @@ function contentType(file) {
   return TYPES[path.extname(file).toLowerCase()] || 'application/octet-stream'
 }
 
+/** Text types worth compressing. Images are already compressed. */
+const COMPRESSIBLE = /^(text\/|application\/(javascript|json|xml|manifest\+json)|image\/svg)/
+
+const COMPRESS_MIN_BYTES = 1024
+
 /** Resolve a URL path to a file inside dist/, or null. */
 function resolveFile(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0].split('#')[0])
@@ -65,32 +78,55 @@ function resolveFile(urlPath) {
   return null
 }
 
+/**
+ * Write a file's bytes, gzipped when the client asked for it and the content
+ * is compressible. Mirrors what a real static host does, so audit numbers
+ * reflect a deployable configuration rather than this script's defaults.
+ */
+function send(req, res, file, status) {
+  const body = fs.readFileSync(file)
+  const type = contentType(file)
+
+  const headers = {
+    'Content-Type': type,
+    // Hashed asset filenames are safe to cache forever.
+    'Cache-Control': file.includes(`${path.sep}assets${path.sep}`)
+      ? 'public, max-age=31536000, immutable'
+      : 'public, max-age=0, must-revalidate',
+  }
+
+  const acceptsGzip = /\bgzip\b/.test(req.headers['accept-encoding'] || '')
+  const shouldCompress = acceptsGzip && COMPRESSIBLE.test(type) && body.length >= COMPRESS_MIN_BYTES
+
+  if (!shouldCompress) {
+    res.writeHead(status, { ...headers, 'Content-Length': body.length })
+    res.end(body)
+    return
+  }
+
+  const gzipped = zlib.gzipSync(body, { level: 9 })
+  res.writeHead(status, {
+    ...headers,
+    'Content-Encoding': 'gzip',
+    // Length must describe the encoded bytes, not the decoded ones.
+    'Content-Length': gzipped.length,
+    Vary: 'Accept-Encoding',
+  })
+  res.end(gzipped)
+}
+
 const server = http.createServer((req, res) => {
   const found = resolveFile(req.url || '/')
 
   if (found) {
-    const body = fs.readFileSync(found.file)
-    res.writeHead(found.status, {
-      'Content-Type': contentType(found.file),
-      'Content-Length': body.length,
-      // Hashed asset filenames are safe to cache forever.
-      'Cache-Control': found.file.includes(`${path.sep}assets${path.sep}`)
-        ? 'public, max-age=31536000, immutable'
-        : 'public, max-age=0, must-revalidate',
-    })
-    res.end(body)
+    send(req, res, found.file, found.status)
     return
   }
 
   // No match: serve 404.html with a real 404 status.
   const notFound = path.join(ROOT, '404.html')
   if (fs.existsSync(notFound)) {
-    const body = fs.readFileSync(notFound)
-    res.writeHead(404, {
-      'Content-Type': 'text/html; charset=utf-8',
-      'Content-Length': body.length,
-    })
-    res.end(body)
+    send(req, res, notFound, 404)
     return
   }
 
