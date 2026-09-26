@@ -1,14 +1,14 @@
 import Picture from './Picture'
+import images from '../data/images.js'
 
 /**
  * Entries resolve to optimised variants in src/data/images.js via `id`.
  * Panda is left as a vector because it already is one - there is nothing to
  * compress, and it stays crisp at any density.
  *
- * `id` values come from scripts/images.mjs. The manifest records each logo's
- * real aspect ratio, so setting only `height` here and letting the stylesheet
- * keep `width: auto` reproduces the intended rendered width without the
- * distortion the previous explicit width/height pairs caused.
+ * Rendered heights come from the manifest's `displayHeight` rather than a
+ * value repeated here. The manifest is measured from the real file by
+ * scripts/images.mjs, so this list cannot drift out of sync with the assets.
  */
 const LOGOS = [
   { name: 'Carina', id: 'logo-carina' },
@@ -38,11 +38,18 @@ const LOGOS = [
 const COPIES = 2
 
 function LogoMark({ logo, decorative }) {
-  // Inline height beats the `.logo-item img { height: 44px }` stylesheet rule,
-  // which is the intended override. The stylesheet's `width: auto` then
-  // derives the rendered width from each logo's real aspect ratio, so no
-  // logo is distorted.
-  const style = { height: `${logo.displayHeight}px` }
+  // Height comes from the measured manifest, so it can never be undefined.
+  // The stylesheet's `.logo-item img { width: auto }` then derives the rendered
+  // width from each logo's real aspect ratio, so nothing is distorted.
+  const displayHeight = logo.displayHeight ?? images[logo.id]?.displayHeight
+  if (!displayHeight) {
+    if (import.meta.env?.DEV) {
+      console.warn(`[LogoCarousel] no displayHeight for "${logo.id}" - run \`npm run images\`.`)
+    }
+    return null
+  }
+
+  const style = { height: `${displayHeight}px` }
   const loading = decorative ? 'lazy' : 'eager'
 
   if (logo.src) {

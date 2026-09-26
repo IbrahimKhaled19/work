@@ -114,19 +114,63 @@ Still placeholders that SEO must not touch until supplied: `ogImage` (`/og-image
 
 ---
 
-## Phase 2 — Prerendering (the critical fix)
+## Phase 2 — Prerendering (the critical fix) — ✅ COMPLETE
 
-| ID | Task | Notes |
+| ID | Task | Status |
 |---|---|---|
-| 2.1 | Make the router injectable | `App.jsx` currently owns `<BrowserRouter>` (`App.jsx:13`). Extract the `<Routes>` tree so both `main.jsx` (BrowserRouter) and a new server entry (StaticRouter) can mount it. `Layout` uses `useLocation` and works under both. |
-| 2.2 | `src/entry-server.jsx` | Exports `render(url) → { html, head }` via `renderToString` + `StaticRouter`. |
-| 2.3 | `src/routes.manifest.js` | Derive the route list from `serviceSections` (13) + the 5 static routes + `/`. **Single source of truth** — consumed by the prerenderer *and* the sitemap generator, so they can never drift. |
-| 2.4 | `scripts/prerender.mjs` | SSR build → render each route → inject head → emit `dist/<route>/index.html` + `dist/404.html`. Inline the emitted CSS so first paint needs zero blocking requests. |
-| 2.5 | SSR-safety audit | `useEffect` does not run in `renderToString`, so window access is mostly safe, but verify: `Navbar` scroll listener, `Layout` scroll effect, `main.jsx:6` `js` class, `Reveal` (`IntersectionObserver` undefined → `visible: true`, good), `CountUp` (`typeof window === 'undefined'` → final value, good), `Footer` `new Date()`. |
-| 2.6 | Wire npm scripts | `build` = client → ssr → prerender. `preview` serves the prerendered `dist/`. |
-| 2.7 | Verify output | For all 19 files assert: non-empty `<body>` content, correct `<title>`, unique description, canonical present, JSON-LD parses, all `/assets/*` references resolve on disk. |
+| 2.1 | Router made injectable — `App.jsx` is routes-only | ✅ |
+| 2.2 | `src/entry-server.jsx` — `render(url)` via `renderToString` + `StaticRouter` | ✅ |
+| 2.3 | `src/routes.manifest.js` — single source of truth for routes + output paths | ✅ |
+| 2.4 | `scripts/prerender.mjs` — SSR build, head injection, 19 files written | ✅ |
+| 2.5 | SSR-safety audit | ✅ no changes needed |
+| 2.6 | npm scripts chained: `build` = client → ssr → prerender | ✅ |
+| 2.7 | Verify output | ✅ `scripts/verify-build.mjs` + `scripts/inspect-prerender.mjs` |
 
-**Exit criteria:** `view-source:` on any route shows full content with no JS execution.
+**Exit criteria:** ✅ 19 pages with real content; **Lighthouse SEO 0.83 → 1.0**; accessibility and best-practices both 1.0.
+
+### Results
+
+| Metric | Before | After |
+|---|---|---|
+| Crawlable body text | 0 characters | **87,583 characters** across 19 pages |
+| HTML files emitted | 1 (empty shell) | 19 |
+| Unique `<title>` | 1 | **19** |
+| Unique `rel=canonical` | 0 | **19** |
+| **Lighthouse SEO** | **0.83** | **1.00** |
+| Lighthouse accessibility | 0.96 | 1.00 |
+| Lighthouse best-practices | 1.00 | 1.00 |
+
+Verified by raw HTTP fetch with **no JavaScript executed** — the actual crawler scenario:
+
+```
+/                            200  74,179 B  h1 "Complete fire protection, engineered to code…"
+/about                       200  65,057 B  h1 "About ALNANDA Contracting"
+/services                    200 105,764 B  h1 "Complete Fire Protection Systems…"
+/services/fire-pump-systems  200  68,626 B  h1 "Fire Pump Systems"
+/nope-does-not-exist         404  (404 document)
+```
+
+### SSR-safety audit — no changes required
+
+`Reveal` initialises `visible` to `true` when `IntersectionObserver` is undefined, and `CountUp`'s `showFinalValue()` returns `true` when `window` is undefined, so both already emit their final state to a string renderer. `BackToTop` returns `null` before its effect runs. `useEffect` never executes under `renderToString`. The prerendered HTML therefore contains `is-visible` on every reveal and real values in the stat counters.
+
+### The deployment trap this exposed
+
+`vite preview` applies an **SPA fallback**, so it served the homepage for `/about`, `/contact` and every other route — each carrying the homepage's title and canonical. Prerendering would have been silently defeated.
+
+`scripts/serve-dist.mjs` was written to serve `dist/` the way static hosting does (directory-index resolution, real 404s) and is what the verification above used. **Any host configured with a blanket `/* → /index.html` rewrite will break this site the same way.** Phase 6 must emit rewrite rules that resolve directories first and only fall through to `404.html`.
+
+### Three bugs found and fixed during verification
+
+1. **Carousel heights collapsed to 44px** (regression from Phase 4). `LogoCarousel` read `logo.displayHeight`, but the rewritten `LOGOS` entries only carry `{ name, id }`, so every height rendered as `height:undefinedpx` and the CSS `height: 44px` default took over. Logos meant to be 52/64/84/96px tall were all flat. The browser check looked plausible — every logo *was* 44px tall — so it passed unnoticed until the prerendered markup exposed the literal `undefined`. Fixed by reading `displayHeight` from the generated manifest instead of duplicating it, with a dev warning and a null guard.
+2. **Prerender was not idempotent.** React 19's `renderToString` hoists a `<link rel="preload">` for every eager `<img>` into the body. Re-running the prerender used its own output as the template, appending another copy of the head block and 16 more preload links (+2,812 bytes per run). Fixed by having `build:client` save a pristine template to `.cache/prerender-template.html` via `scripts/save-template.mjs`, and by anchoring the root replace to `</body>`. Three consecutive runs now produce byte-identical output.
+3. **React's hoisted preload landed inside `<body>`.** Extracted and relocated into `<head>` alongside the other preloads.
+
+### Guards added
+
+- `npm run verify:build` — fails on empty body, duplicate title/canonical, missing or unparseable JSON-LD, a localhost canonical, a missing asset, or a 404 page that is not `noindex`.
+- `npm run inspect-prerender` (`scripts/inspect-prerender.mjs`) — character-encoding integrity (`·`, `→`, `©`, no U+FFFD), no `undefined` in output, no preload hoisted into `<body>`, CSS inlined exactly once. This is what caught bug 1.
+
 
 ---
 

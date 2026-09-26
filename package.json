@@ -5,11 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "npm run build:client && npm run build:ssr && npm run build:prerender",
+    "build:client": "vite build && node scripts/save-template.mjs",
+    "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr",
+    "build:prerender": "node scripts/prerender.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "verify:seo": "node scripts/verify-seo.mjs",
     "verify:seo:strict": "node scripts/verify-seo.mjs --strict",
+    "verify:build": "node scripts/verify-build.mjs",
     "images": "node scripts/images.mjs",
     "images:inspect": "node scripts/inspect-images.mjs"
   },
