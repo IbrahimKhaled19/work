@@ -32,7 +32,11 @@ function Services() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      {/* cv-skip: 13 accordion rows, several thousand pixels below the fold on
+          any viewport. The tall placeholder matters most here - 13 rows of
+          text is far more than --cv-medium, and understating it would move
+          the scrollbar when the section renders. */}
+      <section className="section section-alt cv-skip cv-tall">
         <div className="container">
           <SectionHead
             title="Service Details"

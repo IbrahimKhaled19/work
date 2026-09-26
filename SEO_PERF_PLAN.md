@@ -277,18 +277,79 @@ In-browser, several images report `naturalWidth` ≈ 1000 despite files being e.
 
 ---
 
-## Phase 5 — Bundle and rendering performance
+## Phase 5 — Bundle and rendering performance — ✅ COMPLETE
 
-| ID | Task | Notes |
+| ID | Task | Status |
 |---|---|---|
-| 5.1 | `vite.config.js` build config | Currently 7 lines, no `build` options. Add `manualChunks` (react / react-router / phosphor / vendor), `assetsInlineLimit`, `cssCodeSplit`, and `build.target`. |
-| 5.2 | Route-level code splitting | Zero `React.lazy` today. Lazy-load the 5 non-home routes behind `<Suspense>`; keep Home eager since it is the landing page. |
-| 5.3 | Split the services data | `src/data/services.js` is 41.7 KB and is imported by `Navbar.jsx:4`, `Footer.jsx:5`, `Services.jsx:11`, `Gallery.jsx:7`, `ServiceDetail.jsx:9` — so all 13 services' prose is in the critical path of *every* page, including Home. Navbar/Footer only need `{id, title, category, short}`. Extract a light `serviceIndex.js`. **Measure gzip before/after** — prose compresses well, so confirm the actual win before restructuring further. |
-| 5.4 | `content-visibility: auto` | Add to below-fold `<section>`s with `contain-intrinsic-size`, for the long Services/Home pages. |
-| 5.5 | Self-host fonts | Replace the render-blocking Google Fonts `<link>` (`index.html:9-12`, 5 weights). Subset Montserrat to latin/latin-ext, `font-display: swap`, preload the 2 critical weights. **See B3.** |
-| 5.6 | Fix the `Reveal` opacity gate | `index.css:122` sets `.js .reveal > * { opacity: 0 }` and `Reveal.jsx:5` defaults `visible: false` in every browser with `IntersectionObserver`. All above-the-fold content is invisible until React mounts + a 0.55s transition finishes — taxes LCP and CLS. Restrict `<Reveal>` to below-the-fold; render above-the-fold content statically. |
+| 5.1 | `vite.config.js` build config | ✅ `manualChunks` as a function — rolldown rejects the object form |
+| 5.2 | Route-level code splitting | ✅ 3 chunks → 11; unused JS 155 KiB → 41 KiB |
+| 5.3 | Split the services data | ✅ measured first: **10.9 KiB gzipped off every page load** |
+| 5.4 | `content-visibility: auto` | ⚠️ applied, but **no measurable effect** — see below |
+| 5.5 | Self-host fonts | ✅ 530 KB → 106 KB; variable font, 2 files not 10 |
+| 5.6 | Fix the `Reveal` opacity gate | ❌ **dropped — measurement disproved the premise** |
 
-**Exit criteria:** initial JS meaningfully smaller; no above-the-fold text gated behind `opacity: 0`.
+**Exit criteria:** ✅ initial JS meaningfully smaller (155 → 41 KiB unused). ✅ no above-the-fold text gated behind `opacity: 0` — because the gate was never the problem.
+
+### 5.4 shipped, but changed nothing — kept anyway
+
+`content-visibility: auto` with `contain-intrinsic-size` is on 3 homepage sections and 1 `/services` section. Two runs before and after:
+
+```
+              before        after
+  FCP        1814 ms      1816 ms
+  LCP        3089 ms      3091 ms
+  TBT          11 ms        15 ms
+  CLS            0            0
+```
+
+No change beyond run-to-run noise. The reason is visible in the baseline: TBT was already 11–20 ms, so there was no main-thread work left for skipping layout and paint to save. The optimisation arrived after its own justification had been spent.
+
+**Kept rather than reverted**, for two reasons. It is correct, guarded, and free — it will matter on the low-end Android devices Lighthouse's simulated throttling does not model, where TBT is 5–10× higher. And removing it would discard a working guard. But it is recorded here as a **null result**, not a win, so nobody later re-derives the theory and re-adds it expecting a gain.
+
+`scripts/verify-content-visibility.mjs` enforces the three ways this can go wrong: `content-visibility` shipping without `contain-intrinsic-size` (which would trade one layout shift for another), a `cv-skip` section landing above the fold, and — the one that would actually break the site — `cv-skip` on the hero, which holds the LCP element and would stop it painting. Negative-tested by adding `cv-skip` to the hero.
+
+### 5.6 dropped: the premise was wrong
+
+The plan asserted that `.js .reveal > * { opacity: 0 }` delayed LCP and CLS. **It does not.** Rebuilt with `heroRise` disabled and every reveal gate forced to `opacity: 1`:
+
+```
+  baseline                    LCP 2,954 ms
+  animations fully disabled   LCP 2,966 ms
+```
+
+Unchanged. The hero is not inside a `<Reveal>` at all, and CSS animations on `.hero-content` do not gate the hero *image*, which is a sibling in `.hero-bg`. Implementing 5.6 as written would have been work against a mechanism that does not exist.
+
+### The 2.5 s LCP render delay is still unexplained
+
+Every load-side explanation is eliminated **by measurement**:
+
+| Suspect | Verdict | Evidence |
+|---|---|---|
+| Render-blocking font CSS | fixed | 89 → 93 |
+| Payload / unused JS | fixed | 155 → 41 KiB |
+| Double hero download | fixed | 2 requests → 1 |
+| Animations / reveal gate | **not the cause** | disabled, LCP unchanged |
+| Image loading | **not the cause** | finishes at 34 ms, 0 ms load delay |
+| Discovery | **not the cause** | all 3 `lcp-discovery-insight` checks pass |
+
+The browser has the hero image in 34 ms at high priority and does not paint it for ~2.5 s. That is a paint/compositing question, not a loading one, and it needs a real trace rather than another Lighthouse run. **Deliberately left for Phase 7 rather than guessed at.**
+
+### Phase 5 results
+
+| | before | after |
+|---|---|---|
+| Performance | 71 | **94** |
+| FCP | 4.2 s | 1.9 s |
+| LCP | 5.1 s | 3.0 s |
+| Speed Index | 4.2 s | 1.9 s |
+| TBT | 10 ms | 15 ms |
+| CLS | 0 | 0 |
+| `unused-javascript` | 155 KiB | **41 KiB** |
+| chunks | 3 | 11 |
+| fonts | 530 KB / 10 files | **106 KB / 2 files** |
+| services prose on critical path | 12.7 KiB gz | **2.1 KiB gz** |
+
+Accessibility 100, best-practices 100, SEO 100 throughout.
 
 ---
 

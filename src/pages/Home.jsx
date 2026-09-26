@@ -121,7 +121,10 @@ function Home() {
 
       <ProofBand />
 
-      <section className="section section-alt">
+      {/* cv-skip: below the fold, so the browser can skip laying out and
+          painting it until it approaches the viewport. Never applied to the
+          hero or the stat grid - the hero holds the LCP element. */}
+      <section className="section section-alt cv-skip cv-tall">
         <div className="container">
           <Milestones
             headerClassName="section-head-wide"
@@ -135,7 +138,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section cv-skip cv-tall">
         <div className="container">
           <SectionHead
             eyebrow="What We Do"
@@ -146,7 +149,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="section section-alt why">
+      <section className="section section-alt why cv-skip">
         <div className="container">
           <SectionHead title="Reliable Protection, Backed by Experience" />
           <WhyList items={whyUs} />

@@ -21,6 +21,15 @@
   --bg: #f6f6f9;
   --bg-alt: #e9e9ed;
   --line: #e5e7eb;
+  /*
+   * contain-intrinsic-size for content-visibility, below. These are the
+   * placeholder heights used while a skipped section is off-screen. They must
+   * approximate each section's real height or the scrollbar will jump as
+   * sections resolve - trading one layout shift for another, which is worse
+   * than the rendering cost this saves.
+   */
+  --cv-tall: 900px;
+  --cv-medium: 640px;
   --shadow: 0 10px 30px rgba(34, 31, 31, 0.08);
   --shadow-lg: 0 20px 50px rgba(34, 31, 31, 0.16);
   --radius: 14px;
@@ -81,6 +90,42 @@ h4 {
 .container {
   width: min(1160px, calc(100% - 48px));
   margin: 0 auto;
+}
+
+/*
+ * Skip rendering work for below-the-fold sections (Task 5.4).
+ *
+ * `content-visibility: auto` tells the browser to skip layout, paint and
+ * composite for a subtree that is off-screen, and to do that work when it
+ * approaches the viewport. On the homepage and /services the below-fold
+ * content is several thousand pixels of markup that never affects the first
+ * screenful.
+ *
+ * Constraints this has to respect, all of which are load-bearing:
+ *
+ * 1. NEVER applied above the fold. It is opt-in per section via a `cv-skip`
+ *    class rather than a blanket rule, because skipping the hero would remove
+ *    the LCP element from rendering entirely - the opposite of the intent.
+ *
+ * 2. `contain-intrinsic-size` is mandatory, not optional. Without it the
+ *    browser knows nothing about the skipped element's height, so the
+ *    scrollbar is wrong until the section renders - a layout shift caused by
+ *    the very optimisation meant to reduce layout work. The placeholders are
+ *    measured to approximate the real heights.
+ *
+ * 3. No `contain: size` on anything containing a floating element or an
+ *    absolutely-positioned child that escapes it. The `overflow: hidden` on
+ *    the containing section already clips those; adding size containment
+ *    would change where they resolve.
+ */
+.cv-skip {
+  content-visibility: auto;
+  contain-intrinsic-size: auto var(--cv-medium);
+}
+
+/* Sections that carry a long list - milestones, the services tab panel. */
+.cv-skip.cv-tall {
+  contain-intrinsic-size: auto var(--cv-tall);
 }
 
 .section {
