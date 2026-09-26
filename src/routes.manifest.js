@@ -29,25 +29,40 @@ export const routes = getAllRoutes().map(
 export const notFoundPath = '/404'
 
 /**
- * Map a pathname to its output file inside dist/.
- *   /            -> index.html
- *   /about       -> about/index.html
- *   /404         -> 404.html   (special-cased: must sit at the root so hosts
- *                                  can serve it for any unmatched URL)
+ * Map a pathname to the files that must exist in dist/ for it to resolve.
+ *
+ *   /  -> ['index.html']
+ *   /about -> ['about.html', 'about/index.html']
+ *
+ * Both forms are emitted deliberately. Hosts resolve prerendered routes
+ * inconsistently: Apache and Netlify serve `<route>/index.html` for `/about`,
+ * while Vercel's `cleanUrls` and most CDNs look for `about.html`. Emitting only
+ * one form means the site 404s on half of all hosts - and the failure is silent
+ * until someone loads a deep link. Two forms cost ~1.3 MB of deploy size and
+ * remove the entire class of problem.
+ *
+ * The 404 is special-cased to the root, because that is where every host looks
+ * for it.
  */
-export function outputFileFor(pathname) {
-  if (pathname === '/') return 'index.html'
-  if (pathname === notFoundPath) return '404.html'
-  return `${pathname.replace(/^\//, '').replace(/\/+$/, '')}/index.html`
+export function outputFilesFor(pathname) {
+  if (pathname === '/') return ['index.html']
+  if (pathname === notFoundPath) return ['404.html']
+  const slug = pathname.replace(/^\//, '').replace(/\/+$/, '')
+  return [`${slug}.html`, `${slug}/index.html`]
 }
 
-/** Everything the prerenderer writes: 18 real pages plus the 404. */
+/** Everything the prerenderer writes, flattened across both output forms. */
 export const prerenderTargets = [
   ...routes.map((route) => ({
     ...route,
-    outFile: outputFileFor(route.pathname),
+    outFiles: outputFilesFor(route.pathname),
   })),
-  { pathname: notFoundPath, type: 'notFound', serviceId: null, outFile: outputFileFor(notFoundPath) },
+  {
+    pathname: notFoundPath,
+    type: 'notFound',
+    serviceId: null,
+    outFiles: outputFilesFor(notFoundPath),
+  },
 ]
 
 export default prerenderTargets

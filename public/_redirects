@@ -1,0 +1,19 @@
+# ALNANDA Contracting - Netlify / Cloudflare Pages
+#
+# Route resolution is deliberately left alone. Netlify and Cloudflare Pages
+# already serve dist/<route>/index.html for /about, and serve dist/404.html
+# with a real 404 status for anything unmatched.
+#
+# Do NOT add "/* /index.html 200" here. That is the SPA rewrite, and it would
+# serve the homepage for all 19 routes, destroying the prerendered pages.
+
+# Hashed filenames: safe to cache forever.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Image filenames are stable across builds, so a shorter TTL.
+/img/*
+  Cache-Control: public, max-age=604800
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate

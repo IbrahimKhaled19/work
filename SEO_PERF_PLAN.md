@@ -292,15 +292,63 @@ In-browser, several images report `naturalWidth` ≈ 1000 despite files being e.
 
 ---
 
-## Phase 6 — 404s and deployment
+## Phase 6 — 404s and deployment — ✅ COMPLETE
 
-| ID | Task | Notes |
+| ID | Task | Status |
 |---|---|---|
-| 6.1 | Eliminate soft 404s | `ServiceDetail.jsx:34` renders `<NotFound/>` for any unknown id at **HTTP 200**, and `App.jsx:22` `path="*"` 200s on everything — an unbounded space of indexable "not found" pages. Prerendering fixes discovery (crawlers only see the 18 real files), and a proper `404.html` + host config supplies the correct status. |
-| 6.2 | Portable deploy config | Emit `public/_redirects` (Netlify/Cloudflare), `vercel.json`, and `public/.htaccess` (Apache/cPanel) with the SPA fallback so deep-link hard refreshes don't 404. |
-| 6.3 | Document host setup | README section: the one required line per host. |
+| 6.1 | Eliminate soft 404s | ✅ 19 prerendered routes; unmatched URLs get a real 404 |
+| 6.2 | Portable deploy config | ✅ `_redirects`, `vercel.json`, `.htaccess`, `_headers` — generated |
+| 6.3 | Document host setup | ✅ README deployment section with a per-host table |
+| 6.4 | Deploy verification guard | ✅ `npm run verify:deploy` |
 
-**Exit criteria:** `/services/does-not-exist` returns a real 404; `/services/sprinkler-systems` survives a hard refresh.
+**Exit criteria:** ✅ every route resolves in both URL forms, unknown URLs 404, and no config can reintroduce an SPA rewrite.
+
+### The main fix: two resolution forms per route
+
+Hosts disagree about what `/about` should map to. Apache and Netlify serve `about/index.html`; Vercel's `cleanUrls` and most CDNs look for `about.html`. Emitting one form means the site 404s on half of all hosts, silently, until someone follows a deep link.
+
+The prerender now writes **both** forms of every route — 19 routes, 36 HTML files. Costs ~1.3 MB of deploy size; removes an entire class of silent failure. `verify:build` asserts the two copies are byte-identical, because if they ever diverged the host would serve different metadata depending on which form a visitor's URL resolved to.
+
+### `verify:deploy` rejects the SPA rewrite
+
+The guard treats a blanket `/* → /index.html` as a hard failure, not a warning, and strips comment lines first so the explanatory prose in each config is not mistaken for an active rule.
+
+Tested by injecting `/* /index.html 200` into `public/_redirects` and rebuilding:
+
+```
+FAILED (38)
+  - route /about: missing dist/about.html
+  ...
+  - _redirects contains a catch-all rewrite to index.html ("/*    /index.html").
+    That is the SPA rule and it would serve the homepage for all 19 routes.
+```
+
+The same run surfaced a second hazard: **`build:client` alone empties `dist/`**, because Vite cleans the output directory. A deploy of a client-only build has no prerendered pages at all. `verify:deploy` catches it. Only `npm run build` produces a deployable `dist/`.
+
+### Configs are generated, not hand-written
+
+`scripts/deploy-config.mjs` emits four files into `public/`, which Vite copies into `dist/`. Generating them keeps them in step with the build and keeps the reasoning in the repo — each file carries a comment explaining which failure it avoids.
+
+Notably, `_redirects` contains **no catch-all at all**. On Netlify, redirect rules take precedence over static files, so `/* /404.html 404` would break every route. Netlify and Cloudflare Pages already do the right thing by default; the file only adds cache headers.
+
+`.htaccess` uses `FallbackResource /404.html` rather than `mod_rewrite`, because `FallbackResource` fires only when a request matched nothing — exactly the required semantics, and it works on shared hosting with `mod_rewrite` disabled.
+
+### Verified over HTTP, all forms
+
+```
+/about                                 200  h1 "About ALNANDA Contracting"
+/about/                                200  h1 "About ALNANDA Contracting"
+/about.html                            200  h1 "About ALNANDA Contracting"
+/services/fire-pump-systems            200  h1 "Fire Pump Systems"
+/services/fire-pump-systems/           200  h1 "Fire Pump Systems"
+/nope                                  404  (404 document)
+/robots.txt  /sitemap.xml  /_redirects  /.htaccess   all 200
+```
+
+### Residual soft-404 surface, and why it is acceptable
+
+`ServiceDetail.jsx` still renders `<NotFound />` for an unknown service id, in-app, at HTTP 200. That is correct client behaviour — a visitor who mistypes a URL should see a real 404 page, not a server error. What changed is that crawlers can no longer *reach* those URLs as indexable 200s: only the 18 prerendered files are discoverable, and anything else is served `404.html` with a 404 status. The `Seo` component also applies `noindex` to those URLs at runtime.
+
 
 ---
 

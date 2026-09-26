@@ -225,6 +225,7 @@ const { render } = await import(pathToFileURL(SSR_ENTRY).href)
 
 let written = 0
 let totalBytes = 0
+const writtenFiles = []
 const report = []
 
 for (const target of prerenderTargets) {
@@ -245,15 +246,22 @@ for (const target of prerenderTargets) {
     )
   }
 
-  const outPath = path.join(DIST, target.outFile)
-  fs.mkdirSync(path.dirname(outPath), { recursive: true })
-  fs.writeFileSync(outPath, html, 'utf8')
+  // The same document is written in both resolution forms so the site works
+  // whether the host looks for <route>.html or <route>/index.html.
+  let bytes = 0
+  for (const outFile of target.outFiles) {
+    const outPath = path.join(DIST, outFile)
+    fs.mkdirSync(path.dirname(outPath), { recursive: true })
+    fs.writeFileSync(outPath, html, 'utf8')
+    bytes = Buffer.byteLength(html)
+    writtenFiles.push(outFile)
+  }
 
-  const bytes = Buffer.byteLength(html)
   written += 1
   totalBytes += bytes
   report.push({
-    outFile: target.outFile,
+    outFile: target.outFiles[0],
+    alsoAs: target.outFiles.length > 1 ? target.outFiles[1] : null,
     bytes,
     textLength,
     title: meta.title,
@@ -263,19 +271,21 @@ for (const target of prerenderTargets) {
 const pad = (v, n) => String(v).padEnd(n)
 const lpad = (v, n) => String(v).padStart(n)
 
-console.log(`${pad('output', 42)}${lpad('text', 8)}${lpad('html', 9)}  title`)
-console.log('-'.repeat(100))
+console.log(`${pad('route', 34)}${pad('also written as', 32)}${lpad('text', 8)}${lpad('html', 9)}`)
+console.log('-'.repeat(92))
 for (const row of report) {
   console.log(
-    pad(row.outFile, 42) +
+    pad(row.outFile, 34) +
+      pad(row.alsoAs || '-', 32) +
       lpad(row.textLength, 8) +
-      lpad((row.bytes / 1024).toFixed(1) + 'K', 9) +
-      '  ' +
-      row.title.slice(0, 44)
+      lpad((row.bytes / 1024).toFixed(1) + 'K', 9)
   )
 }
-console.log('-'.repeat(100))
+console.log('-'.repeat(92))
 console.log(
-  `${pad(`${written} files`, 42)}${lpad('', 8)}${lpad((totalBytes / 1024).toFixed(0) + 'K', 9)}  total`
+  `${pad(`${written} routes`, 34)}${pad(`${writtenFiles.length} files`, 32)}` +
+    lpad('', 8) +
+    lpad((totalBytes / 1024).toFixed(0) + 'K', 9) +
+    '   (per-route size, not the doubled total)'
 )
 console.log('')

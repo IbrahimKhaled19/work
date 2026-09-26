@@ -43,16 +43,42 @@ if (htmlFiles.length === 0) {
   process.exit(1)
 }
 
+/**
+ * The prerender writes each route twice - `<route>.html` and
+ * `<route>/index.html` - so that the site resolves regardless of how the host
+ * maps URLs to files. Both copies of a route are one route, so group them and
+ * assert uniqueness per route rather than per file.
+ */
+const routeOf = (rel) => rel.replace(/\/index\.html$/, '.html')
+
+const grouped = new Map()
+for (const file of htmlFiles) {
+  const rel = path.relative(DIST, file).replace(/\\/g, '/')
+  const key = routeOf(rel)
+  if (!grouped.has(key)) grouped.set(key, [])
+  grouped.get(key).push(rel)
+}
+
 const titles = new Map()
 const canonicals = new Map()
 const assetRefs = new Set()
 const absoluteRefs = new Set()
 let totalText = 0
+let fileCount = 0
 
-for (const file of htmlFiles) {
-  const rel = path.relative(DIST, file).replace(/\\/g, '/')
+for (const [route, files] of grouped) {
+  const file = path.join(DIST, files[0])
   const html = fs.readFileSync(file, 'utf8')
-  const isNotFound = rel === '404.html'
+  const isNotFound = route === '404.html'
+  fileCount += files.length
+
+  // Every copy of a route must be byte-identical, or the host will serve
+  // different metadata depending on which form the visitor's URL resolves to.
+  for (const other of files.slice(1)) {
+    if (fs.readFileSync(path.join(DIST, other), 'utf8') !== html) {
+      fail(`${route}: ${other} differs from ${files[0]} - the two URL forms must be identical`)
+    }
+  }
 
   // --- content present --------------------------------------------------
   const body = html.slice(html.indexOf('<body'))
@@ -64,56 +90,56 @@ for (const file of htmlFiles) {
     .trim()
 
   if (text.length < 300) {
-    fail(`${rel}: only ${text.length} characters of body text - looks like an empty shell`)
+    fail(`${route}: only ${text.length} characters of body text - looks like an empty shell`)
   }
   totalText += text.length
 
   // --- title ------------------------------------------------------------
   const title = html.match(/<title>([\s\S]*?)<\/title>/)?.[1]?.trim()
-  if (!title) fail(`${rel}: no <title>`)
-  else if (titles.has(title)) fail(`${rel}: duplicate title with ${titles.get(title)} - "${title}"`)
-  else titles.set(title, rel)
+  if (!title) fail(`${route}: no <title>`)
+  else if (titles.has(title)) fail(`${route}: duplicate title with ${titles.get(title)} - "${title}"`)
+  else titles.set(title, route)
 
   // --- canonical --------------------------------------------------------
   // The 404 must NOT have one: it is noindex, and a canonical there would
   // either point at a URL that does not exist or, worse, at a real page.
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1]
   if (isNotFound) {
-    if (canonical) fail(`${rel}: 404 page must not have a canonical - found ${canonical}`)
-    if (/<meta property="og:url"/.test(html)) fail(`${rel}: 404 page must not have an og:url`)
+    if (canonical) fail(`${route}: 404 page must not have a canonical - found ${canonical}`)
+    if (/<meta property="og:url"/.test(html)) fail(`${route}: 404 page must not have an og:url`)
   } else if (!canonical) {
-    fail(`${rel}: no canonical`)
+    fail(`${route}: no canonical`)
   } else if (canonicals.has(canonical)) {
-    fail(`${rel}: duplicate canonical with ${canonicals.get(canonical)} - ${canonical}`)
+    fail(`${route}: duplicate canonical with ${canonicals.get(canonical)} - ${canonical}`)
   } else {
-    canonicals.set(canonical, rel)
+    canonicals.set(canonical, route)
     if (canonical.startsWith('http://localhost')) {
-      fail(`${rel}: canonical points at localhost - set VITE_SITE_URL`)
+      fail(`${route}: canonical points at localhost - set VITE_SITE_URL`)
     }
   }
 
   // --- robots -----------------------------------------------------------
   const robots = html.match(/<meta name="robots" content="([^"]+)"/)?.[1] || ''
   if (isNotFound && !robots.includes('noindex')) {
-    fail(`${rel}: 404 page must be noindex, got "${robots}"`)
+    fail(`${route}: 404 page must be noindex, got "${robots}"`)
   }
   if (!isNotFound && !robots.includes('index')) {
-    fail(`${rel}: indexable page has robots "${robots}"`)
+    fail(`${route}: indexable page has robots "${robots}"`)
   }
 
   // --- JSON-LD ----------------------------------------------------------
   const ldMatch = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)
   if (isNotFound) {
-    if (ldMatch) fail(`${rel}: 404 page should not carry JSON-LD`)
+    if (ldMatch) fail(`${route}: 404 page should not carry JSON-LD`)
   } else if (!ldMatch) {
-    fail(`${rel}: no JSON-LD block`)
+    fail(`${route}: no JSON-LD block`)
   } else {
     try {
       const parsed = JSON.parse(ldMatch[1].replace(/\\u003c/g, '<'))
-      if (parsed['@context'] !== 'https://schema.org') fail(`${rel}: bad JSON-LD @context`)
-      if (!Array.isArray(parsed['@graph'])) fail(`${rel}: JSON-LD @graph missing`)
+      if (parsed['@context'] !== 'https://schema.org') fail(`${route}: bad JSON-LD @context`)
+      if (!Array.isArray(parsed['@graph'])) fail(`${route}: JSON-LD @graph missing`)
     } catch (error) {
-      fail(`${rel}: JSON-LD does not parse - ${error.message}`)
+      fail(`${route}: JSON-LD does not parse - ${error.message}`)
     }
   }
 
@@ -160,7 +186,8 @@ for (const ref of absoluteRefs) {
 
 // --- report --------------------------------------------------------------
 console.log(`\nverifying dist/\n${'-'.repeat(60)}`)
-console.log(`html files         : ${htmlFiles.length}`)
+console.log(`routes             : ${grouped.size}`)
+console.log(`html files         : ${fileCount} (${grouped.size} routes in 2 resolution forms)`)
 console.log(`unique titles      : ${titles.size}`)
 console.log(`unique canonicals  : ${canonicals.size} (404 excluded by design)`)
 console.log(`asset refs checked : ${assetRefs.size} relative, ${absoluteRefs.size} absolute`)

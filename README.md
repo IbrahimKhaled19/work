@@ -134,6 +134,71 @@ the prerendered HTML, where a crawler that never executes JavaScript still sees 
 
 ---
 
+## Deployment
+
+```bash
+npm run deploy:config    # generate host configs into public/
+npm run build            # client -> ssr -> prerender -> crawl
+npm run verify:deploy    # check dist/ before shipping
+```
+
+Deploy the **contents of `dist/`** — not the repository, and not `public/`.
+`dist/` contains the 19 prerendered routes, the 404 document, hashed assets,
+`sitemap.xml`, `robots.txt` and the host configs.
+
+### The one rule that matters
+
+This is a **prerendered** site: `/about` exists as a real file. If your host has
+a catch-all SPA rewrite — `/* → /index.html` — then every route silently serves
+the **homepage**, with the homepage's title and canonical on all 19 URLs. SEO
+collapses to a single page and nothing errors to warn you.
+
+You want the opposite: resolve real files first, let anything unmatched fall
+through to `404.html` with a real 404 status.
+
+Each route is written **twice** — `about.html` and `about/index.html` — because
+hosts disagree about which one `/about` should map to. That makes the site work
+whether your host does directory-index resolution or `cleanUrls`. It costs
+~1.3 MB of deploy size and removes an entire class of silent failure.
+
+| Host | What to do |
+|---|---|
+| **Netlify / Cloudflare Pages** | Nothing. Both resolve the directory form and serve a root `404.html` with a 404 status by default. `public/_redirects` adds cache headers only. **Do not** add an SPA rewrite. |
+| **Vercel** | Nothing. `public/vercel.json` sets `cleanUrls`, `trailingSlash: false` and cache headers. |
+| **Apache / cPanel** | Nothing. `public/.htaccess` sets `DirectoryIndex` and `FallbackResource /404.html` — `FallbackResource` only fires when nothing matched, so real routes are never intercepted. Works even with `mod_rewrite` disabled. |
+| **GitHub Pages** | Nothing. It serves `404.html` with a 404 status and resolves `/about/`. Add a `CNAME` if you use a custom domain. No rewrite engine, so no config is possible. |
+| **Nginx** | `try_files $uri $uri/ $uri.html =404;` then `error_page 404 /404.html;` |
+| **Anything else** | Serve static files, resolve directories and the `.html` form, and return 404 with `404.html`. Then run `npm run verify:deploy`. |
+
+### Cache headers
+
+`/assets/*` filenames are content-hashed, so they are safe to cache forever
+(`immutable`). `/img/*` filenames are **not** hashed — they are stable across
+builds — so use a short TTL. HTML must never be cached, or visitors will keep
+seeing a stale build. All four host configs set this; the rules are in
+`public/_redirects`, `public/_headers`, `public/vercel.json`.
+
+---
+
+## Verifying a build
+
+| Command | Checks |
+|---|---|
+| `npm run verify:seo` | The metadata layer: 18 unique titles/descriptions/canonicals, JSON-LD parses, and the deliberate omissions (no fabricated address, no legacy email, no unverified NFPA citations) are still absent |
+| `npm run verify:build` | `dist/` output: no empty pages, no duplicate titles, every canonical and JSON-LD present, every asset reference resolves, both URL forms byte-identical |
+| `npm run verify:deploy` | Every route present in both resolution forms, sitemap URLs backed by files, and **no host config has reintroduced an SPA rewrite** |
+| `npm run inspect-prerender` | Encoding integrity and stray markup in the generated HTML |
+
+All three verifiers exit non-zero on failure, so they work as CI gates. In CI,
+run `verify:seo:strict` so a missing `VITE_SITE_URL` fails rather than warns.
+
+### Before every deploy
+
+```bash
+VITE_SITE_URL=https://www.your-domain.com npm run build
+npm run verify:build && npm run verify:deploy
+```
+
 ## Known issues
 
 Tracked in `SEO_PERF_PLAN.md`. These are content/business problems, not code:
