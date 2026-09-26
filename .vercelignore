@@ -1,0 +1,43 @@
+# Files Vercel should not upload.
+#
+# Vercel uploads the repository, builds it, and serves dist/. It does NOT need
+# editor tooling, agent configuration, design references, or the full-resolution
+# image masters - and uploading them wastes build time on every deploy.
+#
+# Nothing listed here is needed to build or serve the site. Removing a line only
+# makes the upload larger; it cannot break the build, so this file is safe to
+# edit conservatively.
+
+# Agent/editor tooling: 175 files, over half the repository. Not site code.
+.opencode/
+.claude/
+.cursor/
+.vscode/
+.idea/
+
+# Documentation and planning artefacts. Useful in the repo, dead weight in a
+# deployment - and SEO_PERF_PLAN.md and DESIGN.md together are large.
+*.md
+!README.md
+assets-src/
+.impeccable/
+
+# Build output. Vercel builds from source, so a committed dist/ would only
+# shadow the real build. (It is gitignored already, but an explicit rule means a
+# locally-built folder cannot be picked up by a folder-based deploy either.)
+dist/
+dist-ssr/
+.cache/
+
+# Local env. .env.production IS committed on purpose and MUST be uploaded: it
+# carries VITE_SITE_URL, which the prerender requires and throws without. Only
+# the developer-local variants are excluded.
+.env
+.env.local
+.env.*.local
+
+# Measurement artefacts. A committed Lighthouse report is ~1 MB and stale the
+# moment the code changes.
+lighthouse_report.json
+lighthouse-*.json
+*.log
