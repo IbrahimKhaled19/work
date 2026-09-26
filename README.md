@@ -322,27 +322,40 @@ route.** The 13 service pages score marginally higher than the homepage because
 they do not carry the hero image, which localises the remaining LCP cost to one
 element on one route.
 
+The same trap exists in the opposite direction. A Lighthouse run against the
+live site from a browser with extensions installed scores **83 / 95 / 81 / 100**,
+and every point of that difference is the measuring browser rather than the
+site: `button-name` fails on a 0×0 px `button#open-side-panel` at the page
+bottom, `deprecations` fails on an extension's deprecated `unload` listener, and
+3 of the 6 long tasks — 392 ms — belong to extensions, which together cost
+984 ms of main-thread time against the site's own 315 ms. Never quote a score
+from a browser you have not cleaned out; `npm run audit` is headless for
+exactly that reason.
+
 Two other options: Chrome DevTools → Lighthouse tab (same engine, visual
 breakdown), or [PageSpeed Insights](https://pagespeed.web.dev/) once deployed —
 that one uses real field data from actual visitors, which is more authoritative
 than any lab test.
 
-### Known limitation: 2.5 s of LCP render delay
+### Known limitation: hero render delay
 
-LCP sits at ~2.9 s across the site, and the phase breakdown attributes ~85% of
-it to **render delay** on the hero image — which finishes downloading in 34 ms
-at high priority, with `lcp-discovery-insight` passing all three checks.
+On the dev machine this measured LCP at ~2.9 s, with the phase breakdown
+attributing ~85% to **render delay** on the hero image. On the live host it
+measures **812 ms** (score 0.98) with 1,015 ms of element render delay, so the
+delay is real but about a third of the size originally recorded — the dev
+figure was inflated by the machine's CPU benchmark index, which Lighthouse
+scales simulated render time by.
 
 Ruled out by measurement, not assumption: render-blocking CSS (fixed), payload
 (`unused-javascript` down to 41 KiB, all React), a double hero download (fixed,
 2 requests → 1), CSS animations and the `Reveal` opacity gate (disabled both;
 LCP unchanged), image loading, and discovery.
 
-The browser has the image almost immediately and does not paint it for ~2.5 s.
-That is a paint/compositing question and needs a real trace rather than another
-Lighthouse run. **It is unresolved and deliberately left that way rather than
-guessed at.** It affects the homepage's LCP only — the other 16 routes are
-unaffected.
+The browser has the image almost immediately and does not paint it for ~1 s.
+That is a paint/compositing question and would need a real trace rather than
+another Lighthouse run. **It is unresolved and deliberately left that way rather
+than guessed at** — the metric passes, and it affects the homepage's LCP only.
+The other 16 routes are unaffected.
 
 Structured data has the same caveat in a different form: `verify:schema`
 validates the vocabulary, not eligibility. [Google's rich-results

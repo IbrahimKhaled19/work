@@ -502,9 +502,9 @@ Lighthouse run against `npm run dev` scored 44, but that measured unminified
 source modules, no `robots.txt` and Vite's own injected markup — it was never a
 valid measurement of the site.
 
-**Unresolved:** ~2.5 s of LCP render delay on the homepage, documented above and
-in the README with everything already ruled out. It needs a real trace. It
-affects one route.
+**Resolved by measurement, not by a code change:** the ~2.5 s LCP render delay
+documented above did not reproduce on the live host — LCP is **812 ms, scoring
+0.98**. See Phase 8.
 
 **Blocked on the business, not the code:**
 
@@ -516,6 +516,88 @@ affects one route.
 - The hero stock photo contains Chinese/Japanese signage.
 - No delivery path for quote-form submissions.
 - "500+ AMC clients" is unconfirmed.
+
+---
+
+## Phase 8 — live deployment verification ✅ done
+
+A green build is not evidence the site works. Two failure modes are silent: a
+catch-all `/* → /index.html` rewrite serves the homepage for all 19 routes, and
+a client-only bundle (a `vite build` without the prerender step) passes every
+build-time guard while shipping zero crawlable text. Both were checked against
+the live host rather than inferred from the build log.
+
+### Served content, crawled from the live `sitemap.xml`
+
+| Check | Result |
+|---|---|
+| URLs in live `sitemap.xml` | 18 |
+| Returning HTTP 200 | **18 / 18** |
+| `rel=canonical` matching the sitemap URL | **18 / 18** |
+| Crawlable text per page | 2,852 – 15,715 chars |
+| Unknown route | HTTP 404, prerendered 404 document |
+| `/about` vs `/` | Distinct title, `<h1>`, canonical and body |
+
+`/about` is the discriminating test: under an SPA rewrite it returns the
+homepage, under a client-only bundle an empty shell. It returns its own 4,956
+characters of prerendered text, so all four build steps ran on Vercel.
+
+### Lighthouse 13.4.1 against the live host
+
+| Category | Live | Recorded | Delta |
+|---|---|---|---|
+| Performance | 83 | 94 | −11 |
+| Accessibility | 95 | 100 | −5 |
+| Best practices | 81 | 100 | −19 |
+| SEO | **100** | 100 | — |
+
+**Every point of that difference is the measuring browser, not the deployment.**
+The run had 13 Chrome extensions installed. Each category's shortfall is a
+single extension-owned audit:
+
+| Category | Failing audit | Source | Ours? |
+|---|---|---|---|
+| Access. −5 | `button-name` | `body > button#open-side-panel`, 0×0 px at page bottom | No — extension UI |
+| Best pract. −19 | `deprecations` (unload handler) | `chrome-extension://…/inspector.js` | No |
+| Perf. −11 | TBT 320 ms, Speed Index 1,695 ms | 3 of 6 long tasks (392 ms) are extensions | No |
+
+`third-parties-insight` prices it directly: 984 ms of main-thread time from
+extensions against 315 ms from our own JavaScript — the add-ons cost 3.1× the
+site. `unload` appears nowhere in `src/`, `index.html`, `dist/index.html` or any
+shipped chunk, so the back/forward-cache block is the extension's unload
+listener, not ours. A clean profile is the only valid comparison, which is why
+`npm run audit` runs headless.
+
+### The LCP limitation did not reproduce
+
+| | Documented | Live host |
+|---|---|---|
+| LCP | ~2,900 ms | **812 ms (score 0.98)** |
+| Element render delay | ~2,500 ms | 1,015 ms |
+| TTFB / server latency | — | 67 ms / 92 ms |
+
+`lcp-discovery-insight` passes all three checks; `document-latency-insight` and
+`render-blocking-insight` pass with no findings. The render delay is real but
+roughly a third of the recorded size, so the original figure was inflated —
+almost certainly by the dev machine's CPU, since Lighthouse scales simulated
+render time by the benchmark index (2,871 on this desktop). Not root-caused,
+and not worth a trace on its own: one route, metric passing with room to spare.
+
+### Carried forward from the live report
+
+Two items, neither a regression:
+
+- **Security headers are absent.** `csp-xss` (no CSP in enforcement mode),
+  `origin-isolation` (no COOP) and `clickjacking-mitigation` (no frame control)
+  each report High severity, but all three are weight 0, so they cannot move a
+  score. `has-hsts` is not-applicable — Vercel sets HSTS itself. Adding a CSP
+  needs care: every prerendered page inlines its CSS by design, and
+  `style-src 'unsafe-inline'` would be required, weakening the benefit.
+- **Pre-existing, weight 0.** `label-content-name-mismatch` on the homepage
+  stats link — `src/pages/Home.jsx:21`, where `aria-label` is
+  "View project gallery: 100+ projects delivered" against visible text
+  "100+ Projects Delivered". Cosmetic for screen readers; the visible label
+  does not lead the accessible name.
 
 ---
 
@@ -537,6 +619,8 @@ Phase 5  (bundle + render)             ← refinements; measure before restructu
 Phase 6  (404 + deploy)                ← depends on prerender output existing
    ↓
 Phase 7  (verify + guard)              ← last, locks everything in
+   ↓
+Phase 8  (live verification)           ← proves the deployment, not the build
 ```
 
 Phases 3 and 4 are independent of each other and could run in parallel. Phase 5's Task 5.3 is explicitly gated on a measurement, not on effort.
