@@ -9,7 +9,9 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "verify:seo": "node scripts/verify-seo.mjs",
-    "verify:seo:strict": "node scripts/verify-seo.mjs --strict"
+    "verify:seo:strict": "node scripts/verify-seo.mjs --strict",
+    "images": "node scripts/images.mjs",
+    "images:inspect": "node scripts/inspect-images.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
@@ -22,6 +24,7 @@
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "oxlint": "^1.81.0",
+    "sharp": "^0.35.4",
     "vite": "^8.3.0"
   }
 }

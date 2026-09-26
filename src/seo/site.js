@@ -70,10 +70,15 @@ export const site = {
   locale: 'en_EG',
   themeColor: '#CC2643',
 
-  // Shown in the nav. A vector also exists at /logo.svg.
-  logo: '/logo.png',
+  // Navbar brand mark. The SVG is the canonical reference - it is what goes
+  // into JSON-LD, since a vector is both smaller and resolution-independent.
+  // The raster path is the optimised 2x variant emitted by scripts/images.mjs;
+  // the original 2132x738 / 166 KB master lives in assets-src/ and is never
+  // served. Rendered size is pinned by `.brand img` in src/index.css.
   logoVector: '/logo.svg',
+  logoRaster: '/img/logo-240.webp',
   favicon: '/favicon.svg',
+  appleTouchIcon: '/img/apple-touch-icon.png',
 
   // Generated in Phase 4 (1200x630). Until then this 404s on social preview,
   // which is why og:image is added in the same task that creates the file.

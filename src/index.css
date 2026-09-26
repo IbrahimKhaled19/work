@@ -379,6 +379,14 @@ textarea:focus-visible {
   gap: 12px;
 }
 
+/* The brand mark has no intrinsic size of its own - the manifest reports the
+   2x variant - so the intended display box is pinned here explicitly. Without
+   this the navbar logo renders at 240x100, twice its intended size. */
+.brand img {
+  width: 120px;
+  height: 50px;
+}
+
 .brand-seal {
   width: 44px;
   height: 44px;
@@ -748,6 +756,12 @@ textarea:focus-visible {
   inset: 0;
   z-index: 0;
   overflow: hidden;
+}
+
+/* The <picture> wrapper must not generate a box, so the <img> below resolves
+   height:100% against .hero-bg and inline usages get no baseline gap. */
+.picture {
+  display: contents;
 }
 
 .hero-bg img {

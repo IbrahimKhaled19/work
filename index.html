@@ -19,7 +19,25 @@
       content="fire safety Egypt, fire fighting systems, fire alarm systems, fire extinguisher service, sprinkler system, fire pump, NFPA 13, NFPA 20, Civil Defense approval, emergency lighting, life safety equipment"
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preload" as="image" href="/hero-fire-protection.webp" fetchpriority="high" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+    <!--
+      Hero preload. The hero is the LCP element on the homepage, so it is
+      preloaded at high priority. imagesrcset/imagesizes mirror the <picture>
+      in src/pages/Home.jsx exactly - if the two disagree the browser preloads
+      one file and then discovers it needed another, wasting the whole point.
+      Sizes come from scripts/images.mjs; if the hero is re-processed, copy
+      the new srcset here.
+    -->
+    <link
+      rel="preload"
+      as="image"
+      href="/img/hero-1600.webp"
+      imagesrcset="/img/hero-640.avif 640w, /img/hero-1024.avif 1024w, /img/hero-1600.avif 1600w, /img/hero-2560.avif 2560w"
+      imagesizes="100vw"
+      type="image/avif"
+      fetchpriority="high"
+    />
+    <link rel="preload" as="image" href="/img/logo-240.webp" fetchpriority="high" />
     <meta property="og:type" content="website" />
     <meta
       property="og:title"

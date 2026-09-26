@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { CaretDown } from '@phosphor-icons/react/CaretDown'
 import { serviceSections, disciplines } from '../data/services'
+import Picture from './Picture'
 
 const links = [
   { to: '/', label: 'Home' },
@@ -60,7 +61,7 @@ function Navbar() {
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container nav-inner">
         <Link to="/" className="brand" aria-label="ALNANDA Contracting, home" onClick={() => setOpen(false)}>
-            <img src="/logo.png" alt="" width="120" height="50" />
+            <Picture id="logo" alt="" loading="eager" fetchPriority="high" />
         </Link>
 
         <button

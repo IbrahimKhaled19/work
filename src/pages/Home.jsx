@@ -6,6 +6,7 @@ import { FireExtinguisher } from '@phosphor-icons/react/FireExtinguisher'
 import { Buildings } from '@phosphor-icons/react/Buildings'
 import { Lightning } from '@phosphor-icons/react/Lightning'
 import SectionHead from '../components/SectionHead'
+import Picture from '../components/Picture'
 import WaveSeparator from '../components/WaveSeparator'
 import LogoCarousel from '../components/LogoCarousel'
 import StatGrid from '../components/StatGrid'
@@ -73,7 +74,12 @@ function Home() {
     <>
       <section className="hero">
         <div className="hero-bg" aria-hidden="true">
-          <img src="/hero-fire-protection.webp" alt="" fetchpriority="high" />
+          <Picture
+            id="hero"
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+          />
         </div>
         <div className="hero-overlay"></div>
         <WaveSeparator />

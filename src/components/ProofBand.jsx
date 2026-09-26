@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
 import Reveal from './Reveal'
+import Picture from './Picture'
 
 function ProofBand({
   className = '',
@@ -47,13 +48,7 @@ function ProofBand({
               </li>
             </ul>
             <figure className="proof-badge-frame">
-              <img
-                src="/logos/gacp-egypt-logo-hd.png"
-                alt="GACP Egypt certification seal"
-                loading="lazy"
-                width="148"
-                height="165"
-              />
+              <Picture id="gacpSeal" loading="lazy" />
               <figcaption>GACP Egypt Certified</figcaption>
             </figure>
             <div className="proof-cta">

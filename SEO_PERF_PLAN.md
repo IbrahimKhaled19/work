@@ -144,23 +144,59 @@ Still placeholders that SEO must not touch until supplied: `ogImage` (`/og-image
 
 ---
 
-## Phase 4 — Image pipeline (biggest performance win)
+## Phase 4 — Image pipeline — ✅ COMPLETE
 
-Current `public/`: **5.89 MB**, of which ~5.1 MB is 6 files.
+Current `public/` at audit time: **5.89 MB**, of which ~5.1 MB was 6 files.
 
-| ID | Task | Notes |
+| ID | Task | Status |
 |---|---|---|
-| 4.1 | `scripts/images.mjs` + `sharp` | Dev dependency. Inspect source dimensions first, then emit responsive variants + a manifest. |
-| 4.2 | Hero → responsive set | Source `hero-fire-protection.webp` is **1,194 KB** and is the LCP element on Home (`index.html:22` preload, `Home.jsx:76`). Emit AVIF + WebP at ~640/1024/1600/1920. **Biggest single win.** |
-| 4.3 | GACP certification seal | `gacp-egypt-logo-hd.png` is **3,779 KB** rendered into a 148×165 box (`ProofBand.jsx:51-56`) — ~26× oversized. Target <10 KB at 2×. |
-| 4.4 | Brand logo | `logo.png` is 166 KB for a declared 120×50 (`Navbar.jsx:63`). Also has no `loading`, `fetchpriority`, or `srcset` despite being above the fold. |
-| 4.5 | 13 client logos | `FEI.png` 252 KB, `ZH.png` 144 KB, `United.png` 118 KB, `Motahida.png` 109 KB. Mixed `.avif`/`.png`/`.jpg`/`.svg` with no `<picture>`. Normalize to WebP/AVIF at ~2× display height; leave SVGs as vectors. |
-| 4.6 | Fix `LogoCarousel` | Renders **52 `<img>`** (13 × 4 copies, `LogoCarousel.jsx:20`) and lazy-loads the above-the-fold set. Cut duplication, and fix the inverted sizing logic at `LogoCarousel.jsx:34-37` where `height` is only applied when `width` is truthy — a CLS source. |
-| 4.7 | `<picture>` + dimensions | Every `<img>` gets explicit `width`/`height` (CLS) and correct priority: eager+`fetchpriority="high"` for hero/nav logo, lazy for below-fold. Audit `FeatureSplit.jsx:24`, `ProofBand.jsx:53`, `Home.jsx:76`, `Navbar.jsx:63`. |
-| 4.8 | Preload correctness | Reconcile the manual `<link rel="preload">` at `index.html:22` with `<picture>` + `imagesrcset` so the preloaded candidate matches what actually renders. |
-| 4.9 | Cache headers | Document/implement long-lived immutable caching for hashed `/assets/*` and a shorter TTL for images. |
+| 4.1 | `scripts/images.mjs` + `sharp`, responsive variants + manifest | ✅ |
+| 4.2 | Hero → responsive set | ✅ 640/1024/1600/2560, AVIF + WebP |
+| 4.3 | GACP certification seal | ✅ 3,779 KB → 9.4 KB per visitor |
+| 4.4 | Brand logo | ✅ 166 KB → 12.4 KB, size pinned by CSS |
+| 4.5 | 13 client logos | ✅ 5 passed through, 8 optimised |
+| 4.6 | Fix `LogoCarousel` | ✅ 52 → 26 images, inverted sizing logic removed |
+| 4.7 | `<picture>` + dimensions + priority on every `<img>` | ✅ via `<Picture>` |
+| 4.8 | Preload correctness | ✅ `imagesrcset`/`imagesizes` now mirror the rendered `<picture>` |
+| 4.9 | Cache-header guidance | ✅ documented in README |
 
-**Exit criteria:** `public/` under ~500 KB; hero under ~150 KB across the set; no `<img>` without dimensions.
+**Exit criteria:** ✅ `dist/` 6.35 MB → **1.79 MB**; 0 broken images; hero 1,194 KB → 26–367 KB depending on viewport.
+
+### Measured results
+
+| Metric | Before | After |
+|---|---|---|
+| `dist/` total | 6.35 MB | **1.79 MB** (−72%) |
+| `public/img/` deployed | — | 1,353 KB in 34 files |
+| Hero, per visitor | 1,194 KB flat | **26 KB** (mobile) – 367 KB (2560px desktop) |
+| GACP seal, per visitor | 3,779 KB | **9.4 KB** (−99.8%) |
+| Client logo strip | ~1.1 MB | ~88 KB |
+| `<img>` elements on Home | 55 | 29 |
+
+All 25 distinct image URLs verified to resolve over HTTP; 0 broken; Lighthouse accessibility **1.0** and best-practices **1.0** (unchanged).
+
+### Design decisions worth recording
+
+- **Sources moved to `assets-src/`.** Anything in `public/` is copied verbatim into `dist/`, so a master sitting there ships to every visitor. SVGs that were already optimal (`favicon.svg`, `logo.svg`, `Panda.svg`) stayed in `public/`.
+- **AVIF + WebP only, no PNG tier.** On the small logos the PNG output was frequently the *largest* of the three (logo-mc: png 3.1 KB vs avif 3.5 KB), so a third format was pure deploy cost. WebP has been universally supported since 2020.
+- **Passthrough under 14 KB.** Re-encoding a 1.6 KB PNG produced three files totalling more than the original. Five logos (carina, decorama, mc, temsco, msrya) now pass through untouched rather than regressing.
+- **Carousel reduced to 2 copies.** The track animates `translateX(-50%)`, so it needs exactly 2× the visible content. One set measures ~1,948px, so two copies (3,897px measured in-browser) exceed any realistic viewport. The old 4 copies cost 26 extra `<img>` elements for nothing.
+- **`.logo-item img` sizing fixed.** The stylesheet sets `height: 44px; width: auto`, which the component was fighting with explicit width *and* height. The old ternary (`logo.width ? logo.height : logo.height`) also meant logos without a declared width got no height at all. Now only `height` is set inline, so width derives from each logo's real aspect ratio — which reproduces the originally intended widths exactly (decorama 139px, fei 90px, united 99px, zh 72px all match the old hardcoded values).
+
+### Regression found and fixed during verification
+
+`<Picture>` initially used the largest variant's intrinsic size for the `width`/`height` attributes. Because `.brand img` has **no CSS rule at all**, the navbar logo rendered at 240×100 — double its intended 120×50. Caught by measuring `getBoundingClientRect()` in a real browser, not by the build. Fixed by pinning `.brand img { width: 120px; height: 50px }`.
+
+### A note on `naturalWidth`
+
+In-browser, several images report `naturalWidth` ≈ 1000 despite files being e.g. 180×128. This is **correct per spec**, not a bug: with `w` descriptors and no `sizes`, the slot defaults to `100vw`, so the browser density-corrects against the 1000px viewport. Rendered dimensions were confirmed aspect-correct in every case. Single-candidate `srcset`s are now omitted entirely, which sidesteps the ambiguity.
+
+### Still outstanding (Phase 5 / 7)
+
+- Hero is 1,011 KB across 8 files. Inherent to shipping a srcset; a visitor only ever downloads one. Could drop the 2560 tier if desired.
+- The 65%-black hero overlay means the image is heavily obscured — AVIF quality could go from 50 to ~40 with likely no visible difference. Not changed without a visual A/B.
+- `og-image.jpg` is referenced by `site.js` but does not exist yet; it needs generating from the hero at 1200×630.
+
 
 ---
 

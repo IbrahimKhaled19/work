@@ -31,6 +31,37 @@ npm run dev          # http://localhost:5173
 | `npm run lint` | oxlint over the project |
 | `npm run verify:seo` | Assert the SEO metadata layer. Warns if `VITE_SITE_URL` is unset |
 | `npm run verify:seo:strict` | Same, but fails without `VITE_SITE_URL`. **Use this in CI** |
+| `npm run images` | Rebuild optimised image variants from `assets-src/` into `public/img/` |
+| `npm run images:inspect` | Report dimensions, format and size of every image |
+
+## Images
+
+Full-resolution masters live in **`assets-src/`** and are never served — anything
+in `public/` is copied verbatim into `dist/`, so a 3.8 MB master sitting there
+would ship to every visitor.
+
+`npm run images` reads them and writes responsive AVIF + WebP variants to
+`public/img/`, plus `src/data/images.js` holding the measured dimensions.
+Components read that manifest through `<Picture>`, which is what gives every
+`<img>` a correct `width`/`height` (no layout shift) and a `srcset`.
+
+To replace an image: drop the new master in `assets-src/`, run `npm run images`,
+and update the entry in the `TARGETS` array in `scripts/images.mjs` if its
+display size changed. Only `scripts/images.mjs` should ever be edited by hand.
+
+Rules the pipeline enforces: never upscale; emit 1x/2x for fixed CSS boxes;
+copy through sources already under 14 KB, because re-encoding a 1.6 KB PNG
+produces three files larger than the original; no PNG tier, since WebP has been
+universally supported since 2020 and on these logos the PNG was often the
+*largest* of the three outputs.
+
+### Caching
+
+`/assets/*` filenames are content-hashed, so they are safe to cache forever
+(`Cache-Control: public, max-age=31536000, immutable`). `/img/*` filenames are
+**not** hashed — they are stable across builds — so use a shorter TTL
+(`max-age=604800`) or add a cache-busting query string when you re-process them.
+`/index.html` should never be cached (`no-cache`).
 
 ## Environment
 
@@ -122,14 +153,22 @@ Tracked in `SEO_PERF_PLAN.md`. These are content/business problems, not code:
 3. **`DESIGN.md` still describes the business as "partner for the UAE"** — a
    leftover from the same reskin.
 
-4. **Oversized images.** `public/hero-fire-protection.webp` is ~1.2 MB and is the
-   LCP element on the homepage; `public/logos/gacp-egypt-logo-hd.png` is ~3.8 MB
-   rendered into a 148×165 box. `public/` is 5.89 MB total. See Phase 4 of the plan.
+4. **The navbar logo is slightly squashed.** The master `assets-src/logo.png` is
+   2132×738 (2.89:1) but `.brand img` renders it into a 120×50 box (2.4:1), so
+   the wordmark is horizontally compressed by about 17%. The pipeline reproduces
+   the current appearance rather than silently changing the brand — fix the box
+   or the master, whichever is wrong.
 
 5. **No quote delivery path.** `src/pages/Contact.jsx` shows a success message
    without sending anything.
 
 6. **`500+ active AMC clients`** is unconfirmed and appears in the homepage stats.
+
+7. **Project photography is still placeholders.** The gallery panels and service
+   spotlights use illustrated medallions, not site photos (`TODO` comments in
+   `src/pages/Gallery.jsx` and `src/pages/About.jsx`). `FeatureSplit` already
+   accepts a manifest `imageId`, so real photos will pick up the responsive
+   pipeline for free.
 
 ---
 
