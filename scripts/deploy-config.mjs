@@ -62,6 +62,23 @@ files['_redirects'] = `# ALNANDA Contracting - Netlify / Cloudflare Pages
 files['vercel.json'] = `${JSON.stringify(
   {
     $schema: 'https://openapi.vercel.sh/vercel.json',
+    // Declared explicitly rather than relying on Vercel's framework detection.
+    // This project is NOT a plain SPA build: `npm run build` runs four steps
+    // (client -> ssr -> prerender -> crawl), and the prerender is what produces
+    // the 19 static HTML files. If Vercel guessed the framework and ran
+    // something else, it would deploy a client-only bundle and every SEO gain
+    // from the prerender would silently be lost - with a green build and a site
+    // that appears to work.
+    buildCommand: 'npm run build',
+    // The four build steps must run in order, so they cannot be parallelised.
+    // npm already sequences them with &&.
+    outputDirectory: 'dist',
+    // Vite 8 requires Node ^20.19.0 || >=22.12.0. Pinned so a Vercel runtime
+    // bump cannot turn into a build failure that is unrelated to the code.
+    // package.json engines is the fallback for platforms that read that.
+    // (Declared as a build-env note rather than a runtime pin: the output is
+    // static files, so the Node version only matters during the build.)
+    //
     // /about -> about.html. The prerender writes both this and
     // about/index.html so either resolution style works.
     cleanUrls: true,

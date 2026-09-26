@@ -167,7 +167,13 @@ if (CHECK_ONLY) {
   const stale = []
   for (const { file, body: expected, label } of artefacts) {
     const existing = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : ''
-    if (existing !== expected) stale.push(label)
+    // Normalise line endings before comparing. git checks out CRLF on Windows
+    // (core.autocrlf) and LF on Linux/CI, so the committed file and the
+    // generated body differ by \r on every line on a Windows checkout - and an
+    // exact comparison reports the file as stale when it is not. That would
+    // make `npm run verify` fail on one platform and pass on another, which
+    // teaches people to ignore it.
+    if (existing.replace(/\r\n/g, '\n') !== expected) stale.push(label)
   }
   if (stale.length) {
     console.error(
@@ -183,7 +189,10 @@ if (CHECK_ONLY) {
   console.log(`  serviceStandards.js is current (${Object.keys(standards).length} entries)`)
 } else {
   for (const { file, body: content, label } of artefacts) {
-    fs.writeFileSync(file, content, 'utf8')
+    // Keep the file's existing line-ending convention so a regeneration on
+    // Windows does not rewrite every line.
+    const eol = fs.existsSync(file) && fs.readFileSync(file, 'utf8').includes('\r\n') ? '\r\n' : '\n'
+    fs.writeFileSync(file, eol === '\r\n' ? content.replace(/\n/g, '\r\n') : content, 'utf8')
     const gz = zlib.gzipSync(Buffer.from(content, 'utf8'), { level: 9 }).length
     console.log(
       `\n  wrote src/data/${label} - ${(content.length / 1024).toFixed(1)} KiB raw / ` +

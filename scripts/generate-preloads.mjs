@@ -88,7 +88,16 @@ const tag = `<link
       fetchpriority="high"
     />`
 
-const html = fs.readFileSync(INDEX, 'utf8')
+// Normalise line endings before comparing. git checks out CRLF on Windows
+// (core.autocrlf), so the committed file and the generated tag differ by \r on
+// every line - and an exact string comparison then reports the file as stale
+// even when it is not.
+//
+// This is not academic: it made `npm run verify` fail on a fresh clone, which is
+// exactly what a Vercel build does. A check that fails on the CI platform and
+// passes on the author's machine is worse than no check, because the first
+// reaction is to disable it.
+const html = fs.readFileSync(INDEX, 'utf8').replace(/\r\n/g, '\n')
 const markerAt = html.indexOf(MARKER)
 
 if (markerAt === -1) {
@@ -125,7 +134,10 @@ if (CHECK_ONLY) {
   process.exit(1)
 }
 
-fs.writeFileSync(INDEX, updated, 'utf8')
+// Preserve the file's existing line-ending convention rather than forcing LF,
+// so a Windows checkout does not produce a whole-file diff on regeneration.
+const eol = fs.readFileSync(INDEX, 'utf8').includes('\r\n') ? '\r\n' : '\n'
+fs.writeFileSync(INDEX, eol === '\r\n' ? updated.replace(/\n/g, '\r\n') : updated, 'utf8')
 
 // Report what changed, because a silently rewritten tag is how the previous
 // drift went unnoticed.
