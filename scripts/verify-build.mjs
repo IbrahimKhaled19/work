@@ -46,6 +46,7 @@ if (htmlFiles.length === 0) {
 const titles = new Map()
 const canonicals = new Map()
 const assetRefs = new Set()
+const absoluteRefs = new Set()
 let totalText = 0
 
 for (const file of htmlFiles) {
@@ -74,9 +75,15 @@ for (const file of htmlFiles) {
   else titles.set(title, rel)
 
   // --- canonical --------------------------------------------------------
+  // The 404 must NOT have one: it is noindex, and a canonical there would
+  // either point at a URL that does not exist or, worse, at a real page.
   const canonical = html.match(/<link rel="canonical" href="([^"]+)"/)?.[1]
-  if (!canonical) fail(`${rel}: no canonical`)
-  else if (canonicals.has(canonical)) {
+  if (isNotFound) {
+    if (canonical) fail(`${rel}: 404 page must not have a canonical - found ${canonical}`)
+    if (/<meta property="og:url"/.test(html)) fail(`${rel}: 404 page must not have an og:url`)
+  } else if (!canonical) {
+    fail(`${rel}: no canonical`)
+  } else if (canonicals.has(canonical)) {
     fail(`${rel}: duplicate canonical with ${canonicals.get(canonical)} - ${canonical}`)
   } else {
     canonicals.set(canonical, rel)
@@ -116,6 +123,24 @@ for (const file of htmlFiles) {
     if (url.startsWith('//') || url.startsWith('/api/')) continue
     assetRefs.add(url.split('?')[0])
   }
+
+  // Absolute URLs are not covered by the root-relative sweep above, and an
+  // og:image pointing at a path that does not exist is invisible until someone
+  // shares a link. Check any absolute URL on our own origin resolves too.
+  for (const m of html.matchAll(/(?:content|href)="(https?:\/\/[^"]+)"/g)) {
+    const url = m[1]
+    let parsed
+    try {
+      parsed = new URL(url)
+    } catch {
+      continue
+    }
+    // Only assert on our own origin; third-party URLs (fonts) are not ours.
+    const siteOrigin = (canonical || '').match(/^https?:\/\/[^/]+/)?.[0]
+    if (siteOrigin && parsed.origin === siteOrigin) {
+      absoluteRefs.add(parsed.pathname)
+    }
+  }
 }
 
 // Every locally-referenced asset must exist on disk.
@@ -125,12 +150,20 @@ for (const ref of assetRefs) {
   if (!ok) fail(`referenced asset does not exist in dist/: ${ref}`)
 }
 
+// Same for absolute URLs on our own origin (og:image, og:url siblings).
+for (const ref of absoluteRefs) {
+  if (ref === '/' || ref.endsWith('/')) continue
+  const target = path.join(DIST, decodeURIComponent(ref))
+  const ok = fs.existsSync(target) || fs.existsSync(path.join(target, 'index.html'))
+  if (!ok) fail(`absolute URL points at a missing file: ${ref}`)
+}
+
 // --- report --------------------------------------------------------------
 console.log(`\nverifying dist/\n${'-'.repeat(60)}`)
 console.log(`html files         : ${htmlFiles.length}`)
 console.log(`unique titles      : ${titles.size}`)
-console.log(`unique canonicals  : ${canonicals.size}`)
-console.log(`asset refs checked : ${assetRefs.size}`)
+console.log(`unique canonicals  : ${canonicals.size} (404 excluded by design)`)
+console.log(`asset refs checked : ${assetRefs.size} relative, ${absoluteRefs.size} absolute`)
 console.log(`body text rendered : ${totalText.toLocaleString()} characters`)
 
 if (failures.length) {

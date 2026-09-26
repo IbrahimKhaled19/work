@@ -80,9 +80,12 @@ export const site = {
   favicon: '/favicon.svg',
   appleTouchIcon: '/img/apple-touch-icon.png',
 
-  // Generated in Phase 4 (1200x630). Until then this 404s on social preview,
-  // which is why og:image is added in the same task that creates the file.
-  ogImage: '/og-image.jpg',
+  // Share card. Generated at 1200x630 by scripts/images.mjs and written to
+  // public/img/, so it is served from /img/ - not the site root.
+  ogImage: '/img/og-image.jpg',
+  ogImageWidth: 1200,
+  ogImageHeight: 630,
+  ogImageType: 'image/jpeg',
   ogImageAlt:
     'ALNANDA Contracting - Civil Defense approved fire safety and fire fighting contractor in Egypt',
 

@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "npm run build:client && npm run build:ssr && npm run build:prerender",
+    "build": "npm run build:client && npm run build:ssr && npm run build:prerender && npm run build:crawl",
     "build:client": "vite build && node scripts/save-template.mjs",
     "build:ssr": "vite build --ssr src/entry-server.jsx --outDir dist-ssr",
     "build:prerender": "node scripts/prerender.mjs",
+    "build:crawl": "node scripts/crawl.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "verify:seo": "node scripts/verify-seo.mjs",

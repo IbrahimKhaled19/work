@@ -12,11 +12,18 @@
 import { getAllRoutes } from './seo/routeMeta.js'
 
 /** Real, indexable routes. */
-export const routes = getAllRoutes().map(({ pathname, type, serviceId }) => ({
-  pathname,
-  type,
-  serviceId: serviceId ?? null,
-}))
+export const routes = getAllRoutes().map(
+  ({ pathname, type, serviceId, priority, changefreq }) => ({
+    pathname,
+    type,
+    serviceId: serviceId ?? null,
+    // Carried through so sitemap.xml can express relative importance. These
+    // are hints only - Google ignores priority and changefreq - but they cost
+    // nothing and document intent.
+    priority: priority ?? 0.5,
+    changefreq: changefreq ?? 'monthly',
+  })
+)
 
 /** The 404 document. Not a route - it is never linked. */
 export const notFoundPath = '/404'

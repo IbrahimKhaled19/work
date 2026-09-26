@@ -101,27 +101,51 @@ function escapeHtml(value) {
 }
 
 function buildHeadTags(meta, jsonLd) {
-  const canonical = meta.canonical || canonicalFor(meta.pathname || '/')
   const ogImage = `${siteUrl}${site.ogImage}`
+  // A noindex page must not advertise a canonical or an og:url. The 404 has no
+  // canonical of its own to point at, and emitting one produced a self-link to
+  // a URL that does not exist.
+  const isIndexable = !/noindex/i.test(meta.robots || '')
 
   const tags = [
     `<title>${escapeHtml(meta.title)}</title>`,
     `<meta name="description" content="${escapeHtml(meta.description)}" />`,
     `<meta name="robots" content="${escapeHtml(meta.robots)}" />`,
-    `<link rel="canonical" href="${escapeHtml(canonical)}" />`,
+  ]
+
+  if (isIndexable) {
+    const canonical = meta.canonical || canonicalFor(meta.pathname || '/')
+    tags.push(`<link rel="canonical" href="${escapeHtml(canonical)}" />`)
+  }
+
+  tags.push(
     `<meta property="og:type" content="${escapeHtml(meta.ogType || 'website')}" />`,
     `<meta property="og:site_name" content="${escapeHtml(site.name)}" />`,
     `<meta property="og:locale" content="${escapeHtml(site.locale)}" />`,
     `<meta property="og:title" content="${escapeHtml(meta.title)}" />`,
-    `<meta property="og:description" content="${escapeHtml(meta.description)}" />`,
-    `<meta property="og:url" content="${escapeHtml(canonical)}" />`,
+    `<meta property="og:description" content="${escapeHtml(meta.description)}" />`
+  )
+
+  if (isIndexable) {
+    tags.push(`<meta property="og:url" content="${escapeHtml(meta.canonical || canonicalFor(meta.pathname || '/'))}" />`)
+  }
+
+  tags.push(
     `<meta property="og:image" content="${escapeHtml(ogImage)}" />`,
+    // Explicit dimensions and type. Scrapers use these to lay the card out
+    // before fetching the image, and a wrong declared size causes a visible
+    // reflow in the feed. Values come from site.js so they cannot drift from
+    // what scripts/images.mjs actually wrote.
+    `<meta property="og:image:width" content="${site.ogImageWidth}" />`,
+    `<meta property="og:image:height" content="${site.ogImageHeight}" />`,
+    `<meta property="og:image:type" content="${site.ogImageType}" />`,
     `<meta property="og:image:alt" content="${escapeHtml(site.ogImageAlt)}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
     `<meta name="twitter:title" content="${escapeHtml(meta.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(meta.description)}" />`,
     `<meta name="twitter:image" content="${escapeHtml(ogImage)}" />`,
-  ]
+    `<meta name="twitter:image:alt" content="${escapeHtml(site.ogImageAlt)}" />`
+  )
 
   if (jsonLd) {
     // `</script>` inside a JSON string would terminate the block early.
