@@ -196,8 +196,10 @@ function buildDocument({ pathname, appHtml, hoisted }) {
   // Replace the single static <title>.
   html = html.replace(TITLE_PATTERN, '')
 
-  // Inline the app stylesheet. The Google Fonts <link rel="stylesheet"> in
-  // index.html is deliberately left alone - only local build output is inlined.
+  // Inline the app stylesheet. This carries the @font-face rules for the
+  // self-hosted Montserrat along with it, so the preload scanner finds the
+  // font files in the inlined CSS and no blocking <link> is needed anywhere.
+  // There is deliberately no font-CDN <link> left in index.html to preserve.
   html = html.replace(
     /<link\s+rel="stylesheet"[^>]*href="\/assets\/[^"]*"[^>]*>/i,
     `<style>${css}</style>`
