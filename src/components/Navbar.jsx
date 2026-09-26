@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { CaretDown } from '@phosphor-icons/react/CaretDown'
-import { serviceSections, disciplines } from '../data/services'
+// The slim index, not the full catalogue. Navbar only needs id, title and
+// category to build the dropdown, and the full module is 36 KB of prose that
+// would otherwise be downloaded by every visitor on every page. See
+// src/data/serviceIndex.js and `npm run measure:services`.
+import { serviceIndex as serviceSections, disciplines } from '../data/serviceIndex'
 import Picture from './Picture'
 
 const links = [

@@ -17,7 +17,14 @@
  */
 
 import site from './site.js'
-import { serviceSections, disciplines, disciplineLabels } from '../data/services.js'
+// The slim index for the fields used here (id, title, text) plus disciplines.
+// The one exception is the OfferCatalog below, which reads each service's
+// `standards` string to emit verified NFPA citations - that field is prose and
+// lives in the full catalogue. The standards are therefore resolved from a
+// small dedicated map rather than by importing 36 KB of service copy into
+// every page's bundle. See src/data/serviceStandards.js.
+import { serviceIndex as serviceSections, disciplines, disciplineLabels } from '../data/serviceIndex.js'
+import { standardsFor } from '../data/serviceStandards.js'
 import { getRouteMeta, matchRoute } from './routeMeta.js'
 
 /** The only NFPA standards confirmed as ones the team actually works to. */
@@ -86,7 +93,7 @@ export function organizationSchema() {
             serviceType: service.title,
           },
         }
-        const standards = verifiedStandards(service.standards)
+        const standards = verifiedStandards(standardsFor(service.id))
         if (standards) item.itemOffered.description = standards.join(' · ')
         return item
       }),
@@ -144,6 +151,9 @@ export function serviceSchema(service) {
     '@id': `${meta?.canonical || `/services/${service.id}`}#service`,
     name: service.title,
     serviceType: service.title,
+    // The primary source is the route's clamped meta description, which is
+    // what the page already declares. `text` is the index field carrying the
+    // same sentence, so the schema never depends on the 36 KB prose module.
     description: meta?.description || service.text,
     provider: { '@id': ORG_ID },
     areaServed: site.areaServed,
@@ -236,4 +246,7 @@ export function jsonLdFor(pathname) {
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })
 }
 
+// Re-exported for convenience, so callers that need the discipline taxonomy do
+// not have to know which data module it came from. jsonld.js is the only
+// module that historically exposed these.
 export { disciplines, disciplineLabels }

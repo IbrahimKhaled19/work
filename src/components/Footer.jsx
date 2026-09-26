@@ -2,7 +2,10 @@ import { Link } from 'react-router-dom'
 import { FacebookLogo } from '@phosphor-icons/react/FacebookLogo'
 import { InstagramLogo } from '@phosphor-icons/react/InstagramLogo'
 import { LinkedinLogo } from '@phosphor-icons/react/LinkedinLogo'
-import { serviceSections } from '../data/services'
+// The slim index, not the full catalogue - the footer links only, so the 36 KB
+// of prose in services.js has no business in the critical path. See
+// src/data/serviceIndex.js.
+import { serviceIndex as serviceSections } from '../data/serviceIndex'
 
 function Footer() {
   return (

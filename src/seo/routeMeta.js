@@ -13,7 +13,11 @@
  */
 
 import site, { canonicalFor } from './site.js'
-import { serviceSections, disciplineLabels } from '../data/services.js'
+// The slim index, not the full catalogue. serviceMeta() below reads only `title`
+// and `text`, so importing the 36 KB prose module here would pull it into the
+// client bundle on every page - Seo.jsx imports this file, so whatever this
+// imports ships everywhere. See src/data/serviceIndex.js.
+import { serviceIndex as serviceSections, disciplineLabels } from '../data/serviceIndex.js'
 
 export const BRAND_SUFFIX = 'ALNANDA Contracting'
 
