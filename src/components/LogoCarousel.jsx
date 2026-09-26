@@ -20,7 +20,11 @@ const LOGOS = [
   { name: 'Msrya', id: 'logo-msrya' },
   { name: 'New Cairo', id: 'logo-new-cairo' },
   { name: 'Nour El Hayah', id: 'logo-nour-el-hayah' },
-  { name: 'Panda', src: '/logos/Panda.svg', displayHeight: 48 },
+  // Panda is the one logo not processed by scripts/images.mjs, so its intrinsic
+  // size is declared here from the SVG's own viewBox ("0 0 110 42"). Declaring
+  // it is what lets the browser reserve layout space before the SVG loads;
+  // without width/height attributes the carousel reflows as the logos arrive.
+  { name: 'Panda', src: '/logos/Panda.svg', displayHeight: 48, intrinsic: { width: 110, height: 42 } },
   { name: 'Temsco', id: 'logo-temsco' },
   { name: 'United', id: 'logo-united' },
   { name: 'ZH', id: 'logo-zh' },
@@ -53,6 +57,12 @@ function LogoMark({ logo, decorative }) {
   const loading = decorative ? 'lazy' : 'eager'
 
   if (logo.src) {
+    // Intrinsic width/height attributes let the browser reserve space before the
+    // file loads. The stylesheet still sets `width: auto` and the inline height,
+    // so the rendered size is unchanged - the attributes only supply the aspect
+    // ratio. Rounded to keep the HTML tidy; a fraction of a pixel is invisible
+    // and the ratio is what the browser actually needs.
+    const ratio = logo.intrinsic.width / logo.intrinsic.height
     return (
       <img
         src={logo.src}
@@ -60,6 +70,8 @@ function LogoMark({ logo, decorative }) {
         aria-hidden={decorative || undefined}
         loading={loading}
         decoding={decorative ? 'async' : 'sync'}
+        width={Math.round(displayHeight * ratio)}
+        height={displayHeight}
         style={style}
       />
     )

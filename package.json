@@ -12,6 +12,8 @@
     "build:crawl": "node scripts/crawl.mjs",
     "deploy:config": "node scripts/deploy-config.mjs",
     "verify:deploy": "node scripts/verify-deploy.mjs",
+    "verify:contrast": "node scripts/verify-contrast.mjs",
+    "verify": "npm run lint && npm run verify:seo && npm run verify:contrast && npm run verify:build && npm run verify:deploy",
     "audit": "node scripts/audit.mjs",
     "lint": "oxlint",
     "preview": "vite preview",

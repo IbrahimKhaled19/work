@@ -9,3 +9,8 @@ dist-ssr/
 .env
 .env.local
 .env.*.local
+
+# Lighthouse output is a transient measurement artifact (~1 MB).
+# Committed audits would be stale the moment the code changes.
+lighthouse_report.json
+lighthouse-*.json

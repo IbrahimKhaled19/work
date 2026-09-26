@@ -31,6 +31,9 @@ npm run dev          # http://localhost:5173
 | `npm run lint` | oxlint over the project |
 | `npm run verify:seo` | Assert the SEO metadata layer. Warns if `VITE_SITE_URL` is unset |
 | `npm run verify:seo:strict` | Same, but fails without `VITE_SITE_URL`. **Use this in CI** |
+| `npm run verify:contrast` | Check every declared colour-token pair against WCAG AA |
+| `npm run verify` | Lint plus all four verifiers, in order. **Use this in CI** |
+| `npm run audit` | Lighthouse against the built `dist/`. The only score worth quoting |
 | `npm run images` | Rebuild optimised image variants from `assets-src/` into `public/img/` |
 | `npm run images:inspect` | Report dimensions, format and size of every image |
 
@@ -187,12 +190,57 @@ seeing a stale build. All four host configs set this; the rules are in
 | `npm run verify:seo` | The metadata layer: 18 unique titles/descriptions/canonicals, JSON-LD parses, and the deliberate omissions (no fabricated address, no legacy email, no unverified NFPA citations) are still absent |
 | `npm run verify:build` | `dist/` output: no empty pages, no duplicate titles, every canonical and JSON-LD present, every asset reference resolves, both URL forms byte-identical |
 | `npm run verify:deploy` | Every route present in both resolution forms, sitemap URLs backed by files, and **no host config has reintroduced an SPA rewrite** |
+| `npm run verify:contrast` | Colour tokens against WCAG AA. Reads `:root` from `src/index.css` and resolves `rgb(var(--x))` references, so it cannot drift from the stylesheet |
 | `npm run inspect-prerender` | Encoding integrity and stray markup in the generated HTML |
 
-All three verifiers exit non-zero on failure, so they work as CI gates. In CI,
+All four verifiers exit non-zero on failure, so they work as CI gates. In CI,
 run `verify:seo:strict` so a missing `VITE_SITE_URL` fails rather than warns.
 
-### Before every deploy
+## Measuring the scores
+
+```bash
+npm run audit
+```
+
+Serves the prerendered `dist/`, runs Lighthouse against it with simulated mobile
+throttling, prints the category scores, the Core Web Vitals and every audit
+below full marks with its estimated saving, then shuts down. `npx --yes
+lighthouse@12` is used, so nothing is added to `dependencies`.
+
+**Do not audit `npm run dev`.** The dev server is not the site. A run against
+`localhost:5173` reports on unminified source modules, has no `robots.txt` and no
+absolute canonical, and includes Vite's own injected markup — Vite's
+error-overlay button alone fails the `button-name` accessibility audit. It
+understates the real scores and sends you chasing problems that do not exist on
+the deployed site. Measured on the same Lighthouse version:
+
+| | dev server | `npm run audit` (`dist/`) |
+|---|---|---|
+| Performance | 44 | **69** |
+| Accessibility | 91 | **100** |
+| Best practices | 96 | **100** |
+| SEO | 85 | **100** |
+
+Two other options: Chrome DevTools → Lighthouse tab (same engine, visual
+breakdown), or [PageSpeed Insights](https://pagespeed.web.dev/) once deployed —
+that one uses real field data from actual visitors, which is more authoritative
+than any lab test.
+
+### What the SEO score does and does not tell you
+
+It is a short technical checklist: title present, meta description present,
+HTTP 200, links crawlable and descriptively worded, images have alt text,
+`robots.txt` valid, canonical valid. **100 means the checklist is cleared, and
+nothing more.** It does not measure rankings, and it is not what will earn
+traffic. Lighthouse is a regression guard here, not a KPI.
+
+For actual visibility, the scoreboard is Google Search Console — real
+impressions and clicks per query, which is free. The single biggest *blocked*
+ranking lever for this site is a confirmed physical business address, which
+`PRODUCT.md` records as still missing; without it Google cannot show the
+business in the local/Map Pack.
+
+## Before every deploy
 
 ```bash
 VITE_SITE_URL=https://www.your-domain.com npm run build

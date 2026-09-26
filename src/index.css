@@ -1,5 +1,18 @@
 :root {
-  --red: #cc2643;
+  /*
+   * --red is a text colour in 39 rules, not just a brand accent, so it has a
+   * hard constraint: it must clear 4.5:1 against the *lightest-contrast* light
+   * surface in the system, which is --bg-alt (#e9e9ed). The previous #cc2643
+   * reached only 4.42 there and failed WCAG AA on .card-link inside the tab
+   * panels. #c32240 measures 4.79 on --bg-alt, 5.37 on --bg, 5.80 for white text
+   * on top of it - so it is safe in every direction the colour is used.
+   *
+   * Do not brighten this token for visual preference. `npm run verify:contrast`
+   * fails the build if any of these ratios regress. To use a lighter red for
+   * decoration, add a separate token rather than changing this one.
+   */
+  --red-rgb: 195 34 64;
+  --red: rgb(var(--red-rgb));
   --red-dark: #b81f39;
   --red-deep: #000000;
   --ink: #221f1f;
@@ -32,7 +45,7 @@ html {
 }
 
 ::selection {
-  background: rgba(204, 38, 67, 0.18);
+  background: rgb(var(--red-rgb) / );
 }
 
 body {
@@ -256,7 +269,7 @@ h4 {
 }
 
 .btn-ghost-dark:hover {
-  background: rgba(204, 38, 67, 0.08);
+  background: rgb(var(--red-rgb) / );
 }
 
 .btn-outline-dark {
@@ -265,7 +278,7 @@ h4 {
 }
 
 .btn-outline-dark:hover {
-  background: rgba(204, 38, 67, 0.08);
+  background: rgb(var(--red-rgb) / );
 }
 
 /* Keyboard focus: signal-red ring on interactive surfaces */
@@ -284,13 +297,13 @@ textarea:focus-visible {
 .gallery-item:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 3px;
-  box-shadow: 0 0 0 4px rgba(204, 38, 67, 0.15);
+  box-shadow: 0 0 0 4px rgb(var(--red-rgb) / );
 }
 
 .nav-toggle:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 3px;
-  box-shadow: 0 0 0 4px rgba(204, 38, 67, 0.15);
+  box-shadow: 0 0 0 4px rgb(var(--red-rgb) / );
 }
 
 /* Keep pill geometry on keyboard focus: global focus sets 6px radius */
@@ -305,7 +318,7 @@ textarea:focus-visible {
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgba(204, 38, 67, 0.55);
+  text-decoration-color: rgb(var(--red-rgb) / );
 }
 
 .footer-contact a:hover,
@@ -479,7 +492,7 @@ textarea:focus-visible {
 
 .nav-links a:not(.btn).active {
   color: #fff;
-  background: rgba(204, 38, 67, 0.28);
+  background: rgb(var(--red-rgb) / );
 }
 
 @media (min-width: 861px) {
@@ -1036,7 +1049,7 @@ textarea:focus-visible {
 }
 
 .stat:hover {
-  background: rgba(204, 38, 67, 0.035);
+  background: rgb(var(--red-rgb) / );
   transform: translateY(-2px);
 }
 
@@ -1094,14 +1107,14 @@ textarea:focus-visible {
 }
 
 .stat-link:hover {
-  background: rgba(204, 38, 67, 0.04);
+  background: rgb(var(--red-rgb) / );
 }
 
 .stat-link:hover .stat-label {
   color: var(--red);
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgba(204, 38, 67, 0.55);
+  text-decoration-color: rgb(var(--red-rgb) / );
 }
 
 .stats .stat-link:hover .stat-label {
@@ -1542,7 +1555,7 @@ textarea:focus-visible {
 }
 
 .service-acc:hover {
-  background: rgba(204, 38, 67, 0.03);
+  background: rgb(var(--red-rgb) / );
 }
 
 .service-acc-head {
@@ -1619,7 +1632,7 @@ textarea:focus-visible {
 
 .service-acc-head:hover .service-acc-icon {
   transform: translateY(-2px);
-  background: rgba(204, 38, 67, 0.12);
+  background: rgb(var(--red-rgb) / );
   color: var(--red);
 }
 
@@ -1740,13 +1753,13 @@ textarea:focus-visible {
 
 .toc-chip:hover {
   color: var(--red);
-  background: rgba(204, 38, 67, 0.06);
+  background: rgb(var(--red-rgb) / );
 }
 
 .toc-chip.is-active {
   color: var(--red);
-  background: rgba(204, 38, 67, 0.08);
-  border-color: rgba(204, 38, 67, 0.15);
+  background: rgb(var(--red-rgb) / );
+  border-color: rgb(var(--red-rgb) / );
 }
 
 /* Sentinel for the back-to-top observer (Layout, every page).
@@ -1820,7 +1833,7 @@ textarea:focus-visible {
 
 .tab-service:hover {
   transform: translateY(-3px);
-  border-color: rgba(204, 38, 67, 0.25);
+  border-color: rgb(var(--red-rgb) / );
   box-shadow: var(--shadow-lg);
 }
 
@@ -1853,7 +1866,7 @@ textarea:focus-visible {
 }
 
 .why-row:hover {
-  background: rgba(204, 38, 67, 0.04);
+  background: rgb(var(--red-rgb) / );
   transform: translateX(4px);
 }
 
@@ -1878,7 +1891,7 @@ textarea:focus-visible {
 
 .why-row:hover .why-row-icon {
   transform: translateY(-2px) rotate(-4deg);
-  background: rgba(204, 38, 67, 0.12);
+  background: rgb(var(--red-rgb) / );
   color: var(--red);
 }
 
@@ -1974,7 +1987,7 @@ textarea:focus-visible {
   background: var(--red);
   display: grid;
   place-items: center;
-  box-shadow: 0 0 0 14px rgba(204, 38, 67, 0.18), var(--shadow-lg);
+  box-shadow: 0 0 0 14px rgb(var(--red-rgb) / ), var(--shadow-lg);
 }
 
 .visual-inner svg {
@@ -2169,7 +2182,7 @@ textarea:focus-visible {
   display: grid;
   place-items: center;
   font-size: 0.8rem;
-  background: rgba(204, 38, 67, 0.1);
+  background: rgb(var(--red-rgb) / );
   border-radius: 50%;
 }
 
@@ -2586,7 +2599,7 @@ textarea:focus-visible {
 
 .gallery-item:hover .gallery-medallion {
   background: var(--red);
-  box-shadow: 0 0 0 10px rgba(204, 38, 67, 0.18);
+  box-shadow: 0 0 0 10px rgb(var(--red-rgb) / );
   transform: scale(1.08) rotate(4deg);
 }
 
@@ -2637,7 +2650,7 @@ textarea:focus-visible {
 
 .gallery-note a:hover {
   text-decoration: underline;
-  text-decoration-color: rgba(204, 38, 67, 0.55);
+  text-decoration-color: rgb(var(--red-rgb) / );
 }
 
 /* Contact */
@@ -2681,7 +2694,7 @@ textarea:focus-visible {
 
 .contact-list li:hover .contact-icon {
   transform: translateY(-2px);
-  background: rgba(204, 38, 67, 0.12);
+  background: rgb(var(--red-rgb) / );
   color: var(--red);
 }
 
@@ -2757,7 +2770,7 @@ textarea:focus-visible {
 .quote-form textarea:focus {
   outline: none;
   border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(204, 38, 67, 0.12);
+  box-shadow: 0 0 0 3px rgb(var(--red-rgb) / );
 }
 
 .quote-form textarea {
@@ -2778,7 +2791,7 @@ textarea:focus-visible {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: rgba(204, 38, 67, 0.08);
+  background: rgb(var(--red-rgb) / );
   color: var(--red);
   display: grid;
   place-items: center;
