@@ -1334,11 +1334,6 @@ textarea:focus-visible {
   opacity: 0.9;
 }
 
-.proof-seal-note {
-  font-size: 0.8rem;
-  opacity: 0.85;
-}
-
 .proof-strip {
   background: linear-gradient(160deg, #000000, #221f1f);
   border: 1px solid rgba(255, 255, 255, 0.12);
