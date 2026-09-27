@@ -26,9 +26,10 @@ function ProofBand({
             <h3>Approved Partner</h3>
             <ul>
               <li>NFPA & Egyptian Code delivery</li>
-              <li>Survey &rarr; install &rarr; maintain</li>
+              <li>Survey &rarr; install &rarr; Annual Maintenance Contract (AMC), one scope</li>
+              <li>Monthly inspections &middot; 24/7 call-out</li>
             </ul>
-            <p className="proof-seal-note">ALNANDA Contracting visual, not an official seal.</p>
+              <p className="proof-seal-note">ALNANDA Contracting visual, not an official seal.</p>
           </div>
           <div className="proof-strip">
             {/* Badge only. The three fact columns and the inline quote CTA were
