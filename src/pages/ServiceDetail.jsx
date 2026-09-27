@@ -80,12 +80,14 @@ function ServiceDetail() {
             <p className="service-detail-pullquote">{service.whyText}</p>
           </Reveal>
 
-          {/* Media-only split, sitting to the right of the why-section. It
-              carries the photograph slot and nothing else: the why-section
-              already states the scope in the pullquote directly beside it, and
-              service.text said the same thing a second time. flip is gone
-              because with no text column there is nothing to flip against. */}
-          <Reveal delay={100}>
+          {/* Media-only split, sitting to the right of the why-section, and
+              sticky so the photograph holds position while the prose scrolls
+              past it. Sticky sits on this Reveal rather than on the split
+              inside it: the Reveal is the grid item, so its containing block is
+              the full-height grid area. A sticky descendant would be bounded by
+              this box, which is only as tall as the photograph, and would have
+              almost no room to travel. */}
+          <Reveal className="service-detail-sticky" delay={100}>
             <FeatureSplit
               image={null}
               imageAlt={`${service.title} project photo`}

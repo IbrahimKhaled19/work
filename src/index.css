@@ -2130,6 +2130,21 @@ textarea:focus-visible {
   margin: 0;
 }
 
+/* Sticky scope split. top: 100px is the offset this layout already uses - it
+   was .about-card's value before the aside was replaced by this split, and it
+   matches the scroll-margin-top on this page's anchors, so the photograph
+   clears the sticky navbar by the same amount the anchors do.
+
+   Placed on the grid item rather than the split inside it, because a sticky
+   element is bounded by its containing block. The grid item's box is the
+   full-height row, set by the prose column; the split inside it is only as
+   tall as the photograph, so stickying the inner element would leave it
+   nowhere to move. */
+.service-detail-sticky {
+  position: sticky;
+  top: 100px;
+}
+
 .service-detail-lead {
   font-size: 1.1rem;
   color: var(--ink-soft);
@@ -2871,6 +2886,13 @@ textarea:focus-visible {
   }
 
   .about-card {
+    position: static;
+  }
+
+  /* Same reset for the split that replaced the aside in this layout. Once the
+     grid is one column there is no second track to sit beside, so a sticky
+     block would only pin itself over the content following the section. */
+  .service-detail-sticky {
     position: static;
   }
 
