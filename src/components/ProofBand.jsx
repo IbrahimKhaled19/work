@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
 import Reveal from './Reveal'
 import Picture from './Picture'
@@ -33,28 +32,14 @@ function ProofBand({
               <p className="proof-seal-note">ALNANDA Contracting visual, not an official seal.</p>
           </div>
           <div className="proof-strip">
-            <ul className="proof-facts" aria-label="Verifiable compliance facts">
-              <li>
-                <strong>NFPA & Egyptian Code</strong>
-                <span>Design, install & commission to approved standards</span>
-              </li>
-              <li>
-                <strong>Monthly AMC inspections</strong>
-                <span>Mon-Sat 8-6 &middot; 24/7 emergency call-out</span>
-              </li>
-              <li>
-                <strong>Survey &rarr; maintenance</strong>
-                <span>One Civil Defense-approved scope, tested & commissioned</span>
-              </li>
-            </ul>
+            {/* Badge only. The three fact columns and the inline quote CTA were
+                removed deliberately: the same claims and the same quote path are
+                carried by the seal card to the left and by <CTA /> further down,
+                and the extra density was competing with the section head. */}
             <figure className="proof-badge-frame">
               <Picture id="gacpSeal" loading="lazy" />
               <figcaption>GACP Egypt Certified</figcaption>
             </figure>
-            <div className="proof-cta">
-              <Link to="/contact" className="btn btn-solid">Get a Free Quote</Link>
-              <span>Engineer callback within 1 hour in working hours</span>
-            </div>
           </div>
         </Reveal>
       </div>
