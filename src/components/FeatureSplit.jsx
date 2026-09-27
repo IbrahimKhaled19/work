@@ -8,7 +8,7 @@ import Picture from './Picture'
  */
 function FeatureSplit({
   heading = null,
-  body,
+  body = null,
   imageId = null,
   image = null,
   imageAlt = '',
@@ -21,12 +21,16 @@ function FeatureSplit({
 }) {
   return (
     <div className={`feature-split${flip ? ' feature-split-flip' : ''}`}>
-      <Reveal className="feature-text">
-        {/* Optional: a split sitting beside an existing heading passes none, and
-            an empty <h2> would be a second, meaningless heading on the page. */}
-        {heading && <h2>{heading}</h2>}
-        <p className="service-detail-text">{body}</p>
-      </Reveal>
+      {/* Both are optional, and the whole block is omitted when neither is given.
+          A split that exists only to carry a photograph is a real case here - an
+          empty <h2> and an empty <p> are worse than no text column, and an empty
+          .feature-text would still occupy a grid track and add a gap. */}
+      {(heading || body) && (
+        <Reveal className="feature-text">
+          {heading && <h2>{heading}</h2>}
+          {body && <p className="service-detail-text">{body}</p>}
+        </Reveal>
+      )}
       <Reveal className="feature-media" variant="scale" delay={120}>
         <div className="feature-frame">
           {imageId ? (

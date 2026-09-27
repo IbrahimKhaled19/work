@@ -80,22 +80,17 @@ function ServiceDetail() {
             <p className="service-detail-pullquote">{service.whyText}</p>
           </Reveal>
 
-          {/* Second split, sitting to the right of the why-section rather than
-              below it. The body is service.text - the one-line scope of the
-              work, which until now was written but never rendered on the detail
-              page. No heading: the section already has one, and a second
-              heading here would compete with it. No badge: the coverage list
-              and the spotlight badge already carry this page's short phrases,
-              and service.standards is null on four of the thirteen services,
-              so a standards badge would render empty on those. */}
+          {/* Media-only split, sitting to the right of the why-section. It
+              carries the photograph slot and nothing else: the why-section
+              already states the scope in the pullquote directly beside it, and
+              service.text said the same thing a second time. flip is gone
+              because with no text column there is nothing to flip against. */}
           <Reveal delay={100}>
             <FeatureSplit
-              body={service.text}
               image={null}
               imageAlt={`${service.title} project photo`}
               placeholderLabel={`${service.title} project photo`}
               dimensionsLabel={PHOTO_SLOT}
-              flip
               FallbackIcon={Icon}
             />
           </Reveal>
