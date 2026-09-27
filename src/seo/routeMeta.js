@@ -41,7 +41,7 @@ export function clamp(text, max) {
 
 const staticRoutes = {
   '/': {
-    title: 'ALNANDA Contracting | Fire Safety & Fire Fighting in Egypt',
+    title: 'ALNANDA Contracting | Fire Protection & Fire Fighting in Egypt',
     description:
       'Civil Defense approved fire safety contractor in Egypt. Fire pumps, sprinklers, ' +
       'detection, suppression and compliance to NFPA and Egyptian code. 25+ years.',
@@ -57,7 +57,7 @@ const staticRoutes = {
     changefreq: 'monthly',
   },
   '/about': {
-    title: 'About ALNANDA Contracting | Fire Safety Company in Egypt',
+    title: 'About ALNANDA Contracting | Fire Protection Company in Egypt',
     description:
       '25+ years designing, installing and maintaining fire protection systems in ' +
       'Egypt. GACP Egypt certified and Civil Defense approved.',
@@ -73,7 +73,7 @@ const staticRoutes = {
     changefreq: 'monthly',
   },
   '/contact': {
-    title: 'Contact ALNANDA Contracting | Fire Safety Quote in Egypt',
+    title: 'Contact ALNANDA Contracting | Fire Protection Quote in Egypt',
     description:
       'Request a free site assessment or AMC quote in Egypt. Engineers respond within ' +
       '1 hour in working hours. WhatsApp +20 100 362 0490.',
