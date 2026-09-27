@@ -1,11 +1,21 @@
 /**
- * Assert the published opening hours are single-sourced and correct.
+ * Assert the published opening hours are single-sourced and correct, and that
+ * no withdrawn availability claim is still published.
  *
  *   npm run verify:hours
  *
- * WHY THIS EXISTS
- * ---------------
- * The hours lived in six places that had nothing to do with each other:
+ * SCOPE, and why it is wider than the name
+ * ----------------------------------------
+ * The name says hours because the single-source assertion is the substantive
+ * part. It also owns the list of withdrawn claims, because they are the same
+ * failure seen from the other side: a commitment the business has backed out
+ * of, still printed on a page. Currently that list is the one-hour response
+ * promise, the round-the-clock / 24-7 availability claim, the previous
+ * Mon-Sat 08:00-18:00 schedule, and the "monthly inspections" phrasing. All
+ * four were removed by hand across a dozen files.
+ *
+ * WHY THE HOURS EXISTED IN SIX PLACES
+ * -----------------------------------
  * src/seo/site.js declared them as the intended single source, but nothing
  * read that block, so jsonld.js hardcoded its own dayOfWeek list and
  * opens/closes, and Home, Contact, Footer, CTA, About and Gallery each
@@ -23,8 +33,8 @@
  * ships, and it is what Google reads - but scanning only dist meant a
  * regression in a component went unnoticed until the next build, which is
  * exactly the window where it is cheapest to catch. The source pass skips
- * comment lines: a guard that fails because someone documented the old value
- * in a comment is a guard people learn to disable, which is worse than none.
+ * comments: a guard that fails because someone documented the old value in a
+ * comment is a guard people learn to disable, which is worse than none.
  */
 import fs from 'node:fs'
 import path from 'node:path'
@@ -128,6 +138,8 @@ if (withHours.length === 0) {
 // checked here, because this reads dist, which has no comments.
 const BANNED = [
   ['the withdrawn 1-hour response claim', /\b(?:1|one)\s+hour\b/i],
+  ['the withdrawn round-the-clock claim', /24\s*[-/]\s*7\b/i],
+  ['the withdrawn "round-the-clock" claim', /round[-\s]the[-\s]clock/i],
   ['the previous Mon-Sat range', /Mon[-\u2013]Sat/i],
   ['the previous Schema.org Mon-Sat code', /Mo-Sa\b/],
   ['the previous 8:00 AM opening', /\b8:00\s*AM\b/i],
@@ -173,6 +185,8 @@ const SOURCE_BANNED = [
   ['a hardcoded closing time', /\b18:00\b|\b6:00\s*PM\b/i],
   ['a hardcoded hours label', /8:00\s*AM/i],
   ['the withdrawn response claim', /\b(?:1|one)\s+hour\b/i],
+  ['the withdrawn round-the-clock claim', /24\s*[-/]\s*7\b/i],
+  ['the withdrawn "round-the-clock" claim', /round[-\s]the[-\s]clock/i],
   ['the withdrawn "monthly inspections" phrase', /monthly inspections/i],
 ]
 

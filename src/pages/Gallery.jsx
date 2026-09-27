@@ -19,7 +19,7 @@ const items = [
   { id: 'amc-inspection', title: 'Inspection, Testing & Maintenance', cat: 'Maintenance', serviceId: 'inspection-testing-maintenance', group: 'maintenance' },
   { id: 'compliance-review', title: 'Civil Defense Compliance & Permitting', cat: 'Compliance', serviceId: 'civil-defense-compliance', group: 'maintenance' },
   { id: 'retrofit-upgrade', title: 'System Retrofit & Upgrade', cat: 'Retrofit', serviceId: 'retrofit-upgrade', group: 'maintenance' },
-  { id: 'emergency-response', title: '24/7 Emergency Response & Repair', cat: 'Emergency', serviceId: 'emergency-repair-services', group: 'maintenance' },
+  { id: 'emergency-response', title: 'Emergency Response & Repair', cat: 'Emergency', serviceId: 'emergency-repair-services', group: 'maintenance' },
   { id: 'staff-training', title: 'Staff Training & Evacuation Drills', cat: 'Training', serviceId: 'training-consulting', group: 'maintenance' },
 ]
 
@@ -112,7 +112,7 @@ function Gallery() {
       <CTA
         title="Need a Quote or Site Inspection?"
         subtitle={`Send a quote request during working hours (${site.hours.inline}), and our engineers will contact you.`}
-        note="WhatsApp 24/7: +20 100 362 0490 · Civil Defense-approved partner."
+        note="WhatsApp: +20 100 362 0490 &middot; Civil Defense-approved partner."
       />
     </>
   )

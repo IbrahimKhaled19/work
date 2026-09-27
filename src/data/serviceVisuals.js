@@ -24,7 +24,7 @@ const serviceVisuals = {
   'inspection-testing-maintenance': { proof: 'NFPA 25', Icon: ListChecks },
   'civil-defense-compliance': { proof: 'Civil Defense', Icon: Certificate },
   'retrofit-upgrade': { proof: 'Code Upgrades', Icon: Hammer },
-  'emergency-repair-services': { proof: '24/7 Response', Icon: Siren },
+  'emergency-repair-services': { proof: 'Emergency Repair', Icon: Siren },
   'training-consulting': { proof: 'Staff Training', Icon: GraduationCap },
 }
 

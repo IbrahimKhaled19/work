@@ -86,7 +86,7 @@ export const serviceIndex = [
     "id": "emergency-repair-services",
     "title": "Emergency & Repair Services",
     "category": "maintenance",
-    "text": "Pump failures and leaks do not wait for business hours. 24/7 emergency response and repair, backed by spare parts availability, so a system failure gets fixed before it becomes a real exposure."
+    "text": "A pump failure or a leak is a live safety gap from the moment it starts. ALNANDA Contracting provides emergency response and repair, backed by spare parts availability, so a system failure gets fixed before it becomes a real exposure."
   },
   {
     "id": "training-consulting",

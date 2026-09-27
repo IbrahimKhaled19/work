@@ -82,7 +82,7 @@ const serviceGroups = [
       },
       {
         title: 'Emergency & Repair Services',
-        desc: '24/7 emergency dispatch, pump and piping repair, and spare parts availability.',
+        desc: 'Emergency dispatch, pump and piping repair, and spare parts availability.',
         anchor: 'emergency-repair-services',
       },
       {

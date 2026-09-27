@@ -1075,7 +1075,11 @@ textarea:focus-visible {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* auto-fit rather than a fixed column count, so the number of tiles is
+     decided by the data in Home.jsx and adding or removing one needs no CSS
+     change. With four tiles this resolves to four equal columns exactly as
+     `repeat(4, 1fr)` did; with three, to three. Empty tracks collapse. */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }

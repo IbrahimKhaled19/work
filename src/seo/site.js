@@ -140,11 +140,10 @@ export const site = {
     display: 'Sat-Thu: 9:00 AM-4:00 PM',
     inline: 'Sat-Thu, 9:00 AM-4:00 PM',
     short: 'Sat-Thu 9-4',
-    // 24/7 emergency cover sits on top of the office schedule; it is a
-    // dispatch promise, not separate staffed hours, so it is expressed in
-    // copy rather than as an openingHoursSpecification range.
-    emergencyDisplay: '24/7 emergency call-out',
-    emergency: true,
+    // `emergencyDisplay` and `emergency` used to sit here, holding
+    // "24/7 emergency call-out". Neither was ever read, and the claim they
+    // carried has been withdrawn site-wide, so they are gone rather than left
+    // to rot. No round-the-clock availability is asserted anywhere now.
   },
 
   // ---- MISSING: no Egypt street address has been supplied (PRODUCT.md:

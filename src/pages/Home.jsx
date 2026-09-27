@@ -17,11 +17,13 @@ import WhyList from '../components/WhyList'
 import CTA from '../components/CTA'
 import site from '../seo/site.js'
 
+// Three tiles, not four. The fourth was "24/7 Emergency Support", withdrawn
+// with the rest of the availability claims. `.stats-grid` uses auto-fit, so
+// this array's length drives the layout and adding a tile back needs no CSS.
 const stats = [
   { target: 25, suffix: '+', label: 'Years of Experience', duration: 1100 },
   { target: 100, suffix: '+', label: 'Projects Delivered', to: '/gallery', aria: 'View project gallery: 100+ projects delivered', duration: 1400 },
   { target: 500, suffix: '+', label: 'Active AMC Clients', duration: 1200 },
-  { value: '24/7', label: 'Emergency Support' },
 ]
 
 const pathSteps = [
@@ -65,8 +67,8 @@ const whyUs = [
   },
   {
     Icon: Lightning,
-    title: 'Fast Response',
-    desc: 'Get an inspection, quote or emergency call-out. Our engineers respond fast.',
+    title: 'Engineers, Not a Call Centre',
+    desc: 'Talk directly to the engineers who will be working on your system, not a queue.',
   },
 ]
 

@@ -10,7 +10,7 @@ function CTA({
   quoteHref = '/contact',
   whatsappText = 'Chat on WhatsApp',
   whatsappHref = 'https://wa.me/201003620490',
-  note = 'Annual Maintenance Contract (AMC) cover includes inspections, 24/7 emergency support, and full Civil Defense compliance.',
+  note = 'Annual Maintenance Contract (AMC) cover includes inspections and full Civil Defense compliance.',
   className = '',
   variant = 'light',
   delay = 0,

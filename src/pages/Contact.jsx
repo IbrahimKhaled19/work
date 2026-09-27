@@ -77,7 +77,7 @@ function Contact() {
                 <span className="contact-icon" aria-hidden="true"><Clock size={24} /></span>
                 <div>
                   <strong>Working Hours</strong>
-                  <p>{site.hours.display} &middot; 24/7 Emergency</p>
+                  <p>{site.hours.display}</p>
                 </div>
               </li>
             </ul>

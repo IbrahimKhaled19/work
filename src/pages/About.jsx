@@ -37,7 +37,7 @@ const values = [
   { title: 'Safety First', desc: 'Every system we touch is engineered to protect lives and property.', Icon: ShieldCheck },
   { title: 'Compliance', desc: 'All works follow NFPA, Egyptian Fire Protection Code and Civil Defense requirements.', Icon: FileText },
   { title: 'Quality Products', desc: 'We deliver trusted brands and certified, code-compliant equipment.', Icon: FireExtinguisher },
-  { title: 'Dedicated Support', desc: 'Responsive service teams backed by 24/7 emergency support.', Icon: Phone },
+  { title: 'Dedicated Support', desc: 'Responsive service teams backed by engineers who already know your system.', Icon: Phone },
 ]
 
 function About() {

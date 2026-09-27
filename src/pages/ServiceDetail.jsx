@@ -17,7 +17,7 @@ const PHOTO_SLOT = '1200 × 800'
  * Badge phrases for the spotlight, taken from copy that already exists.
  *
  * Every `points` entry is written as "Short label: explanation", so the label
- * is an authored short phrase - "Wet pipe systems", "24/7 emergency dispatch",
+ * is an authored short phrase - "Wet pipe systems", "Emergency dispatch",
  * "Firestopping" - and has the same shape as the hand-written items on
  * fire-pump-systems. Reusing them keeps the badge honest: nothing here is
  * invented, and the phrases cannot drift from the coverage list above them
@@ -38,7 +38,7 @@ const blurbs = {
   'inspection-testing-maintenance': 'Scheduled testing with documented proof of compliance.',
   'civil-defense-compliance': 'Approvals, liaison, and licensing handled end to end.',
   'retrofit-upgrade': 'Aging and non-compliant systems brought up to current code.',
-  'emergency-repair-services': '24/7 dispatch, repair, and spare parts.',
+  'emergency-repair-services': 'Emergency dispatch, repair, and spare parts.',
   'training-consulting': 'Training, drills, and ongoing technical consulting.',
 }
 
