@@ -79,6 +79,27 @@ function ServiceDetail() {
             <h2>{service.whyHeading}</h2>
             <p className="service-detail-pullquote">{service.whyText}</p>
           </Reveal>
+
+          {/* Second split, in the first section. The body is service.text - the
+              one-line scope of the work, which until now was written but never
+              rendered on the detail page. Flipped, so it alternates with the
+              spotlight further down instead of stacking two identical
+              text-then-media blocks. No badge: the coverage list and the
+              spotlight badge already carry this page's short phrases, and
+              service.standards is null on four of the thirteen services, so a
+              standards badge would render empty on those. */}
+          <Reveal className="service-detail-block" delay={100}>
+            <FeatureSplit
+              heading="Scope of Work"
+              body={service.text}
+              image={null}
+              imageAlt={`${service.title} project photo`}
+              placeholderLabel={`${service.title} project photo`}
+              dimensionsLabel={PHOTO_SLOT}
+              flip
+              FallbackIcon={Icon}
+            />
+          </Reveal>
         </div>
       </section>
 
