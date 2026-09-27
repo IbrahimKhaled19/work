@@ -113,13 +113,37 @@ export const site = {
   },
 
   hours: {
-    // Schema.org day codes. Mon-Sat 08:00-18:00.
-    openingHours: 'Mo-Sa 08:00-18:00',
-    display: 'Mon-Sat: 8:00 AM - 6:00 PM',
-    emergencyDisplay: '24/7 emergency call-out',
-    // 24/7 emergency cover sits on top of the Mon-Sat schedule; it is a
+    // Office hours are Saturday to Thursday, 09:00-16:00.
+    //
+    // This block was dead until now: it was declared here as the intended
+    // single source for the hours string, but nothing read it, so Home, About,
+    // Contact, Footer, CTA and Gallery each hardcoded their own copy and
+    // jsonld.js hardcoded a third. Changing the hours meant finding all six by
+    // hand, and nothing would have failed if one was missed.
+    //
+    // Stored structured rather than as a ready-made Schema.org string, because
+    // two consumers need different shapes: the JSON-LD needs the explicit
+    // dayOfWeek list plus separate opens/closes, while the UI needs prose.
+    // Deriving both from one object is what makes them unable to disagree.
+    days: {
+      // Schema.org day code, and the same days spelled out for
+      // openingHoursSpecification.dayOfWeek.
+      schema: 'Sa-Th',
+      long: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+    },
+    opens: '09:00',
+    closes: '16:00',
+    // Prose forms. `display` is the full label used in the footer, the contact
+    // page and the CTA subtitles; `short` is the compressed form for the hero
+    // chip, where the WhatsApp number needs the room; `inline` drops the colon
+    // so it reads correctly inside parentheses.
+    display: 'Sat-Thu: 9:00 AM-4:00 PM',
+    inline: 'Sat-Thu, 9:00 AM-4:00 PM',
+    short: 'Sat-Thu 9-4',
+    // 24/7 emergency cover sits on top of the office schedule; it is a
     // dispatch promise, not separate staffed hours, so it is expressed in
     // copy rather than as an openingHoursSpecification range.
+    emergencyDisplay: '24/7 emergency call-out',
     emergency: true,
   },
 
@@ -161,7 +185,11 @@ export const site = {
   // unresolved. "25+" is the conservative, defensible claim.
   yearsExperience: '25+',
   projectsDelivered: '100+', // CONFIRMED
-  callbackPromise: 'within 1 hour during working hours',
+  // `callbackPromise` used to sit here as "within 1 hour during working
+  // hours". It was never read by anything, and the one-hour response claim it
+  // duplicated has been withdrawn from the site, so it is gone rather than
+  // left to rot. There is deliberately no replacement: no response-time
+  // commitment is asserted anywhere now.
 }
 
 /**

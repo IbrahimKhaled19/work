@@ -6,6 +6,7 @@ import { LinkedinLogo } from '@phosphor-icons/react/LinkedinLogo'
 // of prose in services.js has no business in the critical path. See
 // src/data/serviceIndex.js.
 import { serviceIndex as serviceSections } from '../data/serviceIndex'
+import site from '../seo/site.js'
 
 function Footer() {
   return (
@@ -73,7 +74,7 @@ function Footer() {
                 info@universalfirefighting.com
               </a>
             </li>
-            <li>Mon-Sat: 8:00 AM-6:00 PM</li>
+            <li>{site.hours.display}</li>
           </ul>
         </div>
       </div>

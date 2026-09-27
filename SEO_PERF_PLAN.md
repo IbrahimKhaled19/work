@@ -417,14 +417,14 @@ Notably, `_redirects` contains **no catch-all at all**. On Netlify, redirect rul
 
 | ID | Task | Status |
 |---|---|---|
-| 7.1 | Build-time assertions | ✅ `npm run verify` — 12 checks, all fail the build |
+| 7.1 | Build-time assertions | ✅ `npm run verify` — 13 checks, all fail the build |
 | 7.2 | Lighthouse, every route | ✅ `npm run audit:all` — 17 routes, threshold-gated |
 | 7.3 | Structured data validation | ✅ `npm run verify:schema` + 11 negative tests |
 | 7.4 | Final README | ✅ deployment per host, image replacement, the full guard list |
 
-### 7.1 — twelve checks, one command
+### 7.1 — thirteen checks, one command
 
-`npm run verify` runs, in order: `lint`, `verify:seo`, `verify:contrast`, `verify:fonts`, `verify:preloads`, `verify:prerender:lazy`, `verify:taxonomy`, `services:index --check`, `verify:cv`, `verify:images`, `verify:build`, `verify:schema`, `verify:deploy`.
+`npm run verify` runs, in order: `lint`, `verify:seo`, `verify:contrast`, `verify:fonts`, `verify:preloads`, `verify:prerender:lazy`, `verify:taxonomy`, `services:index --check`, `verify:cv`, `verify:images`, `verify:build`, `verify:hours`, `verify:schema`, `verify:deploy`.
 
 The point is not that they exist but that each one covers a failure that is **invisible when it happens**. An unmaintained service index drops a service from the navbar with no error. A `cv-skip` on the hero stops the LCP image painting. A stale preload tag downloads the wrong file. A route table mismatch prerenders 19 pages with correct metadata and no body content. Every one of those produces a site that looks fine and scores 100 in a spot check.
 
@@ -495,7 +495,7 @@ Deployment per host, the image-replacement procedure for the pending photography
 | JS chunks | 3 | **11** |
 | Font payload | 530 KB / 10 files | **106 KB / 2 files** |
 | CLS | — | **0 on all 17 routes** |
-| Build-time guards | 0 | **12** |
+| Build-time guards | 0 | **13** |
 
 The 69 before-figure is the honest pre-work baseline on the built site. A
 Lighthouse run against `npm run dev` scored 44, but that measured unminified

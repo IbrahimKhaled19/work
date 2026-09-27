@@ -251,7 +251,7 @@ seeing a stale build. All four host configs set this; the rules are in
 ## Verifying a build
 
 ```bash
-npm run verify     # lint + all 12 checks. This is the gate.
+npm run verify     # lint + all 13 checks. This is the gate.
 npm test           # negative tests for the schema validator
 ```
 
@@ -268,6 +268,7 @@ Every check exits non-zero on failure, so they work as CI gates. In CI, run
 | `verify:taxonomy` | `ServicesTabs.jsx` or `Gallery.jsx` disagreeing with `services.js` about which discipline a service belongs to — a hand-copied taxonomy with no compiler, so the navbar and the services page would show two different ones |
 | `verify:cv` | `content-visibility` on the hero (stops the LCP painting) or without `contain-intrinsic-size` (trades one layout shift for another) |
 | `verify:images` | An `<img>` in the built site with no explicit `width`/`height`. Lighthouse's `unsized-images` audit catches this but is **weight 0**, so `audit:all` — which gates on category scores only — can never fail on it |
+| `verify:hours` | The opening hours re-hardcoded anywhere, the JSON-LD disagreeing with `site.hours`, or a withdrawn claim (the 1-hour response, the old Mon-Sat range) still published |
 | `verify:build` | Empty pages, duplicate titles, unresolved asset references, the two URL forms diverging |
 | `verify:schema` | An invented or misshapen JSON-LD property, a missing required one, a nested object with no `@type` |
 | `verify:deploy` | An SPA rewrite sneaking back into a host config, or a route missing a resolution form |
@@ -382,7 +383,7 @@ business in the local/Map Pack.
 
 ```bash
 npm run build     # reads .env.production - no need to pass the URL inline
-npm run verify    # 12 checks, all of which fail the build
+npm run verify    # 13 checks, all of which fail the build
 ```
 
 If you are deploying somewhere other than the origin in `.env.production`, pass

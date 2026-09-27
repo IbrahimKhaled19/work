@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
 import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import Reveal from './Reveal'
+import site from '../seo/site.js'
 
 function CTA({
-  title = 'Talk to a fire-protection engineer within 1 hour',
-  subtitle = 'Send a quote request during working hours (Mon-Sat, 8:00 AM-6:00 PM), and an ALNANDA Contracting engineer will call you back within 1 hour.',
+  title = 'Talk to a fire-protection engineer',
+  subtitle = `Send a quote request during working hours (${site.hours.inline}), and an ALNANDA Contracting engineer will call you back.`,
   quoteText = 'Get a Free Quote',
   quoteHref = '/contact',
   whatsappText = 'Chat on WhatsApp',
   whatsappHref = 'https://wa.me/201003620490',
-  note = 'Annual Maintenance Contract (AMC) cover includes monthly inspections, 24/7 emergency support, and full Civil Defense compliance.',
+  note = 'Annual Maintenance Contract (AMC) cover includes inspections, 24/7 emergency support, and full Civil Defense compliance.',
   className = '',
   variant = 'light',
   delay = 0,

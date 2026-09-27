@@ -6,6 +6,7 @@ import { Clock } from '@phosphor-icons/react/Clock'
 import { CheckCircle } from '@phosphor-icons/react/CheckCircle'
 import PageHero from '../components/PageHero'
 import Reveal from '../components/Reveal'
+import site from '../seo/site.js'
 
 const initialForm = {
   name: '',
@@ -34,7 +35,7 @@ function Contact() {
       <PageHero
         crumb="Contact"
         title="Contact Us"
-        subtitle="Need an inspection, installation or Annual Maintenance Contract (AMC) quote? Fill out the form and our engineers will contact you within 1 hour."
+        subtitle="Need an inspection, installation or Annual Maintenance Contract (AMC) quote? Fill out the form and our engineers will contact you."
       />
 
       <section className="section">
@@ -76,7 +77,7 @@ function Contact() {
                 <span className="contact-icon" aria-hidden="true"><Clock size={24} /></span>
                 <div>
                   <strong>Working Hours</strong>
-                  <p>Mon-Sat: 8:00 AM-6:00 PM · 24/7 Emergency</p>
+                  <p>{site.hours.display} &middot; 24/7 Emergency</p>
                 </div>
               </li>
             </ul>
@@ -89,7 +90,7 @@ function Contact() {
                 <h3>Thank You!</h3>
                 <p>
                   Your quote request has been received. Our engineers will
-                  contact you within 1 hour during working hours.
+                  contact you during working hours.
                 </p>
                 <button
                   type="button"

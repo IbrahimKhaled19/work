@@ -75,8 +75,7 @@ const staticRoutes = {
   '/contact': {
     title: 'Contact ALNANDA Contracting | Fire Protection Quote in Egypt',
     description:
-      'Request a free site assessment or AMC quote in Egypt. Engineers respond within ' +
-      '1 hour in working hours. WhatsApp +20 100 362 0490.',
+      'Request a free site assessment or AMC quote in Egypt. WhatsApp +20 100 362 0490.',
     priority: 0.8,
     changefreq: 'yearly',
   },

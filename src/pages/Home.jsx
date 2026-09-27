@@ -15,6 +15,7 @@ import Milestones from '../components/Milestones'
 import ServicesTabs from '../components/ServicesTabs'
 import WhyList from '../components/WhyList'
 import CTA from '../components/CTA'
+import site from '../seo/site.js'
 
 const stats = [
   { target: 25, suffix: '+', label: 'Years of Experience', duration: 1100 },
@@ -109,7 +110,7 @@ function Home() {
             </li>
             <li>
               <Clock size={16} aria-hidden="true" />
-              <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer">Mon-Sat 8-6 &middot; WhatsApp: +20 100 362 0490</a>
+              <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer">{site.hours.short} &middot; WhatsApp: +20 100 362 0490</a>
             </li>
           </ul>
         </div>

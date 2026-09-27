@@ -101,16 +101,14 @@ export function organizationSchema() {
     openingHoursSpecification: [
       {
         '@type': 'OpeningHoursSpecification',
-        dayOfWeek: [
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-        ],
-        opens: '08:00',
-        closes: '18:00',
+        // Derived from site.hours, which is the single source. These were six
+        // hardcoded day names with hardcoded opens/closes, so the structured
+        // data could contradict the hours printed on the page and nothing
+        // would have noticed. Google reads this for local results, so the two
+        // agreeing is a business outcome, not tidiness.
+        dayOfWeek: site.hours.days.long,
+        opens: site.hours.opens,
+        closes: site.hours.closes,
       },
     ],
   }

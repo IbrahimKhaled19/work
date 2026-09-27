@@ -109,11 +109,13 @@ function About() {
         </div>
       </section>
 
-      <CTA
-        title="Talk to a fire-protection engineer within 1 hour"
-        subtitle="Send a quote request during working hours (Mon-Sat, 8:00 AM-6:00 PM), and an ALNANDA Contracting engineer will call you back within 1 hour."
-        note="Annual Maintenance Contract (AMC) cover includes monthly inspections, 24/7 emergency support, and full Civil Defense compliance."
-      />
+      {/* No props: this used to override the CTA title, subtitle and note with
+          copies of the defaults, which is how the withdrawn one-hour claim and
+          the old Mon-Sat hours survived here after being fixed in the
+          component. Three hardcoded copies of a shared string, none of them
+          load-bearing. The defaults are now correct, so the overrides are
+          gone rather than updated in step. */}
+      <CTA />
     </>
   )
 }

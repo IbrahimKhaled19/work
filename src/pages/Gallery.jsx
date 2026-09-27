@@ -5,6 +5,7 @@ import Reveal from '../components/Reveal'
 import SectionHead from '../components/SectionHead'
 import CTA from '../components/CTA'
 import serviceVisuals from '../data/serviceVisuals'
+import site from '../seo/site.js'
 
 const items = [
   { id: 'hydraulic-design', title: 'Hydraulic Design & Shop Drawings', cat: 'Engineering', serviceId: 'design-engineering', group: 'engineering' },
@@ -110,7 +111,7 @@ function Gallery() {
 
       <CTA
         title="Need a Quote or Site Inspection?"
-        subtitle="Send a quote request during working hours (Mon-Sat, 8:00 AM-6:00 PM), and our engineers will contact you within 1 hour."
+        subtitle={`Send a quote request during working hours (${site.hours.inline}), and our engineers will contact you.`}
         note="WhatsApp 24/7: +20 100 362 0490 · Civil Defense-approved partner."
       />
     </>
