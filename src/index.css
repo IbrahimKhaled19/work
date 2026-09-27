@@ -2113,7 +2113,10 @@ textarea:focus-visible {
 
 .service-detail-layout {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
+  /* Single column: the aside that shared this grid was removed in favour of
+     the FeatureSplit spotlight further down. Every text block inside is already
+     capped (65/68/62ch), so the wider column does not stretch line lengths. */
+  grid-template-columns: 1fr;
   gap: 48px;
   align-items: start;
 }
@@ -2443,19 +2446,6 @@ textarea:focus-visible {
 
 .service-compliance p {
   margin: 0;
-}
-
-.aside-creds {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  opacity: 0.9;
-  margin: 16px 0 0;
 }
 
 /* Gallery */

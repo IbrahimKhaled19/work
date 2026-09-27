@@ -1,5 +1,4 @@
 import { Link, useParams } from 'react-router-dom'
-import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import { ShieldCheck } from '@phosphor-icons/react/ShieldCheck'
 import PageHero from '../components/PageHero'
 import Reveal from '../components/Reveal'
@@ -9,7 +8,23 @@ import NotFound from './NotFound'
 import { serviceSections, disciplineLabels } from '../data/services'
 import serviceVisuals from '../data/serviceVisuals'
 
-const WHATSAPP_URL = 'https://wa.me/201003620490'
+// Expected size of the photograph that fills a spotlight slot. Recorded in
+// PRODUCT.md as the standard for the detail spotlights, so it is a production
+// brief rather than a product claim.
+const PHOTO_SLOT = '1200 × 800'
+
+/**
+ * Badge phrases for the spotlight, taken from copy that already exists.
+ *
+ * Every `points` entry is written as "Short label: explanation", so the label
+ * is an authored short phrase - "Wet pipe systems", "24/7 emergency dispatch",
+ * "Firestopping" - and has the same shape as the hand-written items on
+ * fire-pump-systems. Reusing them keeps the badge honest: nothing here is
+ * invented, and the phrases cannot drift from the coverage list above them
+ * because they are read from it.
+ */
+const badgeLabels = (points) =>
+  points.slice(0, 3).map((p) => p.split(':')[0].trim()).filter(Boolean)
 
 const blurbs = {
   'design-engineering': 'Engineering-first fire protection, reviewed against code before a single pipe goes in.',
@@ -37,6 +52,12 @@ function ServiceDetail() {
   const prev = serviceSections[(index - 1 + serviceSections.length) % serviceSections.length]
   const next = serviceSections[(index + 1) % serviceSections.length]
   const { Icon, proof } = serviceVisuals[service.id]
+  // Only fire-pump-systems declares a spotlight today, and it does so to
+  // override the badge with hand-written commissioning steps. Everything else
+  // renders the split from the defaults above, so a service that later gets a
+  // photograph adds its own `spotlight` block rather than needing the other
+  // twelve edited to keep them in step.
+  const spotlight = service.spotlight ?? {}
 
   return (
     <>
@@ -57,44 +78,6 @@ function ServiceDetail() {
             ))}
             <h2>{service.whyHeading}</h2>
             <p className="service-detail-pullquote">{service.whyText}</p>
-          </Reveal>
-
-          <Reveal className="about-card" variant="scale" delay={100}>
-            <span className="proof-seal-badge" aria-hidden="true">
-              <Icon size={44} color="#fff" />
-            </span>
-            <h3>{proof}</h3>
-            <p className="aside-creds">
-              <ShieldCheck size={16} aria-hidden="true" />
-              GACP Egypt Certified
-            </p>
-            <p>{service.cta.text}</p>
-            <div className="cta-actions">
-              {service.cta.href === 'whatsapp' ? (
-                <a href="tel:+201003620490" className="btn btn-solid btn-light">
-                  {service.cta.label}
-                </a>
-              ) : (
-                <Link to="/contact" className="btn btn-solid btn-light">
-                  {service.cta.label}
-                </Link>
-              )}
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline cta-emergency"
-                aria-label="Chat on WhatsApp: +20 100 362 0490"
-              >
-                <WhatsappLogo size={16} aria-hidden="true" />
-                Chat on WhatsApp
-              </a>
-            </div>
-            {service.cta.href === 'whatsapp' && (
-              <p className="cta-note">
-                <a href="tel:+201003620490">01003620490</a>
-              </p>
-            )}
           </Reveal>
         </div>
       </section>
@@ -118,27 +101,18 @@ function ServiceDetail() {
       <section className="section">
         <div className="container">
           <Reveal variant="right" className="service-detail-block" id="approach">
-            {service.spotlight ? (
-              <FeatureSplit
-                heading="Installation & Maintenance Excellence"
-                body={service.approach}
-                image={service.spotlight.image}
-                imageAlt={`${service.title} installation photo`}
-                placeholderLabel={service.spotlight.placeholder}
-                dimensionsLabel={service.spotlight.dimensions}
-                badgeTitle={service.spotlight.badgeTitle}
-                badgeItems={service.spotlight.badgeItems}
-                flip={service.spotlight.flip}
-                FallbackIcon={Icon}
-              />
-            ) : (
-              service.approach && (
-                <>
-                  <h2>Installation &amp; Maintenance Excellence</h2>
-                  <p className="service-detail-text">{service.approach}</p>
-                </>
-              )
-            )}
+            <FeatureSplit
+              heading="Installation & Maintenance Excellence"
+              body={service.approach}
+              image={spotlight.image ?? null}
+              imageAlt={`${service.title} installation photo`}
+              placeholderLabel={spotlight.placeholder ?? `${service.title} installation photo`}
+              dimensionsLabel={spotlight.dimensions ?? PHOTO_SLOT}
+              badgeTitle={spotlight.badgeTitle ?? proof}
+              badgeItems={spotlight.badgeItems ?? badgeLabels(service.points)}
+              flip={spotlight.flip ?? false}
+              FallbackIcon={Icon}
+            />
             {service.compliance && (
               <>
                 <h2>Compliance</h2>
