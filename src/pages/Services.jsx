@@ -25,8 +25,8 @@ function Services() {
         <div className="container">
           <SectionHead
             eyebrow="What We Do"
-            title="Our Fire Safety Services"
-            text="Survey, design, install and maintain to NFPA and Egyptian Fire Protection Code."
+            title="Our Fire Protection Services"
+            text="One contractor, every fire protection discipline your facility requires."
           />
           <ServicesTabs />
         </div>
