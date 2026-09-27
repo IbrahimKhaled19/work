@@ -417,14 +417,14 @@ Notably, `_redirects` contains **no catch-all at all**. On Netlify, redirect rul
 
 | ID | Task | Status |
 |---|---|---|
-| 7.1 | Build-time assertions | ✅ `npm run verify` — 11 checks, all fail the build |
+| 7.1 | Build-time assertions | ✅ `npm run verify` — 12 checks, all fail the build |
 | 7.2 | Lighthouse, every route | ✅ `npm run audit:all` — 17 routes, threshold-gated |
 | 7.3 | Structured data validation | ✅ `npm run verify:schema` + 11 negative tests |
 | 7.4 | Final README | ✅ deployment per host, image replacement, the full guard list |
 
-### 7.1 — eleven checks, one command
+### 7.1 — twelve checks, one command
 
-`npm run verify` runs, in order: `lint`, `verify:seo`, `verify:contrast`, `verify:fonts`, `verify:preloads`, `verify:prerender:lazy`, `services:index --check`, `verify:cv`, `verify:images`, `verify:build`, `verify:schema`, `verify:deploy`.
+`npm run verify` runs, in order: `lint`, `verify:seo`, `verify:contrast`, `verify:fonts`, `verify:preloads`, `verify:prerender:lazy`, `verify:taxonomy`, `services:index --check`, `verify:cv`, `verify:images`, `verify:build`, `verify:schema`, `verify:deploy`.
 
 The point is not that they exist but that each one covers a failure that is **invisible when it happens**. An unmaintained service index drops a service from the navbar with no error. A `cv-skip` on the hero stops the LCP image painting. A stale preload tag downloads the wrong file. A route table mismatch prerenders 19 pages with correct metadata and no body content. Every one of those produces a site that looks fine and scores 100 in a spot check.
 
@@ -495,7 +495,7 @@ Deployment per host, the image-replacement procedure for the pending photography
 | JS chunks | 3 | **11** |
 | Font payload | 530 KB / 10 files | **106 KB / 2 files** |
 | CLS | — | **0 on all 17 routes** |
-| Build-time guards | 0 | **11** |
+| Build-time guards | 0 | **12** |
 
 The 69 before-figure is the honest pre-work baseline on the built site. A
 Lighthouse run against `npm run dev` scored 44, but that measured unminified
@@ -607,6 +607,34 @@ explicitly rather than only category scores. Deliberately not done here: it
 would also drag in audits nobody can act on — an extension-injected `bf-cache`
 failure, for one — so it is a change to the harness's contract and should be
 its own decision.
+
+### Hand-copied data, and the guard that compiles it
+
+Reclassifying two services (Passive Fire Protection → Engineering, Portable Fire
+Extinguishers → Suppression) exposed a structural gap rather than a bug.
+`services.js` holds one authoritative `category` per service, and the Navbar
+derives from it. But `ServicesTabs.jsx` and `Gallery.jsx` **re-state the same
+taxonomy by hand** — the tabs because they need tab-specific descriptions, the
+gallery because it needs project titles. Deriving was abandoned twice, for
+legitimate reasons, and a copied taxonomy is a second source of truth with no
+compiler.
+
+So the edit was necessarily a three-file change, and **nothing would have failed
+if I had found only one of them.** The navbar and the service detail eyebrows
+move automatically; `/services` and `/gallery` would have kept the old grouping.
+The build would succeed, the pages would be non-empty, titles would stay unique,
+and all eleven other checks would pass — because none of them read those files.
+
+`verify:taxonomy` (check 12) compares all three directly: every service appears
+in exactly one tab group and that group equals its `category`; every gallery
+project's `group` equals its service's `category`; every group id is a declared
+discipline; and no discipline is left empty, which would render a blank tab.
+Measured: 13 services, 13 tab entries, 13 gallery projects, 0 disagreements.
+
+Negative-tested in five directions — a source category changed without the tabs,
+a gallery group changed without the source, a gallery item pointing at a
+deleted service, a typo'd group id, and a discipline emptied of its last
+service. All five reported, exit 1, files restored.
 
 ### Carried forward from the live report
 

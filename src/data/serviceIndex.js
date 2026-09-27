@@ -49,7 +49,7 @@ export const serviceIndex = [
   {
     "id": "portable-extinguishers",
     "title": "Portable Fire Extinguishers",
-    "category": "maintenance",
+    "category": "suppression",
     "text": "Correctly specified, correctly placed, and never left to expire unnoticed. We supply, install, and manage the inspection and recharge schedule so this basic requirement never becomes a compliance gap."
   },
   {
@@ -61,7 +61,7 @@ export const serviceIndex = [
   {
     "id": "passive-fire-protection",
     "title": "Passive Fire Protection",
-    "category": "suppression",
+    "category": "engineering",
     "text": "Fire protection is not only pipes and detectors. Fire-rated doors, dampers, firestopping, and protective coatings contain a fire and protect escape routes. That passive layer buys time while active systems do their job."
   },
   {

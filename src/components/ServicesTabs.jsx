@@ -12,6 +12,11 @@ const serviceGroups = [
         desc: 'Hydraulic calculations, pump sizing, shop drawings, and code review before a single pipe goes in.',
         anchor: 'design-engineering',
       },
+      {
+        title: 'Passive Fire Protection',
+        desc: 'Fire-rated doors, dampers, firestopping, and coatings that contain fire and protect escape routes.',
+        anchor: 'passive-fire-protection',
+      },
     ],
   },
   {
@@ -34,14 +39,14 @@ const serviceGroups = [
         anchor: 'standpipe-hose-systems',
       },
       {
+        title: 'Portable Fire Extinguishers',
+        desc: 'Correct type, correct placement, inspected and recharged on schedule.',
+        anchor: 'portable-extinguishers',
+      },
+      {
         title: 'Special Hazard & Suppression',
         desc: 'FM-200, CO2, kitchen hood, and foam systems for server rooms, kitchens, and flammable storage.',
         anchor: 'special-hazard-suppression',
-      },
-      {
-        title: 'Passive Fire Protection',
-        desc: 'Fire-rated doors, dampers, firestopping, and coatings that contain fire and protect escape routes.',
-        anchor: 'passive-fire-protection',
       },
     ],
   },
@@ -60,11 +65,6 @@ const serviceGroups = [
     id: 'maintenance',
     label: 'Maintenance',
     services: [
-      {
-        title: 'Portable Fire Extinguishers',
-        desc: 'Correct type, correct placement, inspected and recharged on schedule.',
-        anchor: 'portable-extinguishers',
-      },
       {
         title: 'Inspection, Testing & Maintenance',
         desc: 'Scheduled pump, sprinkler, alarm, and extinguisher testing with documented deficiency reports.',
