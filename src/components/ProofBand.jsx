@@ -26,8 +26,6 @@ function ProofBand({
             <h3>Approved Partner</h3>
             <ul>
               <li>NFPA & Egyptian Code delivery</li>
-              <li>Survey &rarr; install &rarr; Annual Maintenance Contract (AMC), one scope</li>
-              <li>Monthly inspections &middot; 24/7 call-out</li>
             </ul>
               <p className="proof-seal-note">ALNANDA Contracting visual, not an official seal.</p>
           </div>

@@ -1211,7 +1211,10 @@ textarea:focus-visible {
 
 .proof-grid {
   display: grid;
-  grid-template-columns: 340px 1fr;
+  /* Left wider than right. The right card holds a single fixed-width 148px
+     badge, so a fixed track states that; the seal card takes the rest. Was
+     `340px 1fr`, which made the badge card roughly twice the seal card. */
+  grid-template-columns: 1fr 420px;
   gap: 24px;
   align-items: stretch;
 }
