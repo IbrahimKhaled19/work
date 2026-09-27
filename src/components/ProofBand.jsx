@@ -27,7 +27,7 @@ function ProofBand({
             <ul>
               <li>NFPA & Egyptian Code delivery</li>
               <li>Survey &rarr; install &rarr; Annual Maintenance Contract (AMC), one scope</li>
-              <li>Monthly inspections &middot; 24/7 call-out</li>
+              <li>Inspections</li>
             </ul>
           </div>
           <div className="proof-strip">

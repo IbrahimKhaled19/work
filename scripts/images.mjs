@@ -119,10 +119,10 @@ const TARGETS = [
     id: 'gacpSeal',
     source: 'logos/gacp-egypt-logo-hd.png',
     output: 'gacp-seal',
-    // .proof-badge-frame img is width:148px, height:auto -> 1x and 2x.
-    widths: [148, 296],
-    displayWidth: 148,
-    displayHeight: 165,
+    // .proof-badge-frame img is width:180px, height:auto -> 1x and 2x.
+    widths: [180, 360],
+    displayWidth: 180,
+    displayHeight: 201,
     class: GRAPHIC,
     alt: 'GACP Egypt certification seal',
     note: 'Displayed at 148px wide. Was 3.8 MB at 1896x2116.',

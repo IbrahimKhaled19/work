@@ -38,15 +38,15 @@ export const images = {
   },
   "gacpSeal": {
     "id": "gacpSeal",
-    "src": "/img/gacp-seal-148.webp",
+    "src": "/img/gacp-seal-180.webp",
     "srcSet": {
-      "avif": "/img/gacp-seal-148.avif 148w, /img/gacp-seal-296.avif 296w",
-      "webp": "/img/gacp-seal-148.webp 148w, /img/gacp-seal-296.webp 296w"
+      "avif": "/img/gacp-seal-180.avif 180w, /img/gacp-seal-360.avif 360w",
+      "webp": "/img/gacp-seal-180.webp 180w, /img/gacp-seal-360.webp 360w"
     },
-    "width": 296,
-    "height": 330,
-    "displayWidth": 148,
-    "displayHeight": 165,
+    "width": 360,
+    "height": 402,
+    "displayWidth": 180,
+    "displayHeight": 201,
     "sizes": null,
     "alt": "GACP Egypt certification seal"
   },
