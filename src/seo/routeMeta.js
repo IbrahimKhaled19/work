@@ -43,7 +43,7 @@ const staticRoutes = {
   '/': {
     title: 'ALNANDA Contracting | Fire Protection & Fire Fighting in Egypt',
     description:
-      'Civil Defense approved fire safety contractor in Egypt. Fire pumps, sprinklers, ' +
+      'Civil Defense approved fire protection contractor in Egypt. Fire pumps, sprinklers, ' +
       'detection, suppression and compliance to NFPA and Egyptian code. 25+ years.',
     priority: 1.0,
     changefreq: 'monthly',

@@ -89,7 +89,7 @@ export const site = {
   ogImageHeight: 630,
   ogImageType: 'image/jpeg',
   ogImageAlt:
-    'ALNANDA Contracting - Civil Defense approved fire safety and fire fighting contractor in Egypt',
+    'ALNANDA Contracting - Civil Defense approved fire protection and fire fighting contractor in Egypt',
 
   positioning:
     'Authority-led engineering: complete fire protection engineered to code, ' +
