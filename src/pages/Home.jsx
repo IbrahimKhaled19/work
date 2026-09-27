@@ -42,7 +42,7 @@ const pathSteps = [
   {
     step: '04 - Maintain',
     title: 'Maintain & Cover',
-    desc: 'Monthly Annual Maintenance Contract (AMC) inspections with 24/7 emergency call-out and compliance cover.',
+    desc: 'Scheduled inspections and rapid-response cover keep your fire systems audit-ready and your facility protected long after handover.',
   },
 ]
 
@@ -131,7 +131,7 @@ function Home() {
             header={{
               eyebrow: 'How We Deliver',
               title: 'Survey \u2192 Design \u2192 Install \u2192 Maintain',
-              text: 'One Civil Defense-approved partner owns every step, so 25+ years of tenure shows up as a complete compliance path, not isolated products.',
+              text: 'No handoffs, no finger-pointing between vendors. One accountable partner delivers a complete compliance path from first survey to ongoing maintenance.',
             }}
             items={pathSteps}
           />
