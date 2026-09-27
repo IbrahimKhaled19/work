@@ -2113,12 +2113,21 @@ textarea:focus-visible {
 
 .service-detail-layout {
   display: grid;
-  /* Single column: the aside that shared this grid was removed in favour of
-     the FeatureSplit spotlight further down. Every text block inside is already
-     capped (65/68/62ch), so the wider column does not stretch line lengths. */
-  grid-template-columns: 1fr;
+  /* Two columns again: the overview prose on the left, the scope split on the
+     right. The aside that used to occupy this second column was replaced by
+     that split in 03000b3, so the track came back rather than the aside. */
+  grid-template-columns: 1.15fr 1fr;
   gap: 48px;
   align-items: start;
+}
+
+/* The split is a 1.05fr/0.95fr two-column band in its own right, which is far
+   too narrow for a second column pair plus a 4:3 media frame. Collapsed to one
+   column it stacks, and .feature-split-flip puts the media above the text. */
+.service-detail-layout .feature-split {
+  grid-template-columns: 1fr;
+  gap: 28px;
+  margin: 0;
 }
 
 .service-detail-lead {

@@ -7,7 +7,7 @@ import Picture from './Picture'
  * `image` remains as a fallback for a plain URL.
  */
 function FeatureSplit({
-  heading,
+  heading = null,
   body,
   imageId = null,
   image = null,
@@ -22,7 +22,9 @@ function FeatureSplit({
   return (
     <div className={`feature-split${flip ? ' feature-split-flip' : ''}`}>
       <Reveal className="feature-text">
-        <h2>{heading}</h2>
+        {/* Optional: a split sitting beside an existing heading passes none, and
+            an empty <h2> would be a second, meaningless heading on the page. */}
+        {heading && <h2>{heading}</h2>}
         <p className="service-detail-text">{body}</p>
       </Reveal>
       <Reveal className="feature-media" variant="scale" delay={120}>
