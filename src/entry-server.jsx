@@ -37,6 +37,7 @@ import ServiceDetail from './pages/ServiceDetail'
 import About from './pages/About'
 import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
+import Careers from './pages/Careers'
 import NotFound from './pages/NotFound'
 
 /**
@@ -54,6 +55,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/careers" element={<Careers />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

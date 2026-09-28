@@ -79,6 +79,22 @@ const staticRoutes = {
     priority: 0.8,
     changefreq: 'yearly',
   },
+  // Indexable, not noindex. A careers page that is reachable only from a
+  // footer link is findable by nobody, and it is the sort of page that
+  // attracts applicants through search rather than through the site.
+  //
+  // changefreq is 'weekly' rather than the 'yearly' used by the other static
+  // pages because this is the one page whose content changes when the business
+  // hires. It still resolves to a stable Sitemap lastmod either way, so this is
+  // intent rather than a crawl instruction - Google ignores the value.
+  '/careers': {
+    title: 'Careers at ALNANDA Contracting | Fire Protection Jobs in Egypt',
+    description:
+      'Careers in fire protection engineering, installation and maintenance ' +
+      'across Egypt. Civil Defense approved, thirteen disciplines, since 1993.',
+    priority: 0.5,
+    changefreq: 'weekly',
+  },
 }
 
 export const notFoundMeta = {

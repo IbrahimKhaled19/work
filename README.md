@@ -182,7 +182,7 @@ and `verify:seo` asserts their absence so a later edit cannot reintroduce them:
 ### 2. `src/seo/routeMeta.js` — per-route metadata
 
 `getRouteMeta(pathname)` returns `{ title, description, canonical, robots, ... }`
-for each of the 18 routes. Service-page descriptions are derived from copy that
+for each of the 19 routes. Service-page descriptions are derived from copy that
 already ships in `src/data/services.js` — no invented marketing text.
 
 **Adding a route?** Add it to `staticRoutes` in `routeMeta.js`, then run
@@ -218,7 +218,7 @@ Deploy the **contents of `dist/`** — not the repository, and not `public/`.
 
 This is a **prerendered** site: `/about` exists as a real file. If your host has
 a catch-all SPA rewrite — `/* → /index.html` — then every route silently serves
-the **homepage**, with the homepage's title and canonical on all 19 URLs. SEO
+the **homepage**, with the homepage's title and canonical on all 20 URLs. SEO
 collapses to a single page and nothing errors to warn you.
 
 You want the opposite: resolve real files first, let anything unmatched fall

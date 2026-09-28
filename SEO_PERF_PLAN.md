@@ -73,7 +73,7 @@ The 132.6 KB gzip JS figure is the number Phase 5 works against. The empty `<bod
 | `public/` + `dist/` | 6.35 MB | < 1 MB |
 | `gacp-egypt-logo-hd.png` | 3,779 KB | < 10 KB |
 | `hero-fire-protection.webp` | 1,194 KB | < 150 KB total across `srcset` |
-| Crawlable body content | empty | full text on all 18 routes |
+| Crawlable body content | empty | full text on all 19 routes |
 
 
 ---
@@ -368,7 +368,7 @@ Accessibility 100, best-practices 100, SEO 100 throughout.
 
 Hosts disagree about what `/about` should map to. Apache and Netlify serve `about/index.html`; Vercel's `cleanUrls` and most CDNs look for `about.html`. Emitting one form means the site 404s on half of all hosts, silently, until someone follows a deep link.
 
-The prerender now writes **both** forms of every route — 19 routes, 36 HTML files. Costs ~1.3 MB of deploy size; removes an entire class of silent failure. `verify:build` asserts the two copies are byte-identical, because if they ever diverged the host would serve different metadata depending on which form a visitor's URL resolved to.
+The prerender now writes **both** forms of every route — 20 routes, 38 HTML files. Costs ~1.3 MB of deploy size; removes an entire class of silent failure. `verify:build` asserts the two copies are byte-identical, because if they ever diverged the host would serve different metadata depending on which form a visitor's URL resolved to.
 
 ### `verify:deploy` rejects the SPA rewrite
 
@@ -381,7 +381,7 @@ FAILED (38)
   - route /about: missing dist/about.html
   ...
   - _redirects contains a catch-all rewrite to index.html ("/*    /index.html").
-    That is the SPA rule and it would serve the homepage for all 19 routes.
+    That is the SPA rule and it would serve the homepage for all 20 routes.
 ```
 
 The same run surfaced a second hazard: **`build:client` alone empties `dist/`**, because Vite cleans the output directory. A deploy of a client-only build has no prerendered pages at all. `verify:deploy` catches it. Only `npm run build` produces a deployable `dist/`.
@@ -466,7 +466,7 @@ Uniform, and **CLS is 0 on all 17**. The 13 service pages score marginally *high
 
 `verify:seo` proves the structured data parses. That is not sufficient: JSON-LD fails rich-results eligibility while remaining valid JSON — an invented property, a wrong shape, a missing required property, or a nested object with no `@type` are all silently ignored rather than reported.
 
-`npm run verify:schema` walks all 36 HTML files (35 documents, 165 nodes, 5 types) against a **closed** vocabulary. Closed is the point: a property added to the markup but not to the vocabulary fails the build.
+`npm run verify:schema` walks all 38 HTML files (37 documents, 173 nodes, 5 types) against a **closed** vocabulary. Closed is the point: a property added to the markup but not to the vocabulary fails the build.
 
 The markup needed no changes. All 30 initial failures were gaps in the checker — `areaServed` legitimately accepts an array of Place nodes, and bare `{"@id": …}` references are standard recommended JSON-LD that deliberately carry no `@type`. I had the checker wrong in both cases, in the direction of false alarms.
 
@@ -522,7 +522,7 @@ documented above did not reproduce on the live host — LCP is **812 ms, scoring
 ## Phase 8 — live deployment verification ✅ done
 
 A green build is not evidence the site works. Two failure modes are silent: a
-catch-all `/* → /index.html` rewrite serves the homepage for all 19 routes, and
+catch-all `/* → /index.html` rewrite serves the homepage for all 20 routes, and
 a client-only bundle (a `vite build` without the prerender step) passes every
 build-time guard while shipping zero crawlable text. Both were checked against
 the live host rather than inferred from the build log.
@@ -592,7 +592,7 @@ therefore invisible to the suite by construction, not by oversight: unsized
 images, a blocked back/forward cache, a deprecated API.
 
 `verify:images` (check 11) closes the instance that was asked about, in a way
-Lighthouse cannot: it reads the built `dist/`, so one pass covers all 19 routes
+Lighthouse cannot: it reads the built `dist/`, so one pass covers all 20 routes
 and both resolution forms, needs no browser, and costs no Lighthouse run.
 Negative-tested by deleting `width`/`height` from `Picture.jsx` and rebuilding
 — the guard failed, exit 1, naming all 19 affected pages.
@@ -693,7 +693,7 @@ Never mix phases in a single commit, so a regression bisects cleanly.
 
 ## Definition of done
 
-- [ ] All 19 routes serve real HTML content with no JS execution
+- [ ] All 20 routes serve real HTML content with no JS execution
 - [ ] 19 unique `<title>` / `meta description` / `rel=canonical`
 - [ ] Valid `GeneralContractor` + `Service` + `BreadcrumbList` JSON-LD
 - [ ] Working `sitemap.xml` + `robots.txt`; no `meta keywords`
