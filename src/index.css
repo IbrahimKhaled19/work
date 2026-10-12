@@ -2101,7 +2101,6 @@ textarea:focus-visible {
 
 .milestone {
   background: #fff;
-  border-top: 4px solid var(--red);
   border-radius: var(--radius);
   padding: 24px;
   box-shadow: var(--shadow);
@@ -2387,8 +2386,6 @@ textarea:focus-visible {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--ink);
-  border-left: 3px solid var(--red);
-  padding-left: 10px;
   margin: 0 0 8px;
 }
 
@@ -2745,24 +2742,11 @@ textarea:focus-visible {
 }
 
 .quote-form {
-  position: relative;
-  overflow: hidden;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 36px;
   box-shadow: var(--shadow);
-}
-
-.quote-form::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--red), transparent);
-  pointer-events: none;
 }
 
 .quote-form h3 {
