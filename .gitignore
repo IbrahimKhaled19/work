@@ -14,3 +14,9 @@ dist-ssr/
 # Committed audits would be stale the moment the code changes.
 lighthouse_report.json
 lighthouse-*.json
+
+# OpenCode tooling is machine-local: the ponytail plugin and its slash
+# commands install per developer and are not part of the site or its build.
+# (.opencode/skills/ stays tracked - it is shared reference material.)
+.opencode/command/
+.opencode/plugins/
