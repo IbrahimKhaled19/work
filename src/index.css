@@ -2073,6 +2073,24 @@ textarea:focus-visible {
   margin-bottom: 10px;
 }
 
+/* Founder portrait. Circular crop with a ring that echoes .proof-seal-badge
+   (the shield circles used on the other cards). object-fit cover fills the
+   fixed box without distortion; the crop is biased upward so the face stays
+   in frame for a standard portrait. */
+.about-card .founder-photo {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  object-position: center 22%;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 4px;
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 0 0 14px rgba(255, 255, 255, 0.08),
+    var(--shadow-lg);
+}
+
 /* Milestones */
 .milestones {
   display: grid;

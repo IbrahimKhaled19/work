@@ -8,6 +8,7 @@ import Reveal from '../components/Reveal'
 import SectionHead from '../components/SectionHead'
 import WhyList from '../components/WhyList'
 import Milestones from '../components/Milestones'
+import Picture from '../components/Picture'
 import CTA from '../components/CTA'
 
 const milestones = [
@@ -207,9 +208,11 @@ function About() {
             </p>
           </div>
           <div className="about-card">
-            <span className="proof-seal-badge" aria-hidden="true">
-              <ShieldCheck size={44} />
-            </span>
+            <Picture
+              id="founder"
+              alt="Abdalatty Mohamed Abdalatty, founder of ALNADA Contracting"
+              className="founder-photo"
+            />
             <h3>Our Founder</h3>
             <p className="about-founder-name">Abdalatty Mohamed Abdalatty</p>
             <p>

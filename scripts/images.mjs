@@ -127,6 +127,20 @@ const TARGETS = [
     alt: 'GACP Egypt certification seal',
     note: 'Displayed at 148px wide. Was 3.8 MB at 1896x2116.',
   },
+  {
+    id: 'founder',
+    source: 'founder.jpeg',
+    output: 'founder',
+    // Perhaps a portrait on the About page card. The card sits in the 1fr track
+    // of a 1.5fr/1fr grid (~457px with 40px padding), so the photo fills a
+    // ~220px circular box; 480px wide is 2x of that at the source's 1073px,
+    // so nothing is upscaled.
+    widths: [240, 480],
+    displayWidth: 240,
+    class: PHOTO,
+    alt: 'Abdalatty Mohamed Abdalatty, founder of ALNADA Contracting',
+    note: 'Founder portrait on the About page card.',
+  },
   ...CLIENT_LOGOS.map((logo) => ({
     id: `logo-${logo.name}`,
     source: `logos/${logo.file}`,

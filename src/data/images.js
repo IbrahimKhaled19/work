@@ -50,6 +50,20 @@ export const images = {
     "sizes": null,
     "alt": "GACP Egypt certification seal"
   },
+  "founder": {
+    "id": "founder",
+    "src": "/img/founder-240.webp",
+    "srcSet": {
+      "avif": "/img/founder-240.avif 240w, /img/founder-480.avif 480w",
+      "webp": "/img/founder-240.webp 240w, /img/founder-480.webp 480w"
+    },
+    "width": 480,
+    "height": 656,
+    "displayWidth": 240,
+    "displayHeight": 656,
+    "sizes": null,
+    "alt": "Abdalatty Mohamed Abdalatty, founder of ALNADA Contracting"
+  },
   "logo-carina": {
     "id": "logo-carina",
     "src": "/img/logo-carina.avif",
