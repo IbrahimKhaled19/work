@@ -14,7 +14,7 @@ Other audiences (present in navigation but secondary): contractors/developers ne
 
 ## Product Purpose
 
-Marketing and lead-generation website for ALNANDA Contracting. It explains fire-protection services, establishes authority through engineering depth and Civil Defense compliance, and drives assessment/contact requests with a 1-hour engineer callback promise during working hours. Success means qualified quote requests via the Contact page.
+Marketing and lead-generation website for ALNADA Contracting. It explains fire-protection services, establishes authority through engineering depth and Civil Defense compliance, and drives assessment/contact requests with a 1-hour engineer callback promise during working hours. Success means qualified quote requests via the Contact page.
 
 ## Positioning
 
@@ -38,7 +38,7 @@ Explicitly undecided / missing: no backend or delivery path for quote submission
 
 ## Brand Commitments
 
-Name: ALNANDA Contracting. Voice: factual, compliance-focused, safety-first. Email still uses the legacy info@universalfirefighting.com domain — rebrand the address when the new domain is confirmed. Binding facts: Civil Defense-approved partner claims (Egypt), NFPA + Egyptian Fire Protection Code language, theme-color `#CC2643`, contact facts (call/WhatsApp +20 100 362 0490 via tel:+201003620490 and https://wa.me/201003620490; info@universalfirefighting.com; Mon–Sat 8:00 AM–6:00 PM · 24/7 Emergency). Assets on hand: `public/favicon.svg` only. No binding visual direction was volunteered during init.
+Name: ALNADA Contracting. Voice: factual, compliance-focused, safety-first. Email still uses the legacy info@universalfirefighting.com domain — rebrand the address when the new domain is confirmed. Binding facts: Civil Defense-approved partner claims (Egypt), NFPA + Egyptian Fire Protection Code language, theme-color `#CC2643`, contact facts (call/WhatsApp +20 100 362 0490 via tel:+201003620490 and https://wa.me/201003620490; info@universalfirefighting.com; Mon–Sat 8:00 AM–6:00 PM · 24/7 Emergency). Assets on hand: `public/favicon.svg` only. No binding visual direction was volunteered during init.
 
 ## Evidence on Hand
 

@@ -1,6 +1,6 @@
-# ALNANDA Contracting
+# ALNADA Contracting
 
-Marketing and lead-generation site for ALNANDA Contracting, a Civil Defense
+Marketing and lead-generation site for ALNADA Contracting, a Civil Defense
 approved fire protection and life safety contractor operating across Egypt.
 
 Stack: React 19 + Vite 8 + React Router 7 + Phosphor icons. No backend — the

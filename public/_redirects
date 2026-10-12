@@ -1,4 +1,4 @@
-# ALNANDA Contracting - Netlify / Cloudflare Pages
+# ALNADA Contracting - Netlify / Cloudflare Pages
 #
 # Route resolution is deliberately left alone. Netlify and Cloudflare Pages
 # already serve dist/<route>/index.html for /about, and serve dist/404.html

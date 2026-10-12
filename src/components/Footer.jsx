@@ -13,7 +13,7 @@ function Footer() {
     <footer className="footer">
       <div className="container footer-grid">
         <div className="footer-col">
-          <h3>ALNANDA Contracting</h3>
+          <h3>ALNADA Contracting</h3>
           <p>
             Egypt's trusted Civil Defense approved partner for fire fighting and
             life safety systems. Design, supply, installation, testing and
@@ -81,7 +81,7 @@ function Footer() {
       </div>
 
       <div className="container footer-bottom">
-        <p>© {new Date().getFullYear()} ALNANDA Contracting. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} ALNADA Contracting. All rights reserved.</p>
       </div>
     </footer>
   )

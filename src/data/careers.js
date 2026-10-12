@@ -6,7 +6,7 @@
  * verified - the same reason PRODUCT.md forbids inventing testimonials, case
  * studies, press or pricing. An invented job listing is worse than a missing
  * one: it costs a candidate an interview, and it is a false statement about
- * ALNANDA published under the client's own name.
+ * ALNADA published under the client's own name.
  *
  * The page is complete and indexable with this array empty. It renders a "no
  * current openings, send us your CV" state instead of a vacancy list, so the

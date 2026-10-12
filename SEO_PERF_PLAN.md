@@ -1,4 +1,4 @@
-# SEO & Performance Plan — ALNANDA Contracting
+# SEO & Performance Plan — ALNADA Contracting
 
 Audit source: source review of `index.html`, `src/**`, `public/**`, `vite.config.js`.
 Status: **planned, not started.**
@@ -106,7 +106,7 @@ Driven by `PRODUCT.md`'s claim-safety rules, four things a normal `LocalBusiness
 
 Two content issues surfaced while tracing the NAP data, both needing a business decision:
 
-1. **The contact email belongs to a different company.** Git history shows the site was reskinned from a UAE entity ("Universal Fire Fighting", `+971 2 551 3111`, Mussafah 32/1 Abu Dhabi) to ALNANDA Contracting. The phone number was correctly migrated to `+20 100 362 0490`, but the email domain was not. It is currently a dead-end for customers and is excluded from schema here.
+1. **The contact email belongs to a different company.** Git history shows the site was reskinned from a UAE entity ("Universal Fire Fighting", `+971 2 551 3111`, Mussafah 32/1 Abu Dhabi) to ALNADA Contracting. The phone number was correctly migrated to `+20 100 362 0490`, but the email domain was not. It is currently a dead-end for customers and is excluded from schema here.
 2. **Founding year tension.** `founded: 1993` is confirmed, which implies ~33 years as of 2026, but every claim in the UI says "25+ years". `PRODUCT.md` flags this as unresolved. `site.js` keeps `yearsExperience: '25+'` and does not derive a number from `founded`.
 
 Still placeholders that SEO must not touch until supplied: `ogImage` (`/og-image.jpg`, created in Phase 4), `legalName`, `address`, `social`.
@@ -144,7 +144,7 @@ Verified by raw HTTP fetch with **no JavaScript executed** — the actual crawle
 
 ```
 /                            200  74,179 B  h1 "Complete fire protection, engineered to code…"
-/about                       200  65,057 B  h1 "About ALNANDA Contracting"
+/about                       200  65,057 B  h1 "About ALNADA Contracting"
 /services                    200 105,764 B  h1 "Complete Fire Protection Systems…"
 /services/fire-pump-systems  200  68,626 B  h1 "Fire Pump Systems"
 /nope-does-not-exist         404  (404 document)
@@ -397,9 +397,9 @@ Notably, `_redirects` contains **no catch-all at all**. On Netlify, redirect rul
 ### Verified over HTTP, all forms
 
 ```
-/about                                 200  h1 "About ALNANDA Contracting"
-/about/                                200  h1 "About ALNANDA Contracting"
-/about.html                            200  h1 "About ALNANDA Contracting"
+/about                                 200  h1 "About ALNADA Contracting"
+/about/                                200  h1 "About ALNADA Contracting"
+/about.html                            200  h1 "About ALNADA Contracting"
 /services/fire-pump-systems            200  h1 "Fire Pump Systems"
 /services/fire-pump-systems/           200  h1 "Fire Pump Systems"
 /nope                                  404  (404 document)

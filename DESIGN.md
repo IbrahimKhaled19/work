@@ -1,5 +1,5 @@
 ---
-name: ALNANDA Contracting
+name: ALNADA Contracting
 description: Civil Defense-approved fire protection partner for the UAE.
 colors:
   signal-red: "#CC2643"
@@ -84,7 +84,7 @@ components:
     padding: "12px 14px"
 ---
 
-# Design System: ALNANDA Contracting
+# Design System: ALNADA Contracting
 
 ## Overview
 

@@ -5,7 +5,7 @@ import site from '../seo/site.js'
 
 function CTA({
   title = 'Talk to a fire-protection engineer',
-  subtitle = `Send a quote request during working hours (${site.hours.inline}), and an ALNANDA Contracting engineer will call you back.`,
+  subtitle = `Send a quote request during working hours (${site.hours.inline}), and an ALNADA Contracting engineer will call you back.`,
   quoteText = 'Get a Free Quote',
   quoteHref = '/contact',
   whatsappText = 'Chat on WhatsApp',

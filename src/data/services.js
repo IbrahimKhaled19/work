@@ -26,8 +26,8 @@ export const serviceSections = [
     ],
     standards: 'NFPA 13, NFPA 20 · Egyptian Fire Protection Code',
     overview: [
-      'At ALNANDA Contracting, we treat design as the foundation of everything that follows, not a formality to get through before installation starts. Our engineering team handles the hydraulic calculations, pump sizing, water supply analysis, and complete shop drawings that determine whether a fire protection system actually performs when it is needed, working directly alongside your architects and MEP consultants so protection is planned into the building, not retrofitted around it.',
-      'ALNANDA Contracting has spent 25 years building the engineering discipline that prevents that outcome. Every project starts with an honest assessment of the space, the stored materials or processes, and the water supply available, not an assumption carried over from a similar-looking building down the road.',
+      'At ALNADA Contracting, we treat design as the foundation of everything that follows, not a formality to get through before installation starts. Our engineering team handles the hydraulic calculations, pump sizing, water supply analysis, and complete shop drawings that determine whether a fire protection system actually performs when it is needed, working directly alongside your architects and MEP consultants so protection is planned into the building, not retrofitted around it.',
+      'ALNADA Contracting has spent 10 years building the engineering discipline that prevents that outcome. Every project starts with an honest assessment of the space, the stored materials or processes, and the water supply available, not an assumption carried over from a similar-looking building down the road.',
     ],
     whyHeading: 'Why Engineering Matters',
     whyText: 'A fire protection system is only as strong as the numbers behind it. Get the hydraulic calculations wrong, misjudge the hazard classification of a space, or underestimate the water supply, and the system may look complete on the drawings while failing the moment it is actually tested, or worse, during a real fire. Facilities that skip proper engineering, or hand it to a contractor without the technical depth to do it correctly, often discover the gap only when a Civil Defense inspector or an insurer’s assessor finds it first.',
@@ -39,7 +39,7 @@ export const serviceSections = [
       'Engineering-first approach: we design before we install, not the other way around',
       'Direct coordination with your architects and MEP consultants',
       'Full documentation package for permitting and future reference',
-      '25 years of design experience across industrial and commercial facilities',
+      '10 years of design experience across industrial and commercial facilities',
       'GACP Egypt certified',
     ],
     cta: {
@@ -64,14 +64,14 @@ export const serviceSections = [
     ],
     standards: 'NFPA 20 acceptance testing · NFPA 25 periodic testing',
     overview: [
-      'Fire pump systems are ALNANDA Contracting’s core specialty, and for good reason. Every sprinkler head, standpipe outlet, and hose station in a facility depends entirely on the pump behind it delivering the right pressure and flow, on demand, without fail. We supply, install, and commission electric, diesel, and jockey pump systems in horizontal split case, vertical turbine, and end suction configurations, each matched to the specific water source and demand profile of the facility.',
-      'Over 25 years, our team has both installed new pump systems and diagnosed failing ones on facilities that inherited non-compliant work from previous contractors. That dual experience, building it right the first time, and knowing exactly what goes wrong when it is not, shapes how carefully we approach every installation.',
+      'Fire pump systems are ALNADA Contracting’s core specialty, and for good reason. Every sprinkler head, standpipe outlet, and hose station in a facility depends entirely on the pump behind it delivering the right pressure and flow, on demand, without fail. We supply, install, and commission electric, diesel, and jockey pump systems in horizontal split case, vertical turbine, and end suction configurations, each matched to the specific water source and demand profile of the facility.',
+      'Over 10 years, our team has both installed new pump systems and diagnosed failing ones on facilities that inherited non-compliant work from previous contractors. That dual experience, building it right the first time, and knowing exactly what goes wrong when it is not, shapes how carefully we approach every installation.',
     ],
     whyHeading: 'Why Fire Pump Systems Matter',
     whyText: 'A sprinkler network or standpipe system is only as reliable as the pump feeding it. Without adequate pressure and flow, even a perfectly designed pipe network becomes ineffective the moment it is needed. An undersized pump, an incorrectly configured controller, or a pump that was never properly acceptance-tested is one of the most common reasons a fire protection system fails inspection, or fails in an actual fire, which is a far more serious outcome.',
     coverageHeading: 'Types of Fire Pump Systems We Install',
     coverageIntro: 'Choosing the right pump configuration depends on your power reliability, water source, and facility layout:',
-    approach: 'Every pump installation from ALNANDA Contracting includes full controller setup for either flooded-suction or lift-condition design, followed by flow and churn testing and pump curve verification before we consider the job complete. We do not sign off on a pump system until it has demonstrated it performs at its rated duty point, not just that it powers on. If a facility already has a pump system in place that is underperforming, poorly documented, or was never properly commissioned, our team diagnoses the actual cause, a controller misconfiguration, an undersized impeller, a suction issue, and brings the system up to code rather than defaulting to a full and unnecessary replacement.',
+    approach: 'Every pump installation from ALNADA Contracting includes full controller setup for either flooded-suction or lift-condition design, followed by flow and churn testing and pump curve verification before we consider the job complete. We do not sign off on a pump system until it has demonstrated it performs at its rated duty point, not just that it powers on. If a facility already has a pump system in place that is underperforming, poorly documented, or was never properly commissioned, our team diagnoses the actual cause, a controller misconfiguration, an undersized impeller, a suction issue, and brings the system up to code rather than defaulting to a full and unnecessary replacement.',
     compliance: 'Installed and tested to NFPA 20 acceptance testing requirements, with NFPA 25 periodic testing available as an ongoing maintenance service to keep the system certified year after year.',
     spotlight: {
       image: null,
@@ -82,7 +82,7 @@ export const serviceSections = [
       flip: false,
     },
     whyChoose: [
-      '25 years of hands-on pump installation and commissioning experience means our team has encountered nearly every configuration and failure mode a facility can present',
+      '10 years of hands-on pump installation and commissioning experience means our team has encountered nearly every configuration and failure mode a facility can present',
       'Full acceptance testing before handover, with no guesswork',
       'Remediation service for existing non-compliant installations',
       'GACP Egypt certified, with full acceptance testing and documentation, so you have proof of performance, not just an invoice',
@@ -108,7 +108,7 @@ export const serviceSections = [
     ],
     standards: 'NFPA 13',
     overview: [
-      'A sprinkler system is a facility’s automatic first response to fire, activating before anyone dials for help, containing flames while they are still small enough to control. ALNANDA Contracting engineers and installs the complete pipe network, from header to individual sprinkler head, matched precisely to the hazard classification of the space it protects.',
+      'A sprinkler system is a facility’s automatic first response to fire, activating before anyone dials for help, containing flames while they are still small enough to control. ALNADA Contracting engineers and installs the complete pipe network, from header to individual sprinkler head, matched precisely to the hazard classification of the space it protects.',
     ],
     whyHeading: 'Why Sprinkler Systems Matter',
     whyText: 'The value of a correctly designed sprinkler system is difficult to overstate: it controls fire spread in the critical minutes before emergency services can arrive, protecting both occupants and the physical asset itself. The reverse is also true. A system with the wrong configuration for its hazard class, or sprinkler heads spaced incorrectly for their coverage area, can fail to control a fire even while technically being installed. Insurance premiums are frequently tied directly to whether a facility has a correctly installed, code-compliant sprinkler system, making this one of the highest-value investments in a facility’s overall risk profile.',
@@ -117,7 +117,7 @@ export const serviceSections = [
     approach: 'Installation covers the full pipe network, header, riser, cross main, and branch lines, with every sprinkler head selected for the hazard classification and ceiling coverage area of the specific space it protects, not applied uniformly across the whole facility. Before any system is signed off, it is flushed and hydrostatically pressure-tested to confirm there are no leaks, blockages, or weak points in the network. Wear and tear over time, corroded fittings, painted-over sprinkler heads, gauges that no longer read accurately, is addressed through scheduled inspection rather than waiting for a problem to surface during an emergency. We maintain access to sprinkler heads and components from all major manufacturers, so replacements match your system’s existing design rather than introducing incompatible parts.',
     compliance: 'Designed and installed to NFPA 13, the governing standard for sprinkler system design, installation, and hazard classification.',
     whyChoose: [
-      'With 100+ completed projects and 25 years in the field, our team has designed sprinkler systems across a wide range of hazard classes and facility types, meaning your system is sized for your actual risk, not a generic template',
+      'With 100+ completed projects and 10 years in the field, our team has designed sprinkler systems across a wide range of hazard classes and facility types, meaning your system is sized for your actual risk, not a generic template',
       'Correct classification from the outset means no over-engineered system inflating your costs, and no under-engineered one leaving gaps in your coverage',
     ],
     cta: {
@@ -141,7 +141,7 @@ export const serviceSections = [
     ],
     standards: 'NFPA 14',
     overview: [
-      'In multi-story or large-footprint buildings, a standpipe system gives firefighters and trained occupants reliable water access exactly where it is needed, not three floors and a long hose run away from the fire. ALNANDA Contracting installs Class I, II, and III standpipe systems, hose cabinets, and Fire Department Connections placed and sized according to code.',
+      'In multi-story or large-footprint buildings, a standpipe system gives firefighters and trained occupants reliable water access exactly where it is needed, not three floors and a long hose run away from the fire. ALNADA Contracting installs Class I, II, and III standpipe systems, hose cabinets, and Fire Department Connections placed and sized according to code.',
     ],
     whyHeading: 'Why Standpipe Systems Matter',
     whyText: 'In a multi-story fire, every minute spent running hose lines up stairwells is a minute the fire has to spread further. A correctly designed and placed standpipe system eliminates that delay, giving responders immediate access to pressurized water on the floor where it is actually needed. For buildings tall enough or large enough that hand-carried hose from ground level is not practical, a standpipe system is not an optional upgrade. It is the only way emergency response can realistically reach the affected floor in time.',
@@ -150,7 +150,7 @@ export const serviceSections = [
     approach: 'Our installations include hose cabinets, reels, landing valves, and hose valve assemblies, with Fire Department Connections positioned for genuinely fast external access, not simply wherever is most convenient on the building’s exterior wall. Every outlet is flow- and pressure-tested at commissioning to confirm it delivers what the design calls for at every floor, not just at the point closest to the pump.',
     compliance: 'Designed and installed to NFPA 14, which governs standpipe and hose system classification, sizing, and placement.',
     whyChoose: [
-      'We size Class selection to your building’s actual occupancy type and height rather than defaulting to the minimum code allows, and we plan FDC placement around how fire crews will realistically approach your building, informed by 25 years of projects across facilities of varying height and layout',
+      'We size Class selection to your building’s actual occupancy type and height rather than defaulting to the minimum code allows, and we plan FDC placement around how fire crews will realistically approach your building, informed by 10 years of projects across facilities of varying height and layout',
     ],
     cta: {
       text: 'Multi-story facility without a compliant standpipe system? Let’s fix that.',
@@ -173,7 +173,7 @@ export const serviceSections = [
     ],
     standards: 'NFPA 72-aligned detection and notification',
     overview: [
-      'A fire protection system that does not detect and alert fast enough fails at the exact moment it matters most. ALNANDA Contracting installs and integrates smoke and heat detection, addressable control panels, and notification systems that communicate directly with your sprinklers, your building management system, and Civil Defense monitoring where required.',
+      'A fire protection system that does not detect and alert fast enough fails at the exact moment it matters most. ALNADA Contracting installs and integrates smoke and heat detection, addressable control panels, and notification systems that communicate directly with your sprinklers, your building management system, and Civil Defense monitoring where required.',
     ],
     whyHeading: 'Why Detection Matters',
     whyText: 'Suppression systems only activate once a fire is already burning. Detection is what buys the minutes before that point, early enough for a safe evacuation and, in many cases, early enough to address a fire before it ever triggers full suppression and the water damage that comes with it. A slow, poorly zoned, or unintegrated alarm system undermines the value of every other fire protection investment in the building, because none of those systems can respond to a fire they have not been told about.',
@@ -183,7 +183,7 @@ export const serviceSections = [
     compliance: 'Designed to NFPA 72-aligned detection and notification standards, with integration to Civil Defense monitoring where the facility’s classification requires it.',
     whyChoose: [
       'Our approach starts by asking whether your existing systems are actually talking to each other, not just whether each one individually powers on',
-      'With 25 years of experience integrating detection into working facilities, we close the gaps that standalone installations typically leave behind',
+      'With 10 years of experience integrating detection into working facilities, we close the gaps that standalone installations typically leave behind',
     ],
     cta: {
       text: 'Is your alarm system actually integrated with the rest of your fire protection network? Let’s find out.',
@@ -205,7 +205,7 @@ export const serviceSections = [
     ],
     standards: 'NFPA 10',
     overview: [
-      'It is the simplest requirement in fire protection, and the one most often left to expire unnoticed. ALNANDA Contracting supplies, installs, and manages the full inspection and recharge schedule for your extinguishers, so this basic requirement never quietly becomes a compliance failure during an audit.',
+      'It is the simplest requirement in fire protection, and the one most often left to expire unnoticed. ALNADA Contracting supplies, installs, and manages the full inspection and recharge schedule for your extinguishers, so this basic requirement never quietly becomes a compliance failure during an audit.',
     ],
     whyHeading: 'Why This Matters',
     whyText: 'Portable extinguishers are almost always the first line of defense against a small, still-containable fire. The difference between a minor incident handled in seconds and one that grows into a full suppression event. The wrong extinguisher type for the hazard present, or a unit that has expired without anyone noticing, turns that first line of defense into a liability rather than a safeguard, and it is one of the most common findings in a failed Civil Defense inspection.',
@@ -236,7 +236,7 @@ export const serviceSections = [
     ],
     standards: 'NFPA 2001 (clean agent) · NFPA 96 (kitchen) · NFPA 11 (foam)',
     overview: [
-      'Server rooms, control rooms, commercial kitchens, and flammable liquid storage areas need more than a standard sprinkler head. In many cases, water is the last thing you want discharging onto the equipment or material at risk. ALNANDA Contracting designs and installs clean agent, CO2, kitchen hood, and foam suppression systems built for the specific hazard present in that space.',
+      'Server rooms, control rooms, commercial kitchens, and flammable liquid storage areas need more than a standard sprinkler head. In many cases, water is the last thing you want discharging onto the equipment or material at risk. ALNADA Contracting designs and installs clean agent, CO2, kitchen hood, and foam suppression systems built for the specific hazard present in that space.',
     ],
     whyHeading: 'Why Special Hazard Protection Matters',
     whyText: 'Water damage to a server room or control room can end up costing as much as the fire it was meant to prevent, sometimes more, once data loss and equipment replacement are factored in. A standard sprinkler in a commercial kitchen will not properly address a grease fire the way a wet chemical hood system will. Matching the suppression method to the actual hazard, rather than defaulting to water-based suppression everywhere, is what separates protecting an asset from destroying it in the process of extinguishing a fire.',
@@ -268,7 +268,7 @@ export const serviceSections = [
     ],
     standards: 'NFPA 80 (fire doors) · UL-listed firestop assemblies',
     overview: [
-      'Fire protection is not only pipes, detectors, and pumps. ALNANDA Contracting installs fire-rated doors, dampers, firestopping, and protective coatings that contain a fire and protect escape routes. It is the passive layer of protection that buys time while your active systems do their job.',
+      'Fire protection is not only pipes, detectors, and pumps. ALNADA Contracting installs fire-rated doors, dampers, firestopping, and protective coatings that contain a fire and protect escape routes. It is the passive layer of protection that buys time while your active systems do their job.',
     ],
     whyHeading: 'Why Passive Protection Matters',
     whyText: 'Active systems like sprinklers and alarms respond to a fire once it is detected. Passive protection is what stops that fire from spreading through walls, ducts, and penetrations in the first place. A properly firestopped cable penetration or a correctly rated fire door can be the difference between a fire staying contained to the room where it started and spreading through an entire floor before active systems even finish responding. Passive protection is also the layer most commonly compromised without anyone noticing. A cable pulled through a rated wall during a renovation, and never firestopped afterward, quietly undoes years of compliant construction.',
@@ -300,7 +300,7 @@ export const serviceSections = [
     ],
     standards: 'NFPA 25 inspection, testing & maintenance intervals',
     overview: [
-      'A system that is not tested is a system you are hoping works. ALNANDA Contracting runs scheduled inspections and testing across pumps, sprinklers, alarms, valves, tanks, and extinguishers, with full deficiency reporting, giving you documented proof of compliance, not just an assumption that everything is functioning.',
+      'A system that is not tested is a system you are hoping works. ALNADA Contracting runs scheduled inspections and testing across pumps, sprinklers, alarms, valves, tanks, and extinguishers, with full deficiency reporting, giving you documented proof of compliance, not just an assumption that everything is functioning.',
     ],
     whyHeading: 'Why Ongoing Maintenance Matters',
     whyText: 'Fire protection systems degrade silently. A stuck valve, a slowly corroding pipe section, or a drained battery backup on an alarm panel will not announce itself until the moment the system is actually called on, which is the worst possible time to discover a failure. Regular, documented testing is what catches these issues on a predictable schedule, before they become emergencies, and it is exactly what insurers and Civil Defense inspectors expect to find on file when they ask for maintenance records.',
@@ -332,7 +332,7 @@ export const serviceSections = [
     ],
     standards: null,
     overview: [
-      'Getting a fire protection system approved is a project in its own right, separate from the technical installation itself. ALNANDA Contracting prepares your documentation, liaises directly with Civil Defense, and manages the approval and licensing process end to end, so you are not the one chasing paperwork or interpreting a violation notice without technical support.',
+      'Getting a fire protection system approved is a project in its own right, separate from the technical installation itself. ALNADA Contracting prepares your documentation, liaises directly with Civil Defense, and manages the approval and licensing process end to end, so you are not the one chasing paperwork or interpreting a violation notice without technical support.',
     ],
     whyHeading: 'Why This Matters',
     whyText: 'A technically sound fire protection system still has to clear Civil Defense approval before a facility can legally operate. Missing documentation, drawings that do not match the as-built system, or an unresolved violation from a previous inspection can delay a facility opening by weeks, and that delay carries a real cost in lost operating time, independent of how well the fire protection itself was actually built.',
@@ -363,7 +363,7 @@ export const serviceSections = [
     ],
     standards: null,
     overview: [
-      'Codes change, buildings grow, and installations that were fully compliant when they went in do not always hold up under a closer look years later. ALNANDA Contracting upgrades aging systems to current code, corrects non-compliant installations, and expands capacity as a facility’s storage height or floor area grows beyond what the original system was designed for.',
+      'Codes change, buildings grow, and installations that were fully compliant when they went in do not always hold up under a closer look years later. ALNADA Contracting upgrades aging systems to current code, corrects non-compliant installations, and expands capacity as a facility’s storage height or floor area grows beyond what the original system was designed for.',
     ],
     whyHeading: 'Why Retrofits Matter',
     whyText: 'A system that was compliant a decade ago may not meet current code today, and a facility that has quietly expanded its storage height or floor area may have outgrown its original fire protection design without anyone noticing until an inspection flags it. Retrofit work is not just about correcting problems. It is about making sure a facility’s protection keeps pace with how the facility itself has changed.',
@@ -385,7 +385,7 @@ export const serviceSections = [
     short: 'Emergency',
     category: 'maintenance',
     title: 'Emergency & Repair Services',
-    text: 'A pump failure or a leak is a live safety gap from the moment it starts. ALNANDA Contracting provides emergency response and repair, backed by spare parts availability, so a system failure gets fixed before it becomes a real exposure.',
+    text: 'A pump failure or a leak is a live safety gap from the moment it starts. ALNADA Contracting provides emergency response and repair, backed by spare parts availability, so a system failure gets fixed before it becomes a real exposure.',
     points: [
       'Emergency dispatch: escalated to a named engineer rather than left in a call queue',
       'Pump and piping repair: addressing the most common points of failure in a fire protection system',
@@ -394,7 +394,7 @@ export const serviceSections = [
     ],
     standards: null,
     overview: [
-      'A pump failure or a leak is a live safety gap from the moment it starts. ALNANDA Contracting provides emergency response and repair, backed by spare parts availability, so a system failure gets resolved before it becomes a real exposure.',
+      'A pump failure or a leak is a live safety gap from the moment it starts. ALNADA Contracting provides emergency response and repair, backed by spare parts availability, so a system failure gets resolved before it becomes a real exposure.',
     ],
     whyHeading: 'Why This Matters',
     whyText: 'A failed fire pump or a leaking valve is a genuine safety gap from the moment it is discovered, not a problem that can be deferred indefinitely. Facilities without a dedicated emergency response provider often face extended downtime simply waiting for an available technician or the right spare part, during which the facility is operating with reduced or no fire protection.',
@@ -425,7 +425,7 @@ export const serviceSections = [
     ],
     standards: null,
     overview: [
-      'The best-engineered fire protection system still depends on people knowing what to do when it matters. ALNANDA Contracting trains facility staff on extinguisher use, plans and runs evacuation drills, and provides ongoing consulting for facility managers who do not have in-house fire protection expertise to draw on.',
+      'The best-engineered fire protection system still depends on people knowing what to do when it matters. ALNADA Contracting trains facility staff on extinguisher use, plans and runs evacuation drills, and provides ongoing consulting for facility managers who do not have in-house fire protection expertise to draw on.',
     ],
     whyHeading: 'Why Training Matters',
     whyText: 'A fully compliant system on paper does not help if staff hesitate, grab the wrong extinguisher, or do not know the evacuation route during an actual incident. Regular training and rehearsed evacuation procedures are what turn a compliant building into a genuinely prepared one. The gap between passing an inspection and actually being ready is almost always a training gap, not an equipment gap.',

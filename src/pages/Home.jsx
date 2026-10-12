@@ -21,9 +21,9 @@ import site from '../seo/site.js'
 // with the rest of the availability claims. `.stats-grid` uses auto-fit, so
 // this array's length drives the layout and adding a tile back needs no CSS.
 const stats = [
-  { target: 25, suffix: '+', label: 'Years of Experience', duration: 1100 },
-  { target: 100, suffix: '+', label: 'Projects Delivered', to: '/gallery', aria: 'View project gallery: 100+ projects delivered', duration: 1400 },
-  { target: 500, suffix: '+', label: 'Active AMC Clients', duration: 1200 },
+  { target: 10, suffix: '+', label: 'Years in Fire Protection', duration: 1100 },
+  { target: 100, suffix: '+', label: 'Fire Protection Projects', to: '/gallery', aria: 'View project gallery: 100+ projects delivered', duration: 1400 },
+  { target: 13, suffix: '', label: 'Services Under One Roof', duration: 1200 },
 ]
 
 const pathSteps = [

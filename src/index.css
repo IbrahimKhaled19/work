@@ -2066,6 +2066,13 @@ textarea:focus-visible {
   font-size: 0.95rem;
 }
 
+/* The founder's name, set apart from the surrounding biography copy. */
+.about-card .about-founder-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+}
+
 /* Milestones */
 .milestones {
   display: grid;
@@ -2111,7 +2118,7 @@ textarea:focus-visible {
 #overview,
 #coverage,
 #approach,
-#why-alnanda {
+#why-alnada {
   scroll-margin-top: 100px;
 }
 

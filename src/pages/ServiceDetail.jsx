@@ -140,9 +140,9 @@ function ServiceDetail() {
               </>
             )}
           </Reveal>
-          <Reveal variant="scale" className="service-detail-block" delay={100} id="why-alnanda">
-            <h2>Why choose ALNANDA Contracting</h2>
-            <ul className="check-list" aria-label={`Why choose ALNANDA Contracting for ${service.title}`}>
+          <Reveal variant="scale" className="service-detail-block" delay={100} id="why-alnada">
+            <h2>Why choose ALNADA Contracting</h2>
+            <ul className="check-list" aria-label={`Why choose ALNADA Contracting for ${service.title}`}>
               {service.whyChoose.map((p) => (
                 <li key={p}>{p}</li>
               ))}

@@ -35,7 +35,7 @@ const files = {}
 // 404.html with a 404 status automatically, so NO catch-all is written here.
 // A `/* /404.html 404` rule would be actively harmful: redirect rules take
 // precedence over static files on Netlify, so it would break every route.
-files['_redirects'] = `# ALNANDA Contracting - Netlify / Cloudflare Pages
+files['_redirects'] = `# ALNADA Contracting - Netlify / Cloudflare Pages
 #
 # Route resolution is deliberately left alone. Netlify and Cloudflare Pages
 # already serve dist/<route>/index.html for /about, and serve dist/404.html
@@ -108,7 +108,7 @@ files['vercel.json'] = `${JSON.stringify(
 // FallbackResource is the clean primitive here: it applies only when nothing
 // else matched, which is exactly the semantics we want. No mod_rewrite rules
 // are needed, so this works even on hosts with rewrite disabled.
-files['.htaccess'] = `# ALNANDA Contracting - Apache / cPanel shared hosting
+files['.htaccess'] = `# ALNADA Contracting - Apache / cPanel shared hosting
 
 DirectoryIndex index.html index.htm
 

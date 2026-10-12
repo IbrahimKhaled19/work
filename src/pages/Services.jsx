@@ -18,7 +18,7 @@ function Services() {
       <PageHero
         crumb="Services"
         title="Complete Fire Protection Systems: Engineered for Compliance, Built for Reliability"
-        subtitle="For 25 years, ALNANDA Contracting has designed, installed, and maintained fire protection systems for factories, warehouses, and commercial facilities across Egypt. Fire protection is not one system. It is thirteen disciplines working together, from the earliest hydraulic calculation to the last annual inspection, and a gap in any one of them is a gap in the whole facility's safety."
+        subtitle="For 10 years, ALNADA Contracting has designed, installed, and maintained fire protection systems for factories, warehouses, and commercial facilities across Egypt. Fire protection is not one system. It is thirteen disciplines working together, from the earliest hydraulic calculation to the last annual inspection, and a gap in any one of them is a gap in the whole facility's safety."
       />
 
       <section className="section">

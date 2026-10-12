@@ -65,7 +65,7 @@ function Navbar() {
     <>
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container nav-inner">
-        <Link to="/" className="brand" aria-label="ALNANDA Contracting, home" onClick={() => setOpen(false)}>
+        <Link to="/" className="brand" aria-label="ALNADA Contracting, home" onClick={() => setOpen(false)}>
             <Picture id="logo" alt="" loading="eager" fetchPriority="high" />
         </Link>
 

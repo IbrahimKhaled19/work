@@ -63,7 +63,7 @@ export function assertSiteUrl() {
 }
 
 export const site = {
-  name: 'ALNANDA Contracting',
+  name: 'ALNADA Contracting',
   legalName: null, // UNCONFIRMED - not supplied by the business
   url: SITE_URL,
   devOrigin: DEV_ORIGIN,
@@ -89,7 +89,7 @@ export const site = {
   ogImageHeight: 630,
   ogImageType: 'image/jpeg',
   ogImageAlt:
-    'ALNANDA Contracting - Civil Defense approved fire protection and fire fighting contractor in Egypt',
+    'ALNADA Contracting - Civil Defense approved fire protection and fire fighting contractor in Egypt',
 
   positioning:
     'Authority-led engineering: complete fire protection engineered to code, ' +
@@ -105,8 +105,7 @@ export const site = {
 
     // LEGACY. This is the domain of the previous UAE entity
     // (Universal Fire Fighting, Abu Dhabi) and does not match the
-    // ALNANDA brand. PRODUCT.md: "rebrand the address when the new domain
-    // is confirmed". Kept here because the UI displays it, but it is
+    // ALNADA brand. Kept here because the UI displays it, but it is
     // deliberately EXCLUDED from JSON-LD - see jsonld.js.
     email: 'info@universalfirefighting.com',
     emailIsLegacy: true,
@@ -178,12 +177,16 @@ export const site = {
     verifiedNfpa: ['NFPA 13', 'NFPA 14', 'NFPA 20', 'NFPA 25'],
   },
 
-  founded: '1993', // CONFIRMED per PRODUCT.md
-  // Kept as "25+" rather than deriving a year count from `founded`, because
-  // PRODUCT.md flags the arithmetic tension (1993 implies ~33 years) as
-  // unresolved. "25+" is the conservative, defensible claim.
-  yearsExperience: '25+',
-  projectsDelivered: '100+', // CONFIRMED
+  founded: '1993', // CONFIRMED per about-us-copy-v6.pdf: "The company was
+  // established in 1993 as a general contracting company, delivering large
+  // projects such as water desalination plants, schools, and post offices."
+  // The company later added fire protection to its work.
+  founder: 'Abdalatty Mohamed Abdalatty', // CONFIRMED per about-us-copy-v6.pdf
+  yearsExperience: '10+', // CONFIRMED per about-us-copy-v6.pdf: "It has offered
+  // fire protection for the past 10 years." The old "25+" conflated the
+  // company's age with its fire protection experience and is withdrawn.
+  projectsDelivered: '100+', // CONFIRMED per about-us-copy-v6.pdf: "completed
+  // more than 100 fire protection projects"
   // `callbackPromise` used to sit here as "within 1 hour during working
   // hours". It was never read by anything, and the one-hour response claim it
   // duplicated has been withdrawn from the site, so it is gone rather than

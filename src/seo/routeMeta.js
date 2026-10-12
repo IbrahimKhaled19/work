@@ -19,7 +19,7 @@ import site, { canonicalFor } from './site.js'
 // imports ships everywhere. See src/data/serviceIndex.js.
 import { serviceIndex as serviceSections, disciplineLabels } from '../data/serviceIndex.js'
 
-export const BRAND_SUFFIX = 'ALNANDA Contracting'
+export const BRAND_SUFFIX = site.name
 
 /** Google truncates around 580px; stay under ~60 chars to be safe. */
 export const TITLE_MAX = 62
@@ -41,15 +41,15 @@ export function clamp(text, max) {
 
 const staticRoutes = {
   '/': {
-    title: 'ALNANDA Contracting | Fire Protection & Fire Fighting in Egypt',
+    title: 'ALNADA Contracting | Fire Protection & Fire Fighting in Egypt',
     description:
       'Civil Defense approved fire protection contractor in Egypt. Fire pumps, sprinklers, ' +
-      'detection, suppression and compliance to NFPA and Egyptian code. 25+ years.',
+      'detection, suppression and compliance to NFPA and Egyptian code. Est. 1993.',
     priority: 1.0,
     changefreq: 'monthly',
   },
   '/services': {
-    title: 'Fire Protection Services in Egypt | ALNANDA Contracting',
+    title: 'Fire Protection Services in Egypt | ALNADA Contracting',
     description:
       'Thirteen fire protection disciplines in Egypt: pumps, sprinklers, standpipes, ' +
       'detection, extinguishers, suppression and Civil Defense permitting.',
@@ -57,15 +57,14 @@ const staticRoutes = {
     changefreq: 'monthly',
   },
   '/about': {
-    title: 'About ALNANDA Contracting | Fire Protection Company in Egypt',
+    title: 'About ALNADA Contracting | Fire Protection Company in Egypt',
     description:
-      '25+ years designing, installing and maintaining fire protection systems in ' +
-      'Egypt. GACP Egypt certified and Civil Defense approved.',
+      '10+ years in fire protection across Egypt. GACP Egypt certified and Civil Defense approved.',
     priority: 0.7,
     changefreq: 'yearly',
   },
   '/gallery': {
-    title: 'Fire Protection Systems & Projects | ALNANDA Contracting',
+    title: 'Fire Protection Systems & Projects | ALNADA Contracting',
     description:
       'Fire protection systems we design, install and maintain across Egypt: pump sets, ' +
       'sprinkler networks, standpipes and addressable detection.',
@@ -73,7 +72,7 @@ const staticRoutes = {
     changefreq: 'monthly',
   },
   '/contact': {
-    title: 'Contact ALNANDA Contracting | Fire Protection Quote in Egypt',
+    title: 'Contact ALNADA Contracting | Fire Protection Quote in Egypt',
     description:
       'Request a free site assessment or AMC quote in Egypt. WhatsApp +20 100 362 0490.',
     priority: 0.8,
@@ -88,7 +87,7 @@ const staticRoutes = {
   // hires. It still resolves to a stable Sitemap lastmod either way, so this is
   // intent rather than a crawl instruction - Google ignores the value.
   '/careers': {
-    title: 'Careers at ALNANDA Contracting | Fire Protection Jobs in Egypt',
+    title: 'Careers at ALNADA Contracting | Fire Protection Jobs in Egypt',
     description:
       'Careers in fire protection engineering, installation and maintenance ' +
       'across Egypt. Civil Defense approved, thirteen disciplines, since 1993.',
