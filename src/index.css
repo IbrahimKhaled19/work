@@ -1698,6 +1698,7 @@ textarea:focus-visible {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px 20px;
+  list-style: none;
 }
 
 .check-list li {
