@@ -15,6 +15,7 @@ export const serviceSections = [
     short: 'Engineering',
     category: 'engineering',
     title: 'Design & Engineering',
+    photos: { project: 'service-design-engineering' },
     text: 'Every project starts with correct engineering, not guesswork. We handle hydraulic calculations, pump sizing, water supply analysis, and full shop drawings, all reviewed against code before a single pipe goes in.',
     points: [
       'Hydraulic design and calculations: full system modeling to confirm flow, pressure, and demand are met at every point in the network',
@@ -98,6 +99,7 @@ export const serviceSections = [
     short: 'Sprinklers',
     category: 'suppression',
     title: 'Sprinkler Systems',
+    photos: { project: 'service-sprinkler-systems' },
     text: 'Wet pipe, dry pipe, pre-action, deluge, or ESFR, matched to your hazard classification and space, then engineered and installed from header to sprinkler head. Flushed, pressure-tested, and verified before handover.',
     points: [
       'Wet pipe systems: the most common configuration, with water held ready in the pipes for instant activation when a sprinkler head opens. Ideal for spaces that do not face freezing risk',
@@ -131,6 +133,7 @@ export const serviceSections = [
     short: 'Standpipe',
     category: 'suppression',
     title: 'Standpipe & Hose Systems',
+    photos: { project: 'service-standpipe-hose-systems' },
     text: 'For multi-story buildings: Class I, II, and III standpipe systems, hose cabinets, and Fire Department Connections placed and sized to code, so firefighters and building occupants both have reliable access when it counts.',
     points: [
       'Class I standpipes: 2.5-inch hose connections intended for fire department use, delivering the flow professional firefighting crews require',
@@ -163,6 +166,7 @@ export const serviceSections = [
     short: 'Detection',
     category: 'detection',
     title: 'Fire Alarm & Detection',
+    photos: { project: 'service-fire-alarm-detection' },
     text: 'Smoke and heat detection, addressable control panels, and notification systems integrated with sprinklers, BMS, and Civil Defense monitoring where required. Detection fast enough to matter.',
     points: [
       'Addressable and conventional fire alarm control panels: matched to the size and complexity of the facility',
@@ -196,6 +200,10 @@ export const serviceSections = [
     short: 'Extinguishers',
     category: 'suppression',
     title: 'Portable Fire Extinguishers',
+    photos: {
+      project: 'service-portable-extinguishers-project',
+      installation: 'service-portable-extinguishers-install',
+    },
     text: 'Correctly specified, correctly placed, and never left to expire unnoticed. We supply, install, and manage the inspection and recharge schedule so this basic requirement never becomes a compliance gap.',
     points: [
       'Hazard-class matched extinguishers: Class A, B, C, and K units, selected for the specific materials and equipment present in each space',

@@ -88,6 +88,31 @@ const CLIENT_LOGOS = [
   { name: 'zh', file: 'ZH.png', displayHeight: 72 },
 ]
 
+/**
+ * Service-detail photography, one master per output name in assets-src/services/.
+ *
+ * Every entry fills the 4:3 media frame in a service spotlight (.feature-frame
+ * img in src/index.css). That frame measures ~520px wide in the widest layout -
+ * it is 1fr of the 1.15fr/1fr detail grid inside the 1160px container - so 520
+ * is 1x and 1040 is 2x.
+ *
+ * `sizes` matches the width the frame actually occupies so a 1x viewport does
+ * not fetch the 2x file. The two slots differ: the sticky "project photo" slot
+ * spans the full container once the detail grid collapses at 980px, while the
+ * "installation photo" split stacks only at 860px.
+ */
+const PROJECT_SIZES = '(max-width: 980px) 100vw, 520px'
+const INSTALL_SIZES = '(max-width: 860px) 100vw, 520px'
+
+const SERVICE_PHOTOS = [
+  { name: 'design-engineering', alt: 'Hydraulic design and shop drawings for a fire protection system', sizes: PROJECT_SIZES },
+  { name: 'fire-alarm-detection', alt: 'Addressable fire alarm detection and notification system', sizes: PROJECT_SIZES },
+  { name: 'sprinkler-systems', alt: 'Sprinkler network installation', sizes: PROJECT_SIZES },
+  { name: 'standpipe-hose-systems', alt: 'Standpipe and hose reel system', sizes: PROJECT_SIZES },
+  { name: 'portable-extinguishers-project', alt: 'Portable fire extinguisher installation', sizes: PROJECT_SIZES },
+  { name: 'portable-extinguishers-install', alt: 'Portable fire extinguisher service', sizes: INSTALL_SIZES },
+]
+
 const TARGETS = [
   {
     id: 'hero',
@@ -141,6 +166,18 @@ const TARGETS = [
     alt: 'Abdalatty Mohamed Abdalatty, founder of ALNADA Contracting',
     note: 'Founder portrait on the About page card.',
   },
+  ...SERVICE_PHOTOS.map((photo) => ({
+    id: `service-${photo.name}`,
+    source: `services/${photo.name}.jpg`,
+    output: `service-${photo.name}`,
+    widths: [520, 1040],
+    displayWidth: 520,
+    displayHeight: 390,
+    sizes: photo.sizes,
+    class: PHOTO,
+    alt: photo.alt,
+    note: 'Service-detail spotlight photo. 4:3 media frame, ~520px wide.',
+  })),
   ...CLIENT_LOGOS.map((logo) => ({
     id: `logo-${logo.name}`,
     source: `logos/${logo.file}`,

@@ -52,11 +52,11 @@ function ServiceDetail() {
   const prev = serviceSections[(index - 1 + serviceSections.length) % serviceSections.length]
   const next = serviceSections[(index + 1) % serviceSections.length]
   const { Icon, proof } = serviceVisuals[service.id]
-  // Only fire-pump-systems declares a spotlight today, and it does so to
-  // override the badge with hand-written commissioning steps. Everything else
-  // renders the split from the defaults above, so a service that later gets a
-  // photograph adds its own `spotlight` block rather than needing the other
-  // twelve edited to keep them in step.
+  // `spotlight` exists to override the approach split's badge with hand-written
+  // commissioning steps (only fire-pump-systems declares one today). A service
+  // that gains real photography declares a `photos` block of manifest image ids
+  // instead - `project` fills the sticky media slot, `installation` fills the
+  // approach split - so the other twelve need no edit to stay in step.
   const spotlight = service.spotlight ?? {}
 
   return (
@@ -89,7 +89,7 @@ function ServiceDetail() {
               almost no room to travel. */}
           <Reveal className="service-detail-sticky" delay={100}>
             <FeatureSplit
-              image={null}
+              imageId={service.photos?.project ?? null}
               imageAlt={`${service.title} project photo`}
               placeholderLabel={`${service.title} project photo`}
               dimensionsLabel={PHOTO_SLOT}
@@ -121,6 +121,7 @@ function ServiceDetail() {
             <FeatureSplit
               heading="Installation & Maintenance Excellence"
               body={service.approach}
+              imageId={service.photos?.installation ?? null}
               image={spotlight.image ?? null}
               imageAlt={`${service.title} installation photo`}
               placeholderLabel={spotlight.placeholder ?? `${service.title} installation photo`}

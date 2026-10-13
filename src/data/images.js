@@ -64,6 +64,90 @@ export const images = {
     "sizes": null,
     "alt": "Abdalatty Mohamed Abdalatty, founder of ALNADA Contracting"
   },
+  "service-design-engineering": {
+    "id": "service-design-engineering",
+    "src": "/img/service-design-engineering-520.webp",
+    "srcSet": {
+      "avif": "/img/service-design-engineering-520.avif 520w, /img/service-design-engineering-1040.avif 1040w",
+      "webp": "/img/service-design-engineering-520.webp 520w, /img/service-design-engineering-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 693,
+    "displayWidth": 520,
+    "displayHeight": 390,
+    "sizes": "(max-width: 980px) 100vw, 520px",
+    "alt": "Hydraulic design and shop drawings for a fire protection system"
+  },
+  "service-fire-alarm-detection": {
+    "id": "service-fire-alarm-detection",
+    "src": "/img/service-fire-alarm-detection-520.webp",
+    "srcSet": {
+      "avif": "/img/service-fire-alarm-detection-520.avif 520w, /img/service-fire-alarm-detection-1040.avif 1040w",
+      "webp": "/img/service-fire-alarm-detection-520.webp 520w, /img/service-fire-alarm-detection-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 693,
+    "displayWidth": 520,
+    "displayHeight": 390,
+    "sizes": "(max-width: 980px) 100vw, 520px",
+    "alt": "Addressable fire alarm detection and notification system"
+  },
+  "service-sprinkler-systems": {
+    "id": "service-sprinkler-systems",
+    "src": "/img/service-sprinkler-systems-520.webp",
+    "srcSet": {
+      "avif": "/img/service-sprinkler-systems-520.avif 520w, /img/service-sprinkler-systems-1040.avif 1040w",
+      "webp": "/img/service-sprinkler-systems-520.webp 520w, /img/service-sprinkler-systems-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 693,
+    "displayWidth": 520,
+    "displayHeight": 390,
+    "sizes": "(max-width: 980px) 100vw, 520px",
+    "alt": "Sprinkler network installation"
+  },
+  "service-standpipe-hose-systems": {
+    "id": "service-standpipe-hose-systems",
+    "src": "/img/service-standpipe-hose-systems-520.webp",
+    "srcSet": {
+      "avif": "/img/service-standpipe-hose-systems-520.avif 520w, /img/service-standpipe-hose-systems-1040.avif 1024w",
+      "webp": "/img/service-standpipe-hose-systems-520.webp 520w, /img/service-standpipe-hose-systems-1040.webp 1024w"
+    },
+    "width": 1024,
+    "height": 768,
+    "displayWidth": 520,
+    "displayHeight": 390,
+    "sizes": "(max-width: 980px) 100vw, 520px",
+    "alt": "Standpipe and hose reel system"
+  },
+  "service-portable-extinguishers-project": {
+    "id": "service-portable-extinguishers-project",
+    "src": "/img/service-portable-extinguishers-project-520.webp",
+    "srcSet": {
+      "avif": "/img/service-portable-extinguishers-project-520.avif 520w, /img/service-portable-extinguishers-project-1040.avif 1040w",
+      "webp": "/img/service-portable-extinguishers-project-520.webp 520w, /img/service-portable-extinguishers-project-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 693,
+    "displayWidth": 520,
+    "displayHeight": 390,
+    "sizes": "(max-width: 980px) 100vw, 520px",
+    "alt": "Portable fire extinguisher installation"
+  },
+  "service-portable-extinguishers-install": {
+    "id": "service-portable-extinguishers-install",
+    "src": "/img/service-portable-extinguishers-install-520.webp",
+    "srcSet": {
+      "avif": "/img/service-portable-extinguishers-install-520.avif 520w, /img/service-portable-extinguishers-install-1040.avif 1040w",
+      "webp": "/img/service-portable-extinguishers-install-520.webp 520w, /img/service-portable-extinguishers-install-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 1560,
+    "displayWidth": 520,
+    "displayHeight": 390,
+    "sizes": "(max-width: 860px) 100vw, 520px",
+    "alt": "Portable fire extinguisher service"
+  },
   "logo-carina": {
     "id": "logo-carina",
     "src": "/img/logo-carina.avif",

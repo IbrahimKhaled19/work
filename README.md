@@ -60,8 +60,9 @@ universally supported since 2020 and on these logos the PNG was often the
 
 ### Replacing the placeholder photography
 
-The site currently ships stock imagery. When real project photography arrives,
-the procedure is the same for every image, and the pipeline does the rest:
+Remaining placeholder imagery is stock. Real project photography arrives service
+by service (see item 7 under Known gaps); the procedure is the same for every
+image, and the pipeline does the rest:
 
 1. **Drop the master in `assets-src/`.** Full resolution, any format the
    `sharp` install can read. Keep the aspect ratio roughly matching the
@@ -426,11 +427,17 @@ Tracked in `SEO_PERF_PLAN.md`. These are content/business problems, not code:
 
 6. **`500+ active AMC clients`** is unconfirmed and appears in the homepage stats.
 
-7. **Project photography is still placeholders.** The gallery panels and service
-   spotlights use illustrated medallions, not site photos (`TODO` comments in
-   `src/pages/Gallery.jsx` and `src/pages/About.jsx`). `FeatureSplit` already
-   accepts a manifest `imageId`, so real photos will pick up the responsive
-   pipeline for free.
+7. **Project photography is only partly in.** Five service pages now carry real
+   project photos: design & engineering, fire alarm & detection, sprinkler,
+   standpipe & hose and portable extinguishers. Each declares a `photos` block
+   of manifest image ids in `src/data/services.js`, with masters in
+   `assets-src/services/` and targets in `scripts/images.mjs`; `FeatureSplit`
+   reads the `imageId` and the responsive pipeline does the rest, so further
+   photos need no component change. Portable extinguishers fills both its slots;
+   the other four still show one empty "installation photo". The gallery panels,
+   the About visual and the remaining eight services still use illustrated
+   medallions (`TODO` comments in `src/pages/Gallery.jsx` and
+   `src/pages/About.jsx`).
 
 ---
 
