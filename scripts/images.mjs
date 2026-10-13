@@ -113,10 +113,15 @@ const SERVICE_PHOTOS = [
   { name: 'portable-extinguishers-install', alt: 'Portable fire extinguisher service', sizes: INSTALL_SIZES },
 ]
 
+// The hero master is referenced twice: by the target below, and by the OG card
+// builder at the bottom of this file, which composites the share image from the
+// same photograph. One constant so the two cannot drift apart.
+const HERO_SOURCE = 'hero.jpg'
+
 const TARGETS = [
   {
     id: 'hero',
-    source: 'hero-fire-protection.webp',
+    source: HERO_SOURCE,
     output: 'hero',
     widths: [640, 1024, 1600, 2560],
     sizes: '100vw',
@@ -156,15 +161,20 @@ const TARGETS = [
     id: 'founder',
     source: 'founder.jpeg',
     output: 'founder',
-    // Perhaps a portrait on the About page card. The card sits in the 1fr track
-    // of a 1.5fr/1fr grid (~457px with 40px padding), so the photo fills a
-    // ~220px circular box; 480px wide is 2x of that at the source's 1073px,
-    // so nothing is upscaled.
-    widths: [240, 480],
-    displayWidth: 240,
+    // The founder portrait opens the About page in a 440px-wide 3:4 frame, so
+    // 440 is 1x and 880 is 2x. The source is 1073x1466 (0.732), very close to
+    // 3:4, so the frame crops almost nothing off the original composition and
+    // 880 still fits inside the source width - nothing is upscaled.
+    widths: [440, 880],
+    displayWidth: 440,
+    displayHeight: 587,
+    // Must track the CSS: 440 in the founder-feature grid, capped at 380 once
+    // that grid stacks to one column at 980px. The 48px is the container inset
+    // (see .container), which is what caps the width on a phone.
+    sizes: '(max-width: 980px) min(100vw - 48px, 380px), 440px',
     class: PHOTO,
     alt: 'Abdalatty Mohamed Abdalatty, founder of ALNADA Contracting',
-    note: 'Founder portrait on the About page card.',
+    note: 'Founder portrait opening the About page. 3:4 frame, 440px wide.',
   },
   ...SERVICE_PHOTOS.map((photo) => ({
     id: `service-${photo.name}`,
@@ -427,12 +437,12 @@ if (!CHECK_ONLY) {
 const OG = { width: 1200, height: 630, out: 'og-image.jpg' }
 
 if (!CHECK_ONLY) {
-  const heroSource = path.join(SRC, 'hero-fire-protection.webp')
+  const heroSource = path.join(SRC, HERO_SOURCE)
   const wordmark = path.join(SRC, 'logo.png')
   const ogOut = path.join(OUT, OG.out)
 
   if (!fs.existsSync(heroSource)) {
-    console.error(`  MISSING OG SOURCE: assets-src/hero-fire-protection.webp`)
+    console.error(`  MISSING OG SOURCE: assets-src/${HERO_SOURCE}`)
     process.exitCode = 1
   } else {
     // Wordmark at ~46% of the card width. Composited as a buffer because

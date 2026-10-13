@@ -36,6 +36,7 @@ import { prerenderTargets, notFoundPath } from '../src/routes.manifest.js'
 import { getRouteMeta, notFoundMeta } from '../src/seo/routeMeta.js'
 import { jsonLdFor } from '../src/seo/jsonld.js'
 import { assertSiteUrl, site, canonicalFor } from '../src/seo/site.js'
+import images from '../src/data/images.js'
 
 const ROOT = process.cwd()
 const DIST = path.join(ROOT, 'dist')
@@ -106,6 +107,55 @@ function escapeHtml(value) {
     .replace(/"/g, '&quot;')
 }
 
+/**
+ * Build the per-route LCP image preload, mirroring exactly what <Picture>
+ * renders for that manifest entry.
+ *
+ * WHY THIS IS NOT AUTOMATIC
+ * -------------------------
+ * React 19 does hoist a preload for an eager <img src>, and this script already
+ * lifts whatever React hoists into <head> (extractHoistedLinks). But it does not
+ * hoist one for an <img> wrapped in a <picture>, which is how every image on
+ * this site is built - <picture> carries the AVIF/WebP <source> pair, and the
+ * <img> src is only the fallback. So the founder portrait, the largest element
+ * on /about, had no preload at all.
+ *
+ * The tag mirrors <Picture> field for field and takes its values from the same
+ * generated manifest, so it cannot describe a file or a candidate list that the
+ * <picture> does not also offer. Deriving both from one source is the only way
+ * they cannot disagree - see the same reasoning in scripts/generate-preloads.mjs,
+ * which does this for the homepage hero.
+ *
+ * The avif <source> is listed first, so the preload describes the avif set, and
+ * href repeats the largest candidate as a bare URL because the spec requires
+ * href to be present and consistent with imagesrcset.
+ *
+ * Single-variant entries have no srcset to preload against - their one file is
+ * already what <img src> requests, so a preload buys nothing and risks a
+ * doubled fetch. Those return null.
+ */
+function buildPreloadTag(imageId) {
+  if (!imageId) return null
+
+  const image = images[imageId]
+  if (!image) {
+    console.error(`  preloadImage "${imageId}" is not in src/data/images.js - run \`npm run images\``)
+    process.exitCode = 1
+    return null
+  }
+
+  if (!image.srcSet?.avif || !image.srcSet.avif.includes(',')) {
+    return null
+  }
+
+  const candidates = image.srcSet.avif.split(',').map((c) => c.trim())
+  // Strip the width descriptor for href: a bare path there, or the browser
+  // requests a URL that does not exist.
+  const href = candidates[candidates.length - 1].split(/\s+/)[0]
+
+  return `<link rel="preload" as="image" href="${href}" imagesrcset="${image.srcSet.avif}" imagesizes="${image.sizes || '100vw'}" type="image/avif" fetchpriority="high" />`
+}
+
 function buildHeadTags(meta, jsonLd) {
   const ogImage = `${siteUrl}${site.ogImage}`
   // A noindex page must not advertise a canonical or an og:url. The 404 has no
@@ -122,6 +172,11 @@ function buildHeadTags(meta, jsonLd) {
   if (isIndexable) {
     const canonical = meta.canonical || canonicalFor(meta.pathname || '/')
     tags.push(`<link rel="canonical" href="${escapeHtml(canonical)}" />`)
+  }
+
+  const preload = buildPreloadTag(meta.preloadImage)
+  if (preload) {
+    tags.push(preload)
   }
 
   tags.push(

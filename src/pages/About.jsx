@@ -71,49 +71,68 @@ function About() {
         subtitle="ALNADA Contracting designs, installs and maintains fire protection systems for factories, warehouses and commercial buildings across Egypt."
       />
 
+      {/* The founder leads. This is the only photograph on a page that is
+          otherwise copy, checklists and rules, and the tenure the rest of the
+          page argues from starts with him - so the portrait opens the page
+          rather than closing it. It is also the first thing below the hero, so
+          it loads eagerly: at ~360px from the top it is inside the first
+          viewport on any normal screen. */}
       <section className="section">
-        <Reveal className="container about-layout">
-          <div className="about-text">
-            <p className="eyebrow">Who We Are</p>
-            <h2>Fire Protection Contractor in Egypt</h2>
-            <p>
-              ALNADA Contracting is an Egyptian contracting company that works in
-              general construction and fire protection. On this site we focus on
-              our fire protection services. We work with business owners,
-              facility managers and project consultants who need a system that
-              meets code, passes Civil Defense inspection and works when it is
-              needed.
-            </p>
-            <p>
-              The company was established in 1993 and has offered fire
-              protection for the past 10 years. In that time we have completed
-              more than 100 fire protection projects. We cover every part of a
-              fire protection system ourselves, so you work with one company
-              from the first site visit to the last inspection.
-            </p>
-            <ul className="check-list" aria-label="Fire protection coverage">
-              {coverage.map((c) => (
-                <li key={c.anchor}>
-                  <Link to={`/services/${c.anchor}`}>{c.label}</Link>
-                </li>
-              ))}
-            </ul>
+        <Reveal className="container founder-feature">
+          <div className="founder-frame">
+            <Picture
+              id="founder"
+              alt="Abdalatty Mohamed Abdalatty, founder of ALNADA Contracting"
+              className="founder-photo"
+              loading="eager"
+              fetchPriority="high"
+            />
           </div>
-          <div className="about-card">
-            {/* TODO: company visual, 800x1000 photographic, team or facility */}
-            <span className="proof-seal-badge" aria-hidden="true">
-              <ShieldCheck size={44} />
-            </span>
-            <h3>10+ Years in Fire Protection</h3>
-            <p>
-              Civil Defense approved contractor for fire fighting and life
-              safety systems across Egypt.
+          <div className="founder-text">
+            <p className="eyebrow">Our Founder</p>
+            <h2>Abdalatty Mohamed Abdalatty</h2>
+            <p className="founder-role">Founder, ALNADA Contracting</p>
+            <p className="founder-bio">
+              Founded ALNADA Contracting in 1993. In its early years the
+              company took on large contracting projects, built to detailed
+              specifications, run on demanding schedules, and required to pass
+              formal inspection. Those requirements shaped how the company
+              works today.
             </p>
           </div>
         </Reveal>
       </section>
 
       <section className="section section-alt">
+        <Reveal className="container about-copy about-text">
+          <p className="eyebrow">Who We Are</p>
+          <h2>Fire Protection Contractor in Egypt</h2>
+          <p>
+            ALNADA Contracting is an Egyptian contracting company that works in
+            general construction and fire protection. On this site we focus on
+            our fire protection services. We work with business owners,
+            facility managers and project consultants who need a system that
+            meets code, passes Civil Defense inspection and works when it is
+            needed.
+          </p>
+          <p>
+            The company was established in 1993 and has offered fire
+            protection for the past 10 years. In that time we have completed
+            more than 100 fire protection projects. We cover every part of a
+            fire protection system ourselves, so you work with one company
+            from the first site visit to the last inspection.
+          </p>
+          <ul className="check-list" aria-label="Fire protection coverage">
+            {coverage.map((c) => (
+              <li key={c.anchor}>
+                <Link to={`/services/${c.anchor}`}>{c.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+      </section>
+
+      <section className="section">
         <div className="container">
           <SectionHead
             eyebrow="Why It Matters"
@@ -131,7 +150,7 @@ function About() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-alt">
         <div className="container">
           <SectionHead
             eyebrow="How We Work"
@@ -141,7 +160,7 @@ function About() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <SectionHead
             eyebrow="What We Promise"
@@ -156,7 +175,7 @@ function About() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-alt">
         <div className="container">
           <Milestones
             header={{
@@ -169,7 +188,7 @@ function About() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <SectionHead
             eyebrow="One Company"
@@ -186,7 +205,7 @@ function About() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-alt">
         <div className="container about-layout">
           <div className="about-text">
             <p className="eyebrow">Our Experience</p>
@@ -208,25 +227,19 @@ function About() {
             </p>
           </div>
           <div className="about-card">
-            <Picture
-              id="founder"
-              alt="Abdalatty Mohamed Abdalatty, founder of ALNADA Contracting"
-              className="founder-photo"
-            />
-            <h3>Our Founder</h3>
-            <p className="about-founder-name">Abdalatty Mohamed Abdalatty</p>
+            <span className="proof-seal-badge" aria-hidden="true">
+              <ShieldCheck size={44} />
+            </span>
+            <h3>10+ Years in Fire Protection</h3>
             <p>
-              Founded ALNADA Contracting in 1993. In its early years the
-              company took on large contracting projects, built to detailed
-              specifications, run on demanding schedules, and required to pass
-              formal inspection. Those requirements shaped how the company
-              works today.
+              Civil Defense approved contractor for fire fighting and life
+              safety systems across Egypt.
             </p>
           </div>
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <SectionHead
             eyebrow="Credentials"
@@ -236,7 +249,7 @@ function About() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-alt">
         <div className="container">
           <Milestones
             header={{
@@ -249,7 +262,7 @@ function About() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section">
         <div className="container">
           <SectionHead title="What We Stand For" />
           <WhyList items={values} />

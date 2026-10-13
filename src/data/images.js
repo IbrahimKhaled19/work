@@ -16,9 +16,9 @@ export const images = {
       "webp": "/img/hero-640.webp 640w, /img/hero-1024.webp 1024w, /img/hero-1600.webp 1600w, /img/hero-2560.webp 2560w"
     },
     "width": 2560,
-    "height": 1709,
+    "height": 1707,
     "displayWidth": 2560,
-    "displayHeight": 1709,
+    "displayHeight": 1707,
     "sizes": "100vw",
     "alt": ""
   },
@@ -52,16 +52,16 @@ export const images = {
   },
   "founder": {
     "id": "founder",
-    "src": "/img/founder-240.webp",
+    "src": "/img/founder-440.webp",
     "srcSet": {
-      "avif": "/img/founder-240.avif 240w, /img/founder-480.avif 480w",
-      "webp": "/img/founder-240.webp 240w, /img/founder-480.webp 480w"
+      "avif": "/img/founder-440.avif 440w, /img/founder-880.avif 880w",
+      "webp": "/img/founder-440.webp 440w, /img/founder-880.webp 880w"
     },
-    "width": 480,
-    "height": 656,
-    "displayWidth": 240,
-    "displayHeight": 656,
-    "sizes": null,
+    "width": 880,
+    "height": 1202,
+    "displayWidth": 440,
+    "displayHeight": 587,
+    "sizes": "(max-width: 980px) min(100vw - 48px, 380px), 440px",
     "alt": "Abdalatty Mohamed Abdalatty, founder of ALNADA Contracting"
   },
   "service-design-engineering": {

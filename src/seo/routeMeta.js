@@ -60,6 +60,13 @@ const staticRoutes = {
     title: 'About ALNADA Contracting | Fire Protection Company in Egypt',
     description:
       '10+ years in fire protection across Egypt. GACP Egypt certified and Civil Defense approved.',
+    // The founder portrait opens the page and is by a wide margin its largest
+    // element, so it is this route's LCP image. Nothing preloads it otherwise:
+    // React hoists a preload for a bare eager <img>, but not for one wrapped in
+    // <picture> (scripts/prerender.mjs lifts whatever React does hoist), so
+    // without this the browser only discovers it partway down the body parse.
+    // See the preloadImage block in scripts/prerender.mjs.
+    preloadImage: 'founder',
     priority: 0.7,
     changefreq: 'yearly',
   },
@@ -167,6 +174,9 @@ export function getRouteMeta(pathname) {
     ogType: 'website',
     ogImage: site.ogImage,
     robots: route.robots || 'index, follow',
+    // Only set on routes whose largest element is an image this site serves
+    // rather than a remote one; the prerender turns it into a <link rel=preload>.
+    preloadImage: route.preloadImage,
     priority: route.priority,
     changefreq: route.changefreq,
     route,

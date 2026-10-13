@@ -2013,6 +2013,14 @@ textarea:focus-visible {
   align-items: start;
 }
 
+/* A text-only About block: no card to sit in the second grid track, so the
+   copy is capped to a readable measure and centred instead of running the full
+   1160px container width. */
+.about-copy {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
 .about-text h2 {
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   margin: 8px 0 18px;
@@ -2067,29 +2075,54 @@ textarea:focus-visible {
   font-size: 0.95rem;
 }
 
-/* The founder's name, set apart from the surrounding biography copy. */
-.about-card .about-founder-name {
-  font-weight: 700;
-  font-size: 1.05rem;
-  margin-bottom: 10px;
+/* Founder portrait, the opener of the About page.
+   A 3:4 frame at a full 440px, replacing the 220px circular crop this used to
+   sit in at the end of the page. The source is a half-body portrait, so a large
+   circle would have cropped to a face and thrown away the suit and the room -
+   a rectangular frame shows the photograph as it was shot. */
+.founder-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 440px) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
 }
 
-/* Founder portrait. Circular crop with a ring that echoes .proof-seal-badge
-   (the shield circles used on the other cards). object-fit cover fills the
-   fixed box without distortion; the crop is biased upward so the face stays
-   in frame for a standard portrait. */
-.about-card .founder-photo {
-  width: 220px;
-  height: 220px;
-  object-fit: cover;
-  object-position: center 22%;
-  border-radius: 50%;
+.founder-frame {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: linear-gradient(160deg, #000000, #221f1f);
+}
+
+.founder-photo {
   display: block;
-  margin: 0 auto 4px;
-  border: 2px solid rgba(255, 255, 255, 0.75);
-  box-shadow:
-    0 0 0 14px rgba(255, 255, 255, 0.08),
-    var(--shadow-lg);
+  width: 100%;
+  /* `height: auto` is load-bearing for the same reason as .feature-frame img:
+     Picture emits the manifest's 880x1202 as width/height attributes, and those
+     presentational hints outrank `aspect-ratio`. Without this reset the frame
+     takes the source's intrinsic height instead of the 3:4 box. */
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.founder-text h2 {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin: 8px 0 6px;
+}
+
+.founder-role {
+  color: var(--red);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.82rem;
+  margin-bottom: 20px;
+}
+
+.founder-bio {
+  color: var(--muted);
 }
 
 /* Milestones */
@@ -2905,6 +2938,22 @@ textarea:focus-visible {
   .service-detail-layout {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  /* Stacked, the founder portrait reads as a profile card, so it is centred and
+     capped rather than left full-bleed at the container width. */
+  .founder-feature {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .founder-frame {
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  .founder-text {
+    text-align: center;
   }
 
   .about-card {
