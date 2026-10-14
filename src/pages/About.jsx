@@ -93,11 +93,16 @@ function About() {
             <h2>Abdalatty Mohamed Abdalatty</h2>
             <p className="founder-role">Founder, ALNADA Contracting</p>
             <p className="founder-bio">
-              Founded ALNADA Contracting in 1993. In its early years the
-              company took on large contracting projects, built to detailed
-              specifications, run on demanding schedules, and required to pass
-              formal inspection. Those requirements shaped how the company
-              works today.
+              Abdalatty founded ALNADA Contracting in 1993 as a general
+              contracting company, delivering water desalination plants, schools
+              and post offices. Those projects were built to detailed
+              specifications, run on demanding schedules, and had to pass formal
+              inspection. In 2016 he added fire protection, bringing the same
+              discipline to systems that must work when needed. Today the
+              company is certified by the General Administration for Civil
+              Protection (GACP) and has completed 100+ fire protection projects
+              across Egypt, all designed and tested to NFPA and the Egyptian
+              Fire Protection Code.
             </p>
           </div>
         </Reveal>
