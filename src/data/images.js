@@ -22,6 +22,20 @@ export const images = {
     "sizes": "100vw",
     "alt": ""
   },
+  "cta": {
+    "id": "cta",
+    "src": "/img/cta-640.webp",
+    "srcSet": {
+      "avif": "/img/cta-640.avif 640w, /img/cta-1024.avif 1024w, /img/cta-1600.avif 1600w, /img/cta-2560.avif 2560w",
+      "webp": "/img/cta-640.webp 640w, /img/cta-1024.webp 1024w, /img/cta-1600.webp 1600w, /img/cta-2560.webp 2560w"
+    },
+    "width": 2560,
+    "height": 1707,
+    "displayWidth": 2560,
+    "displayHeight": 1707,
+    "sizes": "100vw",
+    "alt": ""
+  },
   "logo": {
     "id": "logo",
     "src": "/img/logo-240.webp",

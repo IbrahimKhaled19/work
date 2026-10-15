@@ -130,6 +130,19 @@ const TARGETS = [
     note: 'LCP element. Full-bleed cover background at 100vw.',
   },
   {
+    id: 'cta',
+    source: 'cta.jpg',
+    output: 'cta',
+    // The pre-footer CTA band on every page. Full-bleed cover at 100vw like the
+    // hero, but never the LCP element: the band always sits below the fold, so
+    // a srcset is still right but the fetch is not allowed to block first paint.
+    widths: [640, 1024, 1600, 2560],
+    sizes: '100vw',
+    class: PHOTO,
+    alt: '',
+    note: 'Full-bleed cover background behind the pre-footer CTA on every page.',
+  },
+  {
     id: 'logo',
     source: 'logo.png',
     output: 'logo',

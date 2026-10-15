@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import Reveal from './Reveal'
+import Picture from './Picture'
 import site from '../seo/site.js'
 
 function CTA({
@@ -19,6 +20,13 @@ function CTA({
 
   return (
     <section className="cta">
+      {/* Background photograph and scrim. Decorative, so it is hidden from
+          assistive tech - the copy on top carries the meaning. Lazy on purpose:
+          this band is below the fold on every page that renders it. */}
+      <div className="cta-bg" aria-hidden="true">
+        <Picture id="cta" alt="" />
+      </div>
+      <div className="cta-overlay" aria-hidden="true"></div>
       <Reveal className={`container cta-inner ${className}`} delay={delay}>
         <h2>{title}</h2>
         <p>{subtitle}</p>
