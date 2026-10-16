@@ -17,10 +17,13 @@
  * outcome prerendering exists to prevent, and verify:build cannot see it,
  * because the head metadata is generated independently of the body.
  *
- * So the two tables are compared directly.
+ * So the two tables are compared directly. src/seo/routeMeta.js is compared
+ * against them too, at the end: it is the table the prerender and the sitemap
+ * are generated from, and a route missing from it is never rendered to HTML.
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { getAllRoutes } from '../src/seo/routeMeta.js'
 
 const ROOT = process.cwd()
 const APP = path.join(ROOT, 'src', 'App.jsx')
@@ -102,6 +105,50 @@ for (const p of ssrByPath.keys()) {
         'The page would exist as static HTML but 404 on client-side navigation.'
     )
   }
+}
+
+// --- and both must match the SEO route table -------------------------------
+// src/seo/routeMeta.js is a third table: it drives the prerender, sitemap.xml
+// and every <title>. A path in App.jsx that it does not know about renders in
+// the browser but is never prerendered, so a direct load 404s; an entry it
+// knows about with no App route is static HTML the app cannot navigate to.
+// Neither mistake is visible from inside either table, and neither fails a
+// build, so it is checked here where the App table is already parsed.
+const seoPaths = new Set(getAllRoutes().map((r) => r.pathname))
+const appPaths = new Set(appRoutes.map((r) => r.path))
+const SERVICE_PARAM = '/services/:serviceId'
+
+for (const p of appPaths) {
+  // The catch-all renders NotFound. The parametric service route matches the
+  // thirteen expanded paths, so it is checked separately below rather than
+  // against a literal entry that does not exist.
+  if (p === '*' || p === SERVICE_PARAM) continue
+  if (!seoPaths.has(p)) {
+    failures.push(
+      `src/App.jsx declares "${p}" but src/seo/routeMeta.js has no entry for it. ` +
+        'The page would render in the browser but never be prerendered, so a direct load 404s.'
+    )
+  }
+}
+for (const p of seoPaths) {
+  if (p.startsWith('/services/')) continue // served by the parametric route
+  if (!appPaths.has(p)) {
+    failures.push(
+      `src/seo/routeMeta.js has "${p}" but src/App.jsx does not declare it. ` +
+        'The prerender would emit a page the app cannot route to.'
+    )
+  }
+}
+const serviceSeoRoutes = [...seoPaths].filter((p) => p.startsWith('/services/'))
+if (appPaths.has(SERVICE_PARAM) && serviceSeoRoutes.length === 0) {
+  failures.push(
+    'App.jsx declares /services/:serviceId but routeMeta.js derives no service routes from services.js.'
+  )
+}
+if (!appPaths.has(SERVICE_PARAM) && serviceSeoRoutes.length > 0) {
+  failures.push(
+    `routeMeta.js derives ${serviceSeoRoutes.length} service routes but App.jsx has no /services/:serviceId route.`
+  )
 }
 
 // --- lazy() calls must have a real import behind them ----------------------

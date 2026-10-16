@@ -35,6 +35,15 @@ const Careers = lazy(() => import('./pages/Careers'))
  * the client, <StaticRouter> in src/entry-server.jsx for prerendering. That
  * split is what lets the same component tree be rendered to a string in Node
  * for crawlers, which is the whole point of the prerender step.
+ *
+ * Two other tables have to stay in step with this one, and neither would
+ * notice a mismatch on its own. `npm run verify:prerender:lazy` checks both:
+ *
+ *   src/entry-server.jsx   the same routes, eagerly imported, because
+ *                          renderToString cannot await a lazy component.
+ *   src/seo/routeMeta.js   titles, descriptions and the sitemap. A path
+ *                          declared here but not there renders in the browser
+ *                          and 404s on a direct load.
  */
 function App() {
   return (

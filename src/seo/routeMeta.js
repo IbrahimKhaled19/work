@@ -10,6 +10,13 @@
  *   - scripts/verify-seo.mjs (plain Node, no bundler)
  *   - the prerender script (Phase 2)
  *   - src/components/Seo.jsx (client-side navigation)
+ *
+ * This is the second of the site's route tables. The first is the browser's
+ * own: <Route> declarations in src/App.jsx and src/entry-server.jsx, which say
+ * which component renders which path. Nothing derives one from the other, so
+ * adding a page means adding it in both places - and a path that exists only
+ * in App.jsx renders in the browser while 404ing on a direct load, with no
+ * error anywhere. `npm run verify:prerender:lazy` compares the tables.
  */
 
 import site, { canonicalFor } from './site.js'
