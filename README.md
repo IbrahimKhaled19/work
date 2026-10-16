@@ -233,7 +233,7 @@ whether your host does directory-index resolution or `cleanUrls`. It costs
 | Host | What to do |
 |---|---|
 | **Netlify / Cloudflare Pages** | Nothing. Both resolve the directory form and serve a root `404.html` with a 404 status by default. `public/_redirects` adds cache headers only. **Do not** add an SPA rewrite. |
-| **Vercel** | Nothing. `public/vercel.json` sets `cleanUrls`, `trailingSlash: false` and cache headers. |
+| **Vercel** | Nothing. `vercel.json` in the project root sets `cleanUrls`, `trailingSlash: false` and cache headers. |
 | **Apache / cPanel** | Nothing. `public/.htaccess` sets `DirectoryIndex` and `FallbackResource /404.html` — `FallbackResource` only fires when nothing matched, so real routes are never intercepted. Works even with `mod_rewrite` disabled. |
 | **GitHub Pages** | Nothing. It serves `404.html` with a 404 status and resolves `/about/`. Add a `CNAME` if you use a custom domain. No rewrite engine, so no config is possible. |
 | **Nginx** | `try_files $uri $uri/ $uri.html =404;` then `error_page 404 /404.html;` |
@@ -245,7 +245,8 @@ whether your host does directory-index resolution or `cleanUrls`. It costs
 (`immutable`). `/img/*` filenames are **not** hashed — they are stable across
 builds — so use a short TTL. HTML must never be cached, or visitors will keep
 seeing a stale build. All four host configs set this; the rules are in
-`public/_redirects`, `public/_headers`, `public/vercel.json`.
+`public/_redirects`, `public/_headers`, `public/.htaccess` and `vercel.json`
+(project root).
 
 ---
 

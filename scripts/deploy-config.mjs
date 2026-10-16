@@ -166,11 +166,13 @@ files['_headers'] = `/assets/*
 // settings are silently ignored, which is worse than having no config at all
 // because it looks like it is working.
 //
-// So it is written to the root as well as public/. The public/ copy is kept
-// because it is harmless there and keeps every host config in one place, but the
-// root copy is the one Vercel actually reads. delete the public/ one if a
-// future audit shows it being served at /vercel.json.
+// So it is written to the root ONLY. It used to be written to public/ too,
+// which shipped it into dist/ and served it live at /vercel.json for anyone
+// who asked - publishing how the project is configured while the copy being
+// served did nothing. The three configs above stay in public/ because those
+// hosts read them from the deploy directory.
 const vercelJson = files['vercel.json']
+delete files['vercel.json']
 
 for (const [name, content] of Object.entries(files)) {
   fs.writeFileSync(path.join(PUBLIC, name), content, 'utf8')
