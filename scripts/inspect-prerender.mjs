@@ -13,12 +13,21 @@ import path from 'node:path'
 const file = process.argv[2] || 'dist/index.html'
 const html = fs.readFileSync(file, 'utf8')
 
-const count = (re) => (html.match(re) || []).length
+// Element counts run against the markup with comments removed. The head
+// template carries an explanatory comment naming <title>, canonical and <h1>
+// by way of explaining what goes where, which a naive count reads as a second
+// copy of each. Presence checks keep the raw text: a mangled character is
+// worth catching even inside a comment.
+const visible = html.replace(/<!--[\s\S]*?-->/g, '')
+const count = (re) => (visible.match(re) || []).length
 const present = (needle) => html.includes(needle)
 
 /** Each entry: [label, actual, expected] */
 const checks = [
-  ['middot U+00B7 preserved', present('8-6 \u00b7 WhatsApp'), true],
+  // Any middot survives the render: the entity must come back out as U+00B7
+  // rather than as mojibake. The specific string is deliberately not pinned
+  // here - the hours text it used to sit next to has changed twice.
+  ['middot U+00B7 preserved', present('\u00b7'), true],
   ['arrow U+2192 preserved', present('Survey \u2192 Design'), true],
   ['copyright U+00A9 preserved', present('\u00a9'), true],
   ['no U+FFFD replacement chars', present('\ufffd'), false],
@@ -30,7 +39,11 @@ const checks = [
   ['exactly one ld+json block', count(/application\/ld\+json/g), 1],
   ['exactly one <h1>', count(/<h1[ >]/g), 1],
   ['app stylesheet link removed', count(/<link[^>]*href="\/assets\/[^"]*\.css"/g), 0],
-  ['font stylesheet link kept', count(/<link[^>]*href="https:\/\/fonts\.googleapis\.com\/css2[^"]*"/g), 1],
+  // Fonts are self-hosted and preloaded now. This used to assert that a
+  // Google Fonts stylesheet link was present, which is the opposite of what
+  // verify:fonts enforces and would have called a correct build broken.
+  ['no Google Fonts request', count(/fonts\.googleapis\.com|fonts\.gstatic\.com/g), 0],
+  ['font preloaded', count(/as="font"/g), 1],
   ['CSS inlined', count(/<style>/g), 1],
   ['root is populated', present('<div id="root"></div>'), false],
   ['no "undefined" anywhere', present('undefined'), false],

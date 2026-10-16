@@ -27,15 +27,19 @@ npm run dev          # http://localhost:5173
 |---|---|
 | `npm run dev` | Vite dev server with HMR, bound to all interfaces |
 | `npm run build` | Production build to `dist/` |
-| `npm run preview` | Serve the built `dist/` locally |
+| `npm run preview` | Serve the built `dist/` locally. **Applies an SPA fallback**, so it returns the homepage for every route - the wrong way to check a prerender |
+| `npm run serve` | The same, but resolving `dist/` the way static hosting does: `/about` -> `about/index.html`, and a real 404. Use this one |
 | `npm run lint` | oxlint over the project |
 | `npm run verify:seo` | Assert the SEO metadata layer. Warns if `VITE_SITE_URL` is unset |
 | `npm run verify:seo:strict` | Same, but fails without `VITE_SITE_URL`. **Use this in CI** |
 | `npm run verify:contrast` | Check every declared colour-token pair against WCAG AA |
-| `npm run verify` | Lint plus all four verifiers, in order. **Use this in CI** |
+| `npm run verify` | Lint plus every verifier, in order. Runs on every deploy; **use this in CI** too |
 | `npm run audit` | Lighthouse against the built `dist/`. The only score worth quoting |
 | `npm run images` | Rebuild optimised image variants from `assets-src/` into `public/img/` |
 | `npm run images:inspect` | Report dimensions, format and size of every image |
+| `npm run inspect-prerender` | Character encoding, duplicate tags and hoisted preloads in one built page |
+| `npm run lighthouse:summary` | Scores, Core Web Vitals and failing audits from a Lighthouse JSON report |
+| `npm run lighthouse:detail` | The offending selectors and snippets behind those failing audits |
 
 ## Images
 

@@ -23,6 +23,7 @@
     "audit:all": "node scripts/audit-all.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
+    "serve": "node scripts/serve-dist.mjs",
     "verify:seo": "node scripts/verify-seo.mjs",
     "verify:seo:strict": "node scripts/verify-seo.mjs --strict",
     "verify:build": "node scripts/verify-build.mjs",
@@ -38,6 +39,9 @@
     "test:schema": "node scripts/verify-schema.test.mjs",
     "services:index": "node scripts/generate-service-index.mjs",
     "measure:services": "node scripts/measure-services.mjs",
+    "lighthouse:summary": "node scripts/lighthouse-summary.mjs",
+    "lighthouse:detail": "node scripts/lighthouse-detail.mjs",
+    "inspect-prerender": "node scripts/inspect-prerender.mjs",
     "images": "node scripts/images.mjs",
     "images:inspect": "node scripts/inspect-images.mjs"
   },
