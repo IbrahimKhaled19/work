@@ -66,7 +66,6 @@ export const site = {
   name: 'ALNADA Contracting',
   legalName: null, // UNCONFIRMED - not supplied by the business
   url: SITE_URL,
-  devOrigin: DEV_ORIGIN,
 
   lang: 'en',
   locale: 'en_EG',
@@ -74,11 +73,7 @@ export const site = {
 
   // Navbar brand mark. The SVG is the canonical reference - it is what goes
   // into JSON-LD, since a vector is both smaller and resolution-independent.
-  // The raster path is the optimised 2x variant emitted by scripts/images.mjs;
-  // the original 2132x738 / 166 KB master lives in assets-src/ and is never
-  // served. Rendered size is pinned by `.brand img` in src/index.css.
   logoVector: '/logo.svg',
-  logoRaster: '/img/logo-240.webp',
   favicon: '/favicon.svg',
   appleTouchIcon: '/img/apple-touch-icon.png',
 
@@ -100,7 +95,6 @@ export const site = {
   contact: {
     phone: '+201003620490',
     phoneDisplay: '+20 100 362 0490',
-    phoneLocal: '01003620490',
     whatsapp: 'https://wa.me/201003620490',
 
     // LEGACY. This is the domain of the previous UAE entity
@@ -154,17 +148,6 @@ export const site = {
   areaServed: [
     { '@type': 'Country', name: 'Egypt' },
   ],
-  areaServedDisplay: 'Industrial and commercial facilities across Egypt',
-
-  // ---- UNCONFIRMED: retained in the UI, excluded from schema/meta ----
-  // "The 500+ AMC clients figure is unconfirmed and retained only until corrected."
-  unconfirmed: {
-    activeAmcClients: '500+',
-  },
-
-  // Footer renders href="#" placeholders for Facebook/Instagram/LinkedIn.
-  // Left empty so `sameAs` is omitted rather than emitting dead URLs.
-  social: [],
 
   // ---- CONFIRMED claims (PRODUCT.md "Evidence on Hand") ----
   claims: {
