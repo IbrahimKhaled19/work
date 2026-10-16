@@ -104,12 +104,11 @@ Driven by `PRODUCT.md`'s claim-safety rules, four things a normal `LocalBusiness
 | `sameAs` | Footer social links are `href="#"` placeholders. |
 | NFPA 72/10/2001/96/11/80 + "UL-listed" | `PRODUCT.md` marks these UNVERIFIED. 4 services cite only unverified standards, so `verifiedStandards()` returns `null` and they carry **no** standards claim at all. |
 
-Two content issues surfaced while tracing the NAP data, both needing a business decision:
+One content issue surfaced while tracing the NAP data, and it needs a business decision:
 
 1. **The contact email belongs to a different company.** Git history shows the site was reskinned from a UAE entity ("Universal Fire Fighting", `+971 2 551 3111`, Mussafah 32/1 Abu Dhabi) to ALNADA Contracting. The phone number was correctly migrated to `+20 100 362 0490`, but the email domain was not. It is currently a dead-end for customers and is excluded from schema here.
-2. **Founding year tension.** `founded: 1993` is confirmed, which implies ~33 years as of 2026, but every claim in the UI says "25+ years". `PRODUCT.md` flags this as unresolved. `site.js` keeps `yearsExperience: '25+'` and does not derive a number from `founded`.
 
-Still placeholders that SEO must not touch until supplied: `ogImage` (`/og-image.jpg`, created in Phase 4), `legalName`, `address`, `social`.
+Still placeholders that SEO must not touch until supplied: `legalName`, `address`. `ogImage` is generated at `/img/og-image.jpg`; the empty `social` field is gone, and jsonld omits `sameAs` because the footer links are href="#" placeholders.
 
 
 ---
@@ -512,10 +511,8 @@ documented above did not reproduce on the live host — LCP is **812 ms, scoring
   and the local/Map Pack — the single largest ranking lever available.
 - `info@universalfirefighting.com` in `Contact.jsx` and `Footer.jsx` belongs to
   the previous UAE entity and is live in the UI.
-- Founded 1993 vs "25+ years" in the copy is internally inconsistent.
 - The hero stock photo contains Chinese/Japanese signage.
 - No delivery path for quote-form submissions.
-- "500+ AMC clients" is unconfirmed.
 
 ---
 

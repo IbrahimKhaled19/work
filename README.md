@@ -409,26 +409,19 @@ Tracked in `SEO_PERF_PLAN.md`. These are content/business problems, not code:
    is live in the UI at `src/pages/Contact.jsx` and `src/components/Footer.jsx`,
    so enquiries currently go nowhere. Excluded from JSON-LD in the meantime.
 
-2. **Founding year vs. years of experience.** `founded: 1993` is confirmed, which
-   implies ~33 years as of 2026, but all site copy claims "25+ years". Flagged as
-   unresolved in `PRODUCT.md`. `site.js` keeps `25+` and does not derive a figure
-   from the founding year.
-
-3. **`DESIGN.md` still describes the business as "partner for the UAE"** — a
+2. **`DESIGN.md` still describes the business as "partner for the UAE"** — a
    leftover from the same reskin.
 
-4. **The navbar logo is slightly squashed.** The master `assets-src/logo.png` is
+3. **The navbar logo is slightly squashed.** The master `assets-src/logo.png` is
    2132×738 (2.89:1) but `.brand img` renders it into a 120×50 box (2.4:1), so
    the wordmark is horizontally compressed by about 17%. The pipeline reproduces
    the current appearance rather than silently changing the brand — fix the box
    or the master, whichever is wrong.
 
-5. **No quote delivery path.** `src/pages/Contact.jsx` shows a success message
+4. **No quote delivery path.** `src/pages/Contact.jsx` shows a success message
    without sending anything.
 
-6. **`500+ active AMC clients`** is unconfirmed and appears in the homepage stats.
-
-7. **Project photography is only partly in.** Five service pages now carry real
+5. **Project photography is only partly in.** Five service pages now carry real
    project photos: design & engineering, fire alarm & detection, sprinkler,
    standpipe & hose and portable extinguishers. Each declares a `photos` block
    of manifest image ids in `src/data/services.js`, with masters in
