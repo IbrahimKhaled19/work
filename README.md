@@ -34,6 +34,7 @@ npm run dev          # http://localhost:5173
 | `npm run verify:seo:strict` | Same, but fails without `VITE_SITE_URL`. **Use this in CI** |
 | `npm run verify:contrast` | Check every declared colour-token pair against WCAG AA |
 | `npm run verify` | Lint plus every verifier, in order. Runs on every deploy; **use this in CI** too |
+| `npm test` | Negative tests: break a build on purpose and assert the validators reject it |
 | `npm run audit` | Lighthouse against the built `dist/`. The only score worth quoting |
 | `npm run images` | Rebuild optimised image variants from `assets-src/` into `public/img/` |
 | `npm run images:inspect` | Report dimensions, format and size of every image |
