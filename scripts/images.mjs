@@ -6,7 +6,8 @@
  * only image directory Vite copies into dist/.
  *
  *   node scripts/images.mjs          optimise everything
- *   node scripts/images.mjs --check  report only, write nothing (for CI)
+ *   node scripts/images.mjs --check  encode to a scratch directory, report, and
+ *                                    publish nothing (for CI)
  *
  * Design rules, all derived from measured display sizes:
  *
@@ -36,8 +37,19 @@ import path from 'node:path'
 
 const ROOT = process.cwd()
 const SRC = path.join(ROOT, 'assets-src')
-const OUT = path.join(ROOT, 'public', 'img')
+// Everything is encoded into a staging directory and swapped into public/img
+// as a whole at the end. The old order was delete-then-refill, so an
+// interrupt - or one missing source - left the site serving half its images
+// and the working tree showing every file deleted. Staging means public/img
+// changes only on a successful run, and only between two filesystem
+// operations. .cache/ is gitignored, so an interrupted run leaves git with
+// nothing to see.
+const FINAL = path.join(ROOT, 'public', 'img')
+const OUT = path.join(ROOT, '.cache', 'img-staging')
 const MANIFEST = path.join(ROOT, 'src', 'data', 'images.js')
+// --check encodes into staging, reports, and discards it. It used to skip the
+// writes but still delete public/img first, and then read back the files it
+// had not written - so it destroyed the output and then crashed on it.
 const CHECK_ONLY = process.argv.includes('--check')
 
 /**
@@ -240,9 +252,9 @@ async function encode(sourcePath, target, width, format, outDir) {
       ? pipeline.avif({ quality: target.class.avif, effort: 6 })
       : pipeline.webp({ quality: target.class.webp, effort: 5 })
 
-  if (!CHECK_ONLY) {
-    await image.toFile(outFile)
-  }
+  // Written even in --check mode: staging is scratch space, so measuring a
+  // file that does not exist on disk is impossible any other way.
+  await image.toFile(outFile)
 
   const meta = await sharp(outFile).metadata()
   return {
@@ -278,7 +290,7 @@ for (const target of TARGETS) {
     const ext = path.extname(target.source).slice(1)
     const outName = `${target.output}.${ext}`
     const outFile = path.join(OUT, outName)
-    if (!CHECK_ONLY) fs.copyFileSync(sourcePath, outFile)
+    fs.copyFileSync(sourcePath, outFile)
     const bytes = fs.statSync(outFile).size
     outputBytes += bytes
 
@@ -412,21 +424,19 @@ console.log(
 // ---------------------------------------------------------------------------
 const TOUCH_ICON = { source: 'public/favicon.svg', size: 180, out: 'apple-touch-icon.png' }
 
-if (!CHECK_ONLY) {
-  const touchSource = path.join(ROOT, TOUCH_ICON.source)
-  if (fs.existsSync(touchSource)) {
-    const touchOut = path.join(OUT, TOUCH_ICON.out)
-    await sharp(touchSource, { density: 384 })
-      .resize(TOUCH_ICON.size, TOUCH_ICON.size, { fit: 'cover' })
-      .png({ compressionLevel: 9 })
-      .toFile(touchOut)
-    console.log(
-      `\napple-touch-icon  ${formatBytes(fs.statSync(touchOut).size)}  ${TOUCH_ICON.size}x${TOUCH_ICON.size} png`
-    )
-  } else {
-    console.error(`  MISSING TOUCH ICON SOURCE: ${TOUCH_ICON.source}`)
-    process.exitCode = 1
-  }
+const touchSource = path.join(ROOT, TOUCH_ICON.source)
+if (fs.existsSync(touchSource)) {
+  const touchOut = path.join(OUT, TOUCH_ICON.out)
+  await sharp(touchSource, { density: 384 })
+    .resize(TOUCH_ICON.size, TOUCH_ICON.size, { fit: 'cover' })
+    .png({ compressionLevel: 9 })
+    .toFile(touchOut)
+  console.log(
+    `\napple-touch-icon  ${formatBytes(fs.statSync(touchOut).size)}  ${TOUCH_ICON.size}x${TOUCH_ICON.size} png`
+  )
+} else {
+  console.error(`  MISSING TOUCH ICON SOURCE: ${TOUCH_ICON.source}`)
+  process.exitCode = 1
 }
 
 // ---------------------------------------------------------------------------
@@ -449,53 +459,67 @@ if (!CHECK_ONLY) {
 // ---------------------------------------------------------------------------
 const OG = { width: 1200, height: 630, out: 'og-image.jpg' }
 
-if (!CHECK_ONLY) {
-  const heroSource = path.join(SRC, HERO_SOURCE)
-  const wordmark = path.join(SRC, 'logo.png')
-  const ogOut = path.join(OUT, OG.out)
+const heroSource = path.join(SRC, HERO_SOURCE)
+const wordmark = path.join(SRC, 'logo.png')
+const ogOut = path.join(OUT, OG.out)
 
-  if (!fs.existsSync(heroSource)) {
-    console.error(`  MISSING OG SOURCE: assets-src/${HERO_SOURCE}`)
-    process.exitCode = 1
-  } else {
-    // Wordmark at ~46% of the card width. Composited as a buffer because
-    // sharp's composite() takes { input } buffers, not pipeline instances.
-    const logoBuffer = await sharp(wordmark)
-      .resize({ width: Math.round(OG.width * 0.46) })
-      .png()
-      .toBuffer()
+if (!fs.existsSync(heroSource)) {
+  console.error(`  MISSING OG SOURCE: assets-src/${HERO_SOURCE}`)
+  process.exitCode = 1
+} else {
+  // Wordmark at ~46% of the card width. Composited as a buffer because
+  // sharp's composite() takes { input } buffers, not pipeline instances.
+  const logoBuffer = await sharp(wordmark)
+    .resize({ width: Math.round(OG.width * 0.46) })
+    .png()
+    .toBuffer()
 
-    // Brand wash, echoing the site's --red.
-    const washBuffer = await sharp({
-      create: {
-        width: OG.width,
-        height: OG.height,
-        channels: 4,
-        // Brand wash, echoing the site's --red. Kept light: the hero photograph
-        // is already dominated by red brick and hydrant paint, so a heavier
-        // tint doubles up and the whole card reads magenta.
-        background: { r: 204, g: 38, b: 67, alpha: 0.14 },
-      },
-    })
-      .png()
-      .toBuffer()
+  // Brand wash, echoing the site's --red.
+  const washBuffer = await sharp({
+    create: {
+      width: OG.width,
+      height: OG.height,
+      channels: 4,
+      // Brand wash, echoing the site's --red. Kept light: the hero photograph
+      // is already dominated by red brick and hydrant paint, so a heavier
+      // tint doubles up and the whole card reads magenta.
+      background: { r: 204, g: 38, b: 67, alpha: 0.14 },
+    },
+  })
+    .png()
+    .toBuffer()
 
-    await sharp(heroSource)
-      // Cover-crop the hero to 1.91:1, then dim it to match the on-page
-      // treatment so the card is not glaringly brighter than the site.
-      .resize(OG.width, OG.height, { fit: 'cover', position: 'centre' })
-      .modulate({ brightness: 0.62, saturation: 0.9 })
-      .composite([
-        { input: washBuffer, gravity: 'centre' },
-        { input: logoBuffer, gravity: 'centre' },
-      ])
-      .jpeg({ quality: 88, mozjpeg: true, chromaSubsampling: '4:4:4' })
-      .toFile(ogOut)
+  await sharp(heroSource)
+    // Cover-crop the hero to 1.91:1, then dim it to match the on-page
+    // treatment so the card is not glaringly brighter than the site.
+    .resize(OG.width, OG.height, { fit: 'cover', position: 'centre' })
+    .modulate({ brightness: 0.62, saturation: 0.9 })
+    .composite([
+      { input: washBuffer, gravity: 'centre' },
+      { input: logoBuffer, gravity: 'centre' },
+    ])
+    .jpeg({ quality: 88, mozjpeg: true, chromaSubsampling: '4:4:4' })
+    .toFile(ogOut)
 
-    console.log(
-      `\nog-image            ${formatBytes(fs.statSync(ogOut).size)}  ${OG.width}x${OG.height} jpg`
-    )
-  }
+  console.log(
+    `\nog-image            ${formatBytes(fs.statSync(ogOut).size)}  ${OG.width}x${OG.height} jpg`
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Publish. public/img is replaced whole rather than emptied and refilled, and
+// only after every file above has been written, so a failure anywhere leaves
+// the previous set of images in place instead of a half-populated directory.
+// --check discards the staging area instead: public/img and the manifest
+// below are both left exactly as they were.
+// ---------------------------------------------------------------------------
+if (CHECK_ONLY) {
+  fs.rmSync(OUT, { recursive: true, force: true })
+  console.log(`\ncheck only: public/img untouched, ${rows.length} targets measured`)
+} else {
+  if (fs.existsSync(FINAL)) fs.rmSync(FINAL, { recursive: true })
+  fs.renameSync(OUT, FINAL)
+  console.log(`\npublic/img replaced: ${fs.readdirSync(FINAL).length} files`)
 }
 
 if (!CHECK_ONLY) {
