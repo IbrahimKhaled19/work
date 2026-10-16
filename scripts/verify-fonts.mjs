@@ -21,14 +21,13 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { fail, finish } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const INDEX_HTML = path.join(ROOT, 'index.html')
 const FONTS_CSS = path.join(ROOT, 'src', 'fonts.css')
 const FONT_DIR = path.join(ROOT, 'public', 'fonts')
 
-const failures = []
-const fail = (m) => failures.push(m)
 const notes = []
 
 // ---------------------------------------------------------------------------
@@ -177,12 +176,4 @@ if (notes.length) {
   for (const n of notes) console.log(`  ok  ${n}`)
 }
 
-if (failures.length) {
-  console.log(`\n${'x'.repeat(64)}\nFAILED (${failures.length})`)
-  for (const m of failures) console.log(`  - ${m}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`\n${'='.repeat(64)}`)
-console.log('PASSED - fonts are self-hosted, preloaded, and never render-blocking\n')
+finish('fonts are self-hosted, preloaded, and never render-blocking')

@@ -30,6 +30,7 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { fail as failRaw, pad, finish } from './lib/verify.mjs'
 
 const DIST = path.join(process.cwd(), 'dist')
 
@@ -281,8 +282,10 @@ const VOCABULARY = {
 }
 
 // --- shape checks -----------------------------------------------------------
-const failures = []
-const fail = (where, message) => failures.push(`${where}: ${message}`)
+// The shared array and finish() live in ./lib/verify.mjs. This validator
+// reports against a node, so its messages carry that node as a prefix - a
+// two-argument shape the other verifiers do not need.
+const fail = (where, message) => failRaw(`${where}: ${message}`)
 
 function checkShape(where, shape, value, key) {
   switch (shape) {
@@ -451,7 +454,6 @@ if (pagesWithoutLd.length) {
 }
 
 // --- report -----------------------------------------------------------------
-const pad = (v, n) => String(v).padEnd(n)
 const rpad = (v, n) => String(v).padStart(n)
 
 console.log(`\nvalidating JSON-LD against the schema.org vocabulary\n${'-'.repeat(64)}`)
@@ -470,15 +472,7 @@ console.log(`${pad(`${typeCounts.size} distinct types`, 34)}${rpad(
 )}`)
 console.log('')
 
-if (failures.length) {
-  console.log(`${'x'.repeat(64)}\nFAILED (${failures.length})`)
-  for (const f of failures) console.log(`  - ${f}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`${'='.repeat(64)}`)
-console.log('PASSED - every property exists on its type, with the right shape\n')
+finish('every property exists on its type, with the right shape')
 console.log('  Note: this checks the vocabulary, not eligibility. Google\'s rich-results')
 console.log('  test is the authority on whether a given type earns a result:\n')
 console.log('    https://search.google.com/test/rich-results\n')

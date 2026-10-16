@@ -19,13 +19,12 @@ import path from 'node:path'
 
 import { routes, notFoundPath } from '../src/routes.manifest.js'
 import { outputFilesFor } from '../src/routes.manifest.js'
+import { fail, finish } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const DIST = path.join(ROOT, 'dist')
 const PUBLIC = path.join(ROOT, 'public')
 
-const failures = []
-const fail = (m) => failures.push(m)
 const notes = []
 
 if (!fs.existsSync(DIST)) {
@@ -273,12 +272,4 @@ if (notes.length) {
   for (const n of notes) console.log(`  - ${n}`)
 }
 
-if (failures.length) {
-  console.log(`\n${'x'.repeat(64)}\nFAILED (${failures.length})`)
-  for (const m of failures) console.log(`  - ${m}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`\n${'='.repeat(64)}`)
-console.log('PASSED - dist/ is deployable and no config reintroduces an SPA rewrite\n')
+finish('dist/ is deployable and no config reintroduces an SPA rewrite')

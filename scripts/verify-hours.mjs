@@ -40,10 +40,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 
 import site from '../src/seo/site.js'
+import { failures, pad, htmlFiles, finish } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const DIST = path.join(ROOT, 'dist')
-const failures = []
 
 // --- 1. the source is internally coherent ---------------------------------
 const { hours } = site
@@ -148,15 +148,6 @@ const BANNED = [
   ['the previous 18:00 closing', /\b18:00\b/],
   ['the withdrawn "monthly inspections" phrase', /monthly inspections/i],
 ]
-
-function htmlFiles(dir, out = []) {
-  for (const name of fs.readdirSync(dir)) {
-    const p = path.join(dir, name)
-    if (fs.statSync(p).isDirectory()) htmlFiles(p, out)
-    else if (name.endsWith('.html')) out.push(p)
-  }
-  return out
-}
 
 const files = htmlFiles(DIST)
 let scannedChars = 0
@@ -292,7 +283,6 @@ if (sourceCount < 20) {
 }
 
 // --- report ----------------------------------------------------------------
-const pad = (v, n) => String(v).padEnd(n)
 
 console.log(`\nverifying opening hours\n${'-'.repeat(64)}`)
 console.log(`${pad('source', 14)}${site.hours.days?.schema}  ${hours.opens}-${hours.closes}`)
@@ -304,14 +294,6 @@ console.log(`${files.length} built pages scanned, ${scannedChars.toLocaleString(
 console.log(`${sourceCount} source files scanned for hardcoded hours`)
 console.log('')
 
-if (failures.length) {
-  console.log(`${'x'.repeat(64)}\nFAILED (${failures.length})`)
-  for (const f of [...new Set(failures)]) console.log(`  - ${f}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log('='.repeat(64))
-console.log(
-  'PASSED - the hours have one source, the JSON-LD agrees with it, and no withdrawn claim is published\n'
+finish(
+  'the hours have one source, the JSON-LD agrees with it, and no withdrawn claim is published'
 )

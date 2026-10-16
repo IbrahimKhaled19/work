@@ -15,6 +15,7 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { fail, finish } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const DIST = path.join(ROOT, 'dist')
@@ -23,9 +24,6 @@ if (!fs.existsSync(DIST)) {
   console.error('  dist/ not found - run `npm run build` first.')
   process.exit(1)
 }
-
-const failures = []
-const fail = (m) => failures.push(m)
 
 function walk(dir) {
   const out = []
@@ -193,11 +191,4 @@ console.log(`unique canonicals  : ${canonicals.size} (404 excluded by design)`)
 console.log(`asset refs checked : ${assetRefs.size} relative, ${absoluteRefs.size} absolute`)
 console.log(`body text rendered : ${totalText.toLocaleString()} characters`)
 
-if (failures.length) {
-  console.log(`\n${'x'.repeat(60)}\nFAILED (${failures.length})`)
-  for (const m of failures) console.log(`  - ${m}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`\n${'='.repeat(60)}\nPASSED - all build output assertions hold\n`)
+finish('all build output assertions hold')

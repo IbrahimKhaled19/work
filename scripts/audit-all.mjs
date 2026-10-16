@@ -20,6 +20,7 @@ import { spawn, spawnSync } from 'node:child_process'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
+import { failures, pad, finish } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const PORT = Number(process.env.AUDIT_PORT || 4185)
@@ -95,14 +96,12 @@ if (!(await waitForServer())) {
 }
 
 // --- audit each route -------------------------------------------------------
-const pad = (v, n) => String(v).padEnd(n)
 const rpad = (v, n) => String(v).padStart(n)
 const NPX = process.platform === 'win32' ? 'npx.cmd' : 'npx'
 
 console.log(`\nAuditing ${targets.length} routes (Lighthouse ${LIGHTHOUSE})...\n`)
 
 const rows = []
-const failures = []
 
 for (const [i, t] of targets.entries()) {
   const url = `http://localhost:${PORT}${t.path}`
@@ -203,12 +202,4 @@ console.log(
 )
 console.log('')
 
-if (failures.length) {
-  console.log(`${'x'.repeat(76)}\nFAILED (${failures.length})`)
-  for (const f of failures) console.log(`  - ${f}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`${'='.repeat(76)}`)
-console.log(`PASSED - all ${ok.length} routes meet their thresholds\n`)
+finish(`all ${ok.length} routes meet their thresholds`)

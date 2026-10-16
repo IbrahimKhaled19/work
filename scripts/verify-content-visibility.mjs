@@ -18,12 +18,11 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { fail, finish } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const CSS_DIR = path.join(ROOT, 'dist', 'assets')
 
-const failures = []
-const fail = (m) => failures.push(m)
 const notes = []
 
 // --- 1. the CSS rule must exist in the built stylesheet --------------------
@@ -131,12 +130,4 @@ if (firstCvInBody !== -1 && heroEnd !== -1 && firstCvInBody < heroEnd) {
 console.log(`\nverifying content-visibility\n${'-'.repeat(64)}`)
 for (const n of notes) console.log(`  ok  ${n}`)
 
-if (failures.length) {
-  console.log(`\n${'x'.repeat(64)}\nFAILED (${failures.length})`)
-  for (const f of failures) console.log(`  - ${f}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`\n${'='.repeat(64)}`)
-console.log('PASSED - applied below the fold, hero excluded, placeholders declared\n')
+finish('applied below the fold, hero excluded, placeholders declared')

@@ -24,6 +24,7 @@ import { getAllRoutes, getRouteMeta, notFoundMeta, TITLE_MAX, DESCRIPTION_MAX } 
 import { jsonLdFor, verifiedStandards } from '../src/seo/jsonld.js'
 import site, { isSiteUrlConfigured, assertSiteUrl } from '../src/seo/site.js'
 import { serviceSections } from '../src/data/services.js'
+import { fail, finish } from './lib/verify.mjs'
 
 const STRICT = process.argv.includes('--strict')
 
@@ -36,9 +37,7 @@ const STRICT = process.argv.includes('--strict')
 // before you edit the number.
 const EXPECTED_ROUTE_COUNT = 6 + serviceSections.length
 
-const failures = []
 const warnings = []
-const fail = (msg) => failures.push(msg)
 const warn = (msg) => warnings.push(msg)
 
 const routes = getAllRoutes()
@@ -219,11 +218,4 @@ if (warnings.length) {
   for (const message of warnings) console.log(`  - ${message}`)
 }
 
-if (failures.length) {
-  console.log(`\n${'x'.repeat(60)}\nFAILED (${failures.length})`)
-  for (const message of failures) console.log(`  - ${message}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`\n${'='.repeat(60)}\nPASSED - all SEO metadata assertions hold\n`)
+finish('all SEO metadata assertions hold')

@@ -32,9 +32,9 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { failures, pad, finish } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
-const failures = []
 
 const read = (...p) => fs.readFileSync(path.join(ROOT, ...p), 'utf8')
 
@@ -84,7 +84,6 @@ for (const line of gallerySrc.split('\n')) {
 }
 
 // --- report ----------------------------------------------------------------
-const pad = (v, n) => String(v).padEnd(n)
 
 console.log(`\nverifying service taxonomy\n${'-'.repeat(64)}`)
 console.log(`${pad('service', 34)}${pad('source', 12)}${pad('tabs', 12)}gallery`)
@@ -166,12 +165,4 @@ if (categories.size < 13 || tabGroups.size < 13) {
   )
 }
 
-if (failures.length) {
-  console.log(`${'x'.repeat(64)}\nFAILED (${failures.length})`)
-  for (const f of [...new Set(failures)]) console.log(`  - ${f}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log('='.repeat(64))
-console.log('PASSED - services.js, the /services tabs and the gallery filters agree\n')
+finish('services.js, the /services tabs and the gallery filters agree')

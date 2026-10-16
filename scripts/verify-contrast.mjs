@@ -27,6 +27,7 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { failures, pad, finish } from './lib/verify.mjs'
 
 const CSS = path.join(process.cwd(), 'src', 'index.css')
 
@@ -135,10 +136,8 @@ const PAIRS = [
 ]
 
 // --- run -------------------------------------------------------------------
-const pad = (v, n) => String(v).padEnd(n)
 const rpad = (v, n) => String(v).padStart(n)
 
-const failures = []
 const rows = []
 
 for (const { fg, bg, where } of PAIRS) {
@@ -179,12 +178,4 @@ console.log(
 )
 console.log('')
 
-if (failures.length) {
-  console.log(`${'x'.repeat(78)}\nFAILED (${failures.length})`)
-  for (const m of failures) console.log(`  - ${m}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`${'='.repeat(78)}`)
-console.log('PASSED - every declared token pair meets WCAG AA for body text\n')
+finish('every declared token pair meets WCAG AA for body text')

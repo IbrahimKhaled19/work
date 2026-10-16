@@ -26,6 +26,7 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { failures, pad, htmlFiles, finish } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const DIST = path.join(ROOT, 'dist')
@@ -51,22 +52,12 @@ function routeKey(rel) {
   return s || '/'
 }
 
-function htmlFiles(dir, out = []) {
-  for (const name of fs.readdirSync(dir)) {
-    const p = path.join(dir, name)
-    if (fs.statSync(p).isDirectory()) htmlFiles(p, out)
-    else if (name.endsWith('.html')) out.push(p)
-  }
-  return out
-}
-
 // A floor, so this guard cannot pass by matching nothing. If a prerender or
 // markup change ever stopped emitting images, "0 offenders" would be a silent
 // pass over a check that had stopped checking anything. Measured: 47 images
 // across 20 pages, so the floor sits well below the real count.
 const MIN_IMAGES = 20
 
-const failures = []
 const perRoute = new Map()
 let imageCount = 0
 let lazyCount = 0
@@ -104,7 +95,6 @@ for (const file of htmlFiles(DIST)) {
 }
 
 // --- report ----------------------------------------------------------------
-const pad = (v, n) => String(v).padEnd(n)
 
 console.log(`\nverifying image dimensions\n${'-'.repeat(64)}`)
 console.log(`${pad('page', 34)}${pad('images', 8)}unsized`)
@@ -126,14 +116,4 @@ if (imageCount < MIN_IMAGES) {
   )
 }
 
-if (failures.length) {
-  console.log(`${'x'.repeat(64)}\nFAILED (${failures.length})`)
-  for (const f of failures) console.log(`  - ${f}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`${'='.repeat(64)}`)
-console.log(
-  'PASSED - every image declares width and height, so no image can cause a layout shift\n'
-)
+finish('every image declares width and height, so no image can cause a layout shift')

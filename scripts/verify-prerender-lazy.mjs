@@ -24,12 +24,11 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { getAllRoutes } from '../src/seo/routeMeta.js'
+import { failures, pad, finish } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const APP = path.join(ROOT, 'src', 'App.jsx')
 const SSR = path.join(ROOT, 'src', 'entry-server.jsx')
-
-const failures = []
 
 const app = fs.readFileSync(APP, 'utf8')
 const ssr = fs.readFileSync(SSR, 'utf8')
@@ -162,7 +161,6 @@ for (const m of app.matchAll(/lazy\(\(\)\s*=>\s*import\(['"]([^'"]+)['"]\)\)/g))
 }
 
 // --- report ----------------------------------------------------------------
-const pad = (v, n) => String(v).padEnd(n)
 
 console.log(`\nverifying the prerender route table\n${'-'.repeat(64)}`)
 console.log(`${pad('path', 28)}${pad('App.jsx', 18)}entry-server.jsx`)
@@ -174,12 +172,4 @@ console.log('-'.repeat(64))
 console.log(`${appRoutes.length} routes in App.jsx, ${ssrRoutes.length} in entry-server.jsx`)
 console.log('')
 
-if (failures.length) {
-  console.log(`${'x'.repeat(64)}\nFAILED (${failures.length})`)
-  for (const f of failures) console.log(`  - ${f}`)
-  console.log('')
-  process.exit(1)
-}
-
-console.log(`${'='.repeat(64)}`)
-console.log('PASSED - both route tables agree, so the prerender cannot emit an empty page\n')
+finish('both route tables agree, so the prerender cannot emit an empty page')
