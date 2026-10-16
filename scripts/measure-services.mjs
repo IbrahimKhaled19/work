@@ -27,6 +27,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import zlib from 'node:zlib'
+import { pad, rpad } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const FILE = path.join(ROOT, 'src', 'data', 'services.js')
@@ -91,8 +92,6 @@ const stillHasTitles = (light.match(/\btitle:/g) || []).length
 const originalTitles = (sourceNormalized.match(/\btitle:/g) || []).length
 
 // --- report ----------------------------------------------------------------
-const pad = (v, n) => String(v).padEnd(n)
-const rpad = (v, n) => String(v).padStart(n)
 const kib = (n) => (n / 1024).toFixed(1) + ' KiB'
 
 const rows = [

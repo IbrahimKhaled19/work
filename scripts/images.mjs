@@ -34,6 +34,7 @@
 import sharp from 'sharp'
 import fs from 'node:fs'
 import path from 'node:path'
+import { pad, rpad } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const SRC = path.join(ROOT, 'assets-src')
@@ -378,9 +379,6 @@ for (const target of TARGETS) {
     alt: target.alt,
   })
 }
-
-const pad = (v, n) => String(v).padEnd(n)
-const rpad = (v, n) => String(v).padStart(n)
 
 console.log(
   '\n' +

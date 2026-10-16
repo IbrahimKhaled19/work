@@ -27,7 +27,7 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
-import { failures, pad, finish } from './lib/verify.mjs'
+import { failures, pad, rpad, finish } from './lib/verify.mjs'
 
 const CSS = path.join(process.cwd(), 'src', 'index.css')
 
@@ -136,7 +136,6 @@ const PAIRS = [
 ]
 
 // --- run -------------------------------------------------------------------
-const rpad = (v, n) => String(v).padStart(n)
 
 const rows = []
 

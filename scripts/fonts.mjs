@@ -53,6 +53,7 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
+import { pad, rpad } from './lib/verify.mjs'
 
 const ROOT = process.cwd()
 const FONT_DIR = path.join(ROOT, 'public', 'fonts')
@@ -212,8 +213,6 @@ ${downloaded
 fs.writeFileSync(CSS_OUT, css, 'utf8')
 
 // --- report ----------------------------------------------------------------
-const pad = (v, n) => String(v).padEnd(n)
-const rpad = (v, n) => String(v).padStart(n)
 
 console.log(`\nvendored -> public/fonts/`)
 console.log('-'.repeat(64))

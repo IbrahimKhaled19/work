@@ -31,6 +31,9 @@ export const fail = (message) => failures.push(message)
 /** Left-align a value in a fixed-width table column. */
 export const pad = (value, width) => String(value).padEnd(width)
 
+/** Right-align a value in a fixed-width table column: numbers and counts. */
+export const rpad = (value, width) => String(value).padStart(width)
+
 /**
  * Every .html file under dir, recursively, as absolute paths.
  * readdirSync order, so the result is stable within a run.

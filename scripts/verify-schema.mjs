@@ -30,7 +30,7 @@
  */
 import fs from 'node:fs'
 import path from 'node:path'
-import { fail as failRaw, pad, finish } from './lib/verify.mjs'
+import { fail as failRaw, pad, rpad, finish } from './lib/verify.mjs'
 
 const DIST = path.join(process.cwd(), 'dist')
 
@@ -454,7 +454,6 @@ if (pagesWithoutLd.length) {
 }
 
 // --- report -----------------------------------------------------------------
-const rpad = (v, n) => String(v).padStart(n)
 
 console.log(`\nvalidating JSON-LD against the schema.org vocabulary\n${'-'.repeat(64)}`)
 console.log(`  pages scanned : ${pages.length} (404.html is intentionally bare)`)
