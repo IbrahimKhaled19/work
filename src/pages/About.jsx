@@ -4,6 +4,7 @@ import { FileText } from '@phosphor-icons/react/FileText'
 import { FireExtinguisher } from '@phosphor-icons/react/FireExtinguisher'
 import { Phone } from '@phosphor-icons/react/Phone'
 import PageHero from '../components/PageHero'
+import site from '../seo/site.js'
 import Reveal from '../components/Reveal'
 import SectionHead from '../components/SectionHead'
 import WhyList from '../components/WhyList'
@@ -14,7 +15,7 @@ import CTA from '../components/CTA'
 const milestones = [
   { year: '1993', text: 'Founded as a general contracting company, delivering large projects including water desalination plants, schools and post offices.' },
   { year: '2016', text: 'Added fire protection to the company\u2019s work, while continuing as a general contracting company. It has offered fire protection for the past 10 years.' },
-  { year: 'Today', text: '100+ fire protection projects completed across Egypt, with 13 services delivered under one roof.' },
+  { year: 'Today', text: `${site.projectsDelivered}+ fire protection projects completed across Egypt, with 13 services delivered under one roof.` },
 ]
 
 const coverage = [
@@ -100,7 +101,7 @@ function About() {
               inspection. In 2016 he added fire protection, bringing the same
               discipline to systems that must work when needed. Today the
               company is certified by the General Administration for Civil
-              Protection (GACP) and has completed 100+ fire protection projects
+              Protection (GACP) and has completed {site.projectsDelivered}+ fire protection projects
               across Egypt, all designed and tested to NFPA and the Egyptian
               Fire Protection Code.
             </p>
@@ -235,7 +236,7 @@ function About() {
             <span className="proof-seal-badge" aria-hidden="true">
               <ShieldCheck size={44} />
             </span>
-            <h3>10+ Years in Fire Protection</h3>
+            <h3>{site.yearsExperience}+ Years in Fire Protection</h3>
             <p>
               Civil Defense approved contractor for fire fighting and life
               safety systems across Egypt.

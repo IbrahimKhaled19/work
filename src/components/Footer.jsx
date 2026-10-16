@@ -66,8 +66,8 @@ function Footer() {
           <ul className="footer-contact">
             <li>Serving industrial and commercial facilities across Egypt</li>
             <li>
-              <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer">
-                WhatsApp: +20 100 362 0490
+              <a href={site.contact.whatsapp} target="_blank" rel="noopener noreferrer">
+                WhatsApp: {site.contact.phoneDisplay}
               </a>
             </li>
             <li>

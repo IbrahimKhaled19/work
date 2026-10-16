@@ -182,10 +182,13 @@ export const site = {
   // projects such as water desalination plants, schools, and post offices."
   // The company later added fire protection to its work.
   founder: 'Abdalatty Mohamed Abdalatty', // CONFIRMED per about-us-copy-v6.pdf
-  yearsExperience: '10+', // CONFIRMED per about-us-copy-v6.pdf: "It has offered
+  // Numbers, not pre-formatted "10+": the counter reads the value directly and
+  // each copy site writes its own "+", so there is one figure to update rather
+  // than a figure and a formatted string that can disagree.
+  yearsExperience: 10, // CONFIRMED per about-us-copy-v6.pdf: "It has offered
   // fire protection for the past 10 years." The old "25+" conflated the
   // company's age with its fire protection experience and is withdrawn.
-  projectsDelivered: '100+', // CONFIRMED per about-us-copy-v6.pdf: "completed
+  projectsDelivered: 100, // CONFIRMED per about-us-copy-v6.pdf: "completed
   // more than 100 fire protection projects"
   // `callbackPromise` used to sit here as "within 1 hour during working
   // hours". It was never read by anything, and the one-hour response claim it

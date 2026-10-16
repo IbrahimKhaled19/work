@@ -10,7 +10,7 @@ function CTA({
   quoteText = 'Get a Free Quote',
   quoteHref = '/contact',
   whatsappText = 'Chat on WhatsApp',
-  whatsappHref = 'https://wa.me/201003620490',
+  whatsappHref = site.contact.whatsapp,
   note = 'Annual Maintenance Contract (AMC) cover includes inspections and full Civil Defense compliance.',
   className = '',
   variant = 'light',
@@ -39,7 +39,7 @@ function CTA({
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-outline cta-emergency"
-            aria-label={`Chat on WhatsApp: +20 100 362 0490`}
+            aria-label={`Chat on WhatsApp: ${site.contact.phoneDisplay}`}
           >
             <WhatsappLogo size={16} aria-hidden="true" />
             {whatsappText}

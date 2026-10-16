@@ -56,8 +56,8 @@ function Contact() {
                 <div>
                   <strong>WhatsApp</strong>
                   <p>
-                    <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer">
-                      +20 100 362 0490
+                    <a href={site.contact.whatsapp} target="_blank" rel="noopener noreferrer">
+                      {site.contact.phoneDisplay}
                     </a>
                   </p>
                 </div>

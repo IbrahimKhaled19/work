@@ -21,8 +21,8 @@ import site from '../seo/site.js'
 // with the rest of the availability claims. `.stats-grid` uses auto-fit, so
 // this array's length drives the layout and adding a tile back needs no CSS.
 const stats = [
-  { target: 10, suffix: '+', label: 'Years in Fire Protection', duration: 1100 },
-  { target: 100, suffix: '+', label: 'Fire Protection Projects', to: '/gallery', aria: 'View project gallery: 100+ projects delivered', duration: 1400 },
+  { target: site.yearsExperience, suffix: '+', label: 'Years in Fire Protection', duration: 1100 },
+  { target: site.projectsDelivered, suffix: '+', label: 'Fire Protection Projects', to: '/gallery', aria: `View project gallery: ${site.projectsDelivered}+ projects delivered`, duration: 1400 },
   { target: 13, suffix: '', label: 'Services Under One Roof', duration: 1200 },
 ]
 
@@ -112,7 +112,7 @@ function Home() {
             </li>
             <li>
               <Clock size={16} aria-hidden="true" />
-              <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer">{site.hours.short} &middot; WhatsApp: +20 100 362 0490</a>
+              <a href={site.contact.whatsapp} target="_blank" rel="noopener noreferrer">{site.hours.short} &middot; WhatsApp: {site.contact.phoneDisplay}</a>
             </li>
           </ul>
         </div>

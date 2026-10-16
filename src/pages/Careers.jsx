@@ -68,7 +68,7 @@ const applyRoutes = [
     title: 'Message on WhatsApp',
     desc: 'The same number the site uses for site queries. Useful if you would rather talk it through first.',
     Icon: WhatsappLogo,
-    href: 'https://wa.me/201003620490',
+    href: site.contact.whatsapp,
     cta: 'Chat on WhatsApp',
   },
 ]

@@ -1,3 +1,5 @@
+import site from '../seo/site.js'
+
 export const disciplines = [
   { id: 'engineering', label: 'Engineering' },
   { id: 'suppression', label: 'Suppression' },
@@ -119,7 +121,7 @@ export const serviceSections = [
     approach: 'Installation covers the full pipe network, header, riser, cross main, and branch lines, with every sprinkler head selected for the hazard classification and ceiling coverage area of the specific space it protects, not applied uniformly across the whole facility. Before any system is signed off, it is flushed and hydrostatically pressure-tested to confirm there are no leaks, blockages, or weak points in the network. Wear and tear over time, corroded fittings, painted-over sprinkler heads, gauges that no longer read accurately, is addressed through scheduled inspection rather than waiting for a problem to surface during an emergency. We maintain access to sprinkler heads and components from all major manufacturers, so replacements match your system’s existing design rather than introducing incompatible parts.',
     compliance: 'Designed and installed to NFPA 13, the governing standard for sprinkler system design, installation, and hazard classification.',
     whyChoose: [
-      'With 100+ completed projects and 10 years in the field, our team has designed sprinkler systems across a wide range of hazard classes and facility types, meaning your system is sized for your actual risk, not a generic template',
+      `With ${site.projectsDelivered}+ completed projects and ${site.yearsExperience} years in the field, our team has designed sprinkler systems across a wide range of hazard classes and facility types, meaning your system is sized for your actual risk, not a generic template`,
       'Correct classification from the outset means no over-engineered system inflating your costs, and no under-engineered one leaving gaps in your coverage',
     ],
     cta: {

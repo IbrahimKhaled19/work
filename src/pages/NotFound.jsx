@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import PageHero from '../components/PageHero'
 import SectionHead from '../components/SectionHead'
+import site from '../seo/site.js'
 
 function NotFound() {
   return (
@@ -28,8 +29,8 @@ function NotFound() {
             <Link to="/contact" className="btn btn-solid btn-ghost-dark">
               Request a Quote
             </Link>
-            <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-outline-dark">
-              WhatsApp +20 100 362 0490
+            <a href={site.contact.whatsapp} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-outline-dark">
+              WhatsApp {site.contact.phoneDisplay}
             </a>
           </div>
         </div>

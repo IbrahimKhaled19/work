@@ -59,7 +59,7 @@ const staticRoutes = {
   '/about': {
     title: 'About ALNADA Contracting | Fire Protection Company in Egypt',
     description:
-      '10+ years in fire protection across Egypt. GACP Egypt certified and Civil Defense approved.',
+      `${site.yearsExperience}+ years in fire protection across Egypt. GACP Egypt certified and Civil Defense approved.`,
     // The founder portrait opens the page and is by a wide margin its largest
     // element, so it is this route's LCP image. Nothing preloads it otherwise:
     // React hoists a preload for a bare eager <img>, but not for one wrapped in
@@ -81,7 +81,7 @@ const staticRoutes = {
   '/contact': {
     title: 'Contact ALNADA Contracting | Fire Protection Quote in Egypt',
     description:
-      'Request a free site assessment or AMC quote in Egypt. WhatsApp +20 100 362 0490.',
+      `Request a free site assessment or AMC quote in Egypt. WhatsApp ${site.contact.phoneDisplay}.`,
     priority: 0.8,
     changefreq: 'yearly',
   },

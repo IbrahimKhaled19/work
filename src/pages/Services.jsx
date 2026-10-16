@@ -4,6 +4,7 @@ import { CaretDown } from '@phosphor-icons/react/CaretDown'
 import { WhatsappLogo } from '@phosphor-icons/react/WhatsappLogo'
 import PageHero from '../components/PageHero'
 import Reveal from '../components/Reveal'
+import site from '../seo/site.js'
 import SectionHead from '../components/SectionHead'
 import ServicesTabs from '../components/ServicesTabs'
 import CTA from '../components/CTA'
@@ -18,7 +19,7 @@ function Services() {
       <PageHero
         crumb="Services"
         title="Complete Fire Protection Systems: Engineered for Compliance, Built for Reliability"
-        subtitle="For 10 years, ALNADA Contracting has designed, installed, and maintained fire protection systems for factories, warehouses, and commercial facilities across Egypt. Fire protection is not one system. It is thirteen disciplines working together, from the earliest hydraulic calculation to the last annual inspection, and a gap in any one of them is a gap in the whole facility's safety."
+        subtitle={`For ${site.yearsExperience} years, ALNADA Contracting has designed, installed, and maintained fire protection systems for factories, warehouses, and commercial facilities across Egypt. Fire protection is not one system. It is thirteen disciplines working together, from the earliest hydraulic calculation to the last annual inspection, and a gap in any one of them is a gap in the whole facility's safety.`}
       />
 
       <section className="section">
@@ -91,7 +92,7 @@ function Services() {
                         Request Quote for {svc.short}
                       </Link>
                       <a
-                        href="https://wa.me/201003620490"
+                        href={site.contact.whatsapp}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-outline"

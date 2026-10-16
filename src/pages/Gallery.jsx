@@ -104,7 +104,7 @@ function Gallery() {
             Project photography in progress. Panels above are illustrative, not
             site photos. For recent references or a site visit,{' '}
             <Link to="/contact">contact our engineers</Link> or WhatsApp{' '}
-            <a href="https://wa.me/201003620490" target="_blank" rel="noopener noreferrer">+20 100 362 0490</a>.
+            <a href={site.contact.whatsapp} target="_blank" rel="noopener noreferrer">{site.contact.phoneDisplay}</a>.
           </p>
         </div>
       </section>
@@ -112,7 +112,7 @@ function Gallery() {
       <CTA
         title="Need a Quote or Site Inspection?"
         subtitle={`Send a quote request during working hours (${site.hours.inline}), and our engineers will contact you.`}
-        note="WhatsApp: +20 100 362 0490 &middot; Civil Defense-approved partner."
+        note={`WhatsApp: ${site.contact.phoneDisplay} &middot; Civil Defense-approved partner.`}
       />
     </>
   )
