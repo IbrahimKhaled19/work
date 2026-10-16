@@ -69,7 +69,12 @@ files['vercel.json'] = `${JSON.stringify(
     // something else, it would deploy a client-only bundle and every SEO gain
     // from the prerender would silently be lost - with a green build and a site
     // that appears to work.
-    buildCommand: 'npm run build',
+    // The 13 verifiers run as part of the deploy, not just when a human
+    // remembers to. Without them here a green Vercel build only proves the
+    // bundle compiled: duplicate meta, a wrong canonical, or a withdrawn claim
+    // would all ship unnoticed. verify reads dist/, so it must run after the
+    // four build steps above.
+    buildCommand: 'npm run build && npm run verify',
     // The four build steps must run in order, so they cannot be parallelised.
     // npm already sequences them with &&.
     outputDirectory: 'dist',
