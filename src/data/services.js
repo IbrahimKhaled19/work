@@ -56,6 +56,10 @@ export const serviceSections = [
     short: 'Fire Pumps',
     category: 'suppression',
     title: 'Fire Pump Systems',
+    photos: {
+      project: 'service-fire-pump-systems',
+      installation: 'service-fire-pump-systems-install',
+    },
     text: 'Our core specialty. We supply, install, and commission electric, diesel, and jockey pump systems, sized and tested for acceptance with proper controller setup. Non-compliant installations diagnosed and brought up to code.',
     points: [
       'Electric fire pumps: the standard choice for facilities with a dependable grid connection, with lower maintenance and simpler commissioning than diesel alternatives',
@@ -101,7 +105,10 @@ export const serviceSections = [
     short: 'Sprinklers',
     category: 'suppression',
     title: 'Sprinkler Systems',
-    photos: { project: 'service-sprinkler-systems' },
+    photos: {
+      project: 'service-sprinkler-systems',
+      installation: 'service-sprinkler-systems-install',
+    },
     text: 'Wet pipe, dry pipe, pre-action, deluge, or ESFR, matched to your hazard classification and space, then engineered and installed from header to sprinkler head. Flushed, pressure-tested, and verified before handover.',
     points: [
       'Wet pipe systems: the most common configuration, with water held ready in the pipes for instant activation when a sprinkler head opens. Ideal for spaces that do not face freezing risk',
@@ -135,7 +142,10 @@ export const serviceSections = [
     short: 'Standpipe',
     category: 'suppression',
     title: 'Standpipe & Hose Systems',
-    photos: { project: 'service-standpipe-hose-systems' },
+    photos: {
+      project: 'service-standpipe-hose-systems',
+      installation: 'service-standpipe-hose-systems-install',
+    },
     text: 'For multi-story buildings: Class I, II, and III standpipe systems, hose cabinets, and Fire Department Connections placed and sized to code, so firefighters and building occupants both have reliable access when it counts.',
     points: [
       'Class I standpipes: 2.5-inch hose connections intended for fire department use, delivering the flow professional firefighting crews require',
@@ -168,7 +178,10 @@ export const serviceSections = [
     short: 'Detection',
     category: 'detection',
     title: 'Fire Alarm & Detection',
-    photos: { project: 'service-fire-alarm-detection' },
+    photos: {
+      project: 'service-fire-alarm-detection',
+      installation: 'service-fire-alarm-detection-install',
+    },
     text: 'Smoke and heat detection, addressable control panels, and notification systems integrated with sprinklers, BMS, and Civil Defense monitoring where required. Detection fast enough to matter.',
     points: [
       'Addressable and conventional fire alarm control panels: matched to the size and complexity of the facility',
@@ -237,6 +250,7 @@ export const serviceSections = [
     short: 'Suppression',
     category: 'suppression',
     title: 'Special Hazard & Suppression Systems',
+    photos: { project: 'service-special-hazard-suppression' },
     text: 'For server rooms, control rooms, commercial kitchens, and flammable storage, standard sprinklers are not enough. We design and install clean agent (FM-200), CO2, kitchen hood, and foam suppression systems built for the specific risk in that space.',
     points: [
       'FM-200 and CO2 clean agent systems: for server rooms, control rooms, and sensitive electronics, suppressing fire without leaving residue or causing water damage',
