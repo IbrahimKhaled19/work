@@ -100,25 +100,25 @@ export const images = {
       "webp": "/img/service-fire-alarm-detection-520.webp 520w, /img/service-fire-alarm-detection-1040.webp 1040w"
     },
     "width": 1040,
-    "height": 692,
+    "height": 693,
     "displayWidth": 520,
     "displayHeight": 390,
     "sizes": "(max-width: 980px) 100vw, 520px",
-    "alt": "Smoke detector being installed into a suspended ceiling"
+    "alt": "Addressable fire alarm detection and notification system"
   },
-  "service-fire-alarm-detection-install": {
-    "id": "service-fire-alarm-detection-install",
-    "src": "/img/service-fire-alarm-detection-install-520.webp",
+  "service-fire-alarm-detection-detector-install": {
+    "id": "service-fire-alarm-detection-detector-install",
+    "src": "/img/service-fire-alarm-detection-detector-install-520.webp",
     "srcSet": {
-      "avif": "/img/service-fire-alarm-detection-install-520.avif 520w, /img/service-fire-alarm-detection-install-1040.avif 1040w",
-      "webp": "/img/service-fire-alarm-detection-install-520.webp 520w, /img/service-fire-alarm-detection-install-1040.webp 1040w"
+      "avif": "/img/service-fire-alarm-detection-detector-install-520.avif 520w, /img/service-fire-alarm-detection-detector-install-1040.avif 1040w",
+      "webp": "/img/service-fire-alarm-detection-detector-install-520.webp 520w, /img/service-fire-alarm-detection-detector-install-1040.webp 1040w"
     },
     "width": 1040,
-    "height": 588,
+    "height": 692,
     "displayWidth": 520,
     "displayHeight": 390,
     "sizes": "(max-width: 860px) 100vw, 520px",
-    "alt": "Manual fire alarm call point on a wall"
+    "alt": "Smoke detector being installed into a suspended ceiling"
   },
   "service-sprinkler-systems": {
     "id": "service-sprinkler-systems",
@@ -128,46 +128,46 @@ export const images = {
       "webp": "/img/service-sprinkler-systems-520.webp 520w, /img/service-sprinkler-systems-1040.webp 1040w"
     },
     "width": 1040,
-    "height": 717,
+    "height": 693,
     "displayWidth": 520,
     "displayHeight": 390,
     "sizes": "(max-width: 980px) 100vw, 520px",
-    "alt": "Sprinkler pipework and pendant heads below a suspended ceiling"
+    "alt": "Sprinkler network installation"
   },
-  "service-sprinkler-systems-install": {
-    "id": "service-sprinkler-systems-install",
-    "src": "/img/service-sprinkler-systems-install-520.webp",
+  "service-sprinkler-systems-pipework": {
+    "id": "service-sprinkler-systems-pipework",
+    "src": "/img/service-sprinkler-systems-pipework-520.webp",
     "srcSet": {
-      "avif": "/img/service-sprinkler-systems-install-520.avif 520w, /img/service-sprinkler-systems-install-1040.avif 1040w",
-      "webp": "/img/service-sprinkler-systems-install-520.webp 520w, /img/service-sprinkler-systems-install-1040.webp 1040w"
+      "avif": "/img/service-sprinkler-systems-pipework-520.avif 520w, /img/service-sprinkler-systems-pipework-1040.avif 1040w",
+      "webp": "/img/service-sprinkler-systems-pipework-520.webp 520w, /img/service-sprinkler-systems-pipework-1040.webp 1040w"
     },
     "width": 1040,
-    "height": 692,
+    "height": 717,
     "displayWidth": 520,
     "displayHeight": 390,
     "sizes": "(max-width: 860px) 100vw, 520px",
-    "alt": "Pendent sprinkler head and escutcheon"
+    "alt": "Sprinkler pipework installed below a suspended ceiling"
   },
   "service-standpipe-hose-systems": {
     "id": "service-standpipe-hose-systems",
     "src": "/img/service-standpipe-hose-systems-520.webp",
     "srcSet": {
-      "avif": "/img/service-standpipe-hose-systems-520.avif 520w, /img/service-standpipe-hose-systems-1040.avif 1040w",
-      "webp": "/img/service-standpipe-hose-systems-520.webp 520w, /img/service-standpipe-hose-systems-1040.webp 1040w"
+      "avif": "/img/service-standpipe-hose-systems-520.avif 520w, /img/service-standpipe-hose-systems-1040.avif 1024w",
+      "webp": "/img/service-standpipe-hose-systems-520.webp 520w, /img/service-standpipe-hose-systems-1040.webp 1024w"
     },
-    "width": 1040,
-    "height": 691,
+    "width": 1024,
+    "height": 768,
     "displayWidth": 520,
     "displayHeight": 390,
     "sizes": "(max-width: 980px) 100vw, 520px",
-    "alt": "Wall-mounted fire hose reel cabinet"
+    "alt": "Standpipe and hose reel system"
   },
-  "service-standpipe-hose-systems-install": {
-    "id": "service-standpipe-hose-systems-install",
-    "src": "/img/service-standpipe-hose-systems-install-520.webp",
+  "service-standpipe-hose-systems-landing-valve": {
+    "id": "service-standpipe-hose-systems-landing-valve",
+    "src": "/img/service-standpipe-hose-systems-landing-valve-520.webp",
     "srcSet": {
-      "avif": "/img/service-standpipe-hose-systems-install-520.avif 520w, /img/service-standpipe-hose-systems-install-1040.avif 1040w",
-      "webp": "/img/service-standpipe-hose-systems-install-520.webp 520w, /img/service-standpipe-hose-systems-install-1040.webp 1040w"
+      "avif": "/img/service-standpipe-hose-systems-landing-valve-520.avif 520w, /img/service-standpipe-hose-systems-landing-valve-1040.avif 1040w",
+      "webp": "/img/service-standpipe-hose-systems-landing-valve-520.webp 520w, /img/service-standpipe-hose-systems-landing-valve-1040.webp 1040w"
     },
     "width": 1040,
     "height": 682,
@@ -176,12 +176,12 @@ export const images = {
     "sizes": "(max-width: 860px) 100vw, 520px",
     "alt": "Standpipe landing valve with hose connection"
   },
-  "service-fire-pump-systems": {
-    "id": "service-fire-pump-systems",
-    "src": "/img/service-fire-pump-systems-520.webp",
+  "service-fire-pump-systems-pump-set": {
+    "id": "service-fire-pump-systems-pump-set",
+    "src": "/img/service-fire-pump-systems-pump-set-520.webp",
     "srcSet": {
-      "avif": "/img/service-fire-pump-systems-520.avif 520w, /img/service-fire-pump-systems-1040.avif 1040w",
-      "webp": "/img/service-fire-pump-systems-520.webp 520w, /img/service-fire-pump-systems-1040.webp 1040w"
+      "avif": "/img/service-fire-pump-systems-pump-set-520.avif 520w, /img/service-fire-pump-systems-pump-set-1040.avif 1040w",
+      "webp": "/img/service-fire-pump-systems-pump-set-520.webp 520w, /img/service-fire-pump-systems-pump-set-1040.webp 1040w"
     },
     "width": 1040,
     "height": 687,
@@ -190,12 +190,12 @@ export const images = {
     "sizes": "(max-width: 980px) 100vw, 520px",
     "alt": "Fire pump set with pressure gauges and isolation valves"
   },
-  "service-fire-pump-systems-install": {
-    "id": "service-fire-pump-systems-install",
-    "src": "/img/service-fire-pump-systems-install-520.webp",
+  "service-fire-pump-systems-plant-room": {
+    "id": "service-fire-pump-systems-plant-room",
+    "src": "/img/service-fire-pump-systems-plant-room-520.webp",
     "srcSet": {
-      "avif": "/img/service-fire-pump-systems-install-520.avif 520w, /img/service-fire-pump-systems-install-1040.avif 1040w",
-      "webp": "/img/service-fire-pump-systems-install-520.webp 520w, /img/service-fire-pump-systems-install-1040.webp 1040w"
+      "avif": "/img/service-fire-pump-systems-plant-room-520.avif 520w, /img/service-fire-pump-systems-plant-room-1040.avif 1040w",
+      "webp": "/img/service-fire-pump-systems-plant-room-520.webp 520w, /img/service-fire-pump-systems-plant-room-1040.webp 1040w"
     },
     "width": 1040,
     "height": 692,
@@ -204,12 +204,12 @@ export const images = {
     "sizes": "(max-width: 860px) 100vw, 520px",
     "alt": "Fire pump and pipework array in a plant room"
   },
-  "service-special-hazard-suppression": {
-    "id": "service-special-hazard-suppression",
-    "src": "/img/service-special-hazard-suppression-520.webp",
+  "service-special-hazard-suppression-agent-cylinder": {
+    "id": "service-special-hazard-suppression-agent-cylinder",
+    "src": "/img/service-special-hazard-suppression-agent-cylinder-520.webp",
     "srcSet": {
-      "avif": "/img/service-special-hazard-suppression-520.avif 520w, /img/service-special-hazard-suppression-1040.avif 1040w",
-      "webp": "/img/service-special-hazard-suppression-520.webp 520w, /img/service-special-hazard-suppression-1040.webp 1040w"
+      "avif": "/img/service-special-hazard-suppression-agent-cylinder-520.avif 520w, /img/service-special-hazard-suppression-agent-cylinder-1040.avif 1040w",
+      "webp": "/img/service-special-hazard-suppression-agent-cylinder-520.webp 520w, /img/service-special-hazard-suppression-agent-cylinder-1040.webp 1040w"
     },
     "width": 1040,
     "height": 697,
@@ -226,11 +226,11 @@ export const images = {
       "webp": "/img/service-portable-extinguishers-project-520.webp 520w, /img/service-portable-extinguishers-project-1040.webp 1040w"
     },
     "width": 1040,
-    "height": 692,
+    "height": 693,
     "displayWidth": 520,
     "displayHeight": 390,
     "sizes": "(max-width: 980px) 100vw, 520px",
-    "alt": "Portable fire extinguishers during scheduled servicing"
+    "alt": "Portable fire extinguisher installation"
   },
   "service-portable-extinguishers-install": {
     "id": "service-portable-extinguishers-install",
@@ -240,11 +240,11 @@ export const images = {
       "webp": "/img/service-portable-extinguishers-install-520.webp 520w, /img/service-portable-extinguishers-install-1040.webp 1040w"
     },
     "width": 1040,
-    "height": 588,
+    "height": 1560,
     "displayWidth": 520,
     "displayHeight": 390,
     "sizes": "(max-width: 860px) 100vw, 520px",
-    "alt": "Portable fire extinguisher valve being tested"
+    "alt": "Portable fire extinguisher service"
   },
   "logo-carina": {
     "id": "logo-carina",

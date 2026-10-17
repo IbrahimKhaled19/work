@@ -119,17 +119,17 @@ const INSTALL_SIZES = '(max-width: 860px) 100vw, 520px'
 
 const SERVICE_PHOTOS = [
   { name: 'design-engineering', alt: 'Hydraulic design and shop drawings for a fire protection system', sizes: PROJECT_SIZES },
-  { name: 'fire-alarm-detection', alt: 'Smoke detector being installed into a suspended ceiling', sizes: PROJECT_SIZES },
-  { name: 'fire-alarm-detection-install', alt: 'Manual fire alarm call point on a wall', sizes: INSTALL_SIZES },
-  { name: 'sprinkler-systems', alt: 'Sprinkler pipework and pendant heads below a suspended ceiling', sizes: PROJECT_SIZES },
-  { name: 'sprinkler-systems-install', alt: 'Pendent sprinkler head and escutcheon', sizes: INSTALL_SIZES },
-  { name: 'standpipe-hose-systems', alt: 'Wall-mounted fire hose reel cabinet', sizes: PROJECT_SIZES },
-  { name: 'standpipe-hose-systems-install', alt: 'Standpipe landing valve with hose connection', sizes: INSTALL_SIZES },
-  { name: 'fire-pump-systems', alt: 'Fire pump set with pressure gauges and isolation valves', sizes: PROJECT_SIZES },
-  { name: 'fire-pump-systems-install', alt: 'Fire pump and pipework array in a plant room', sizes: INSTALL_SIZES },
-  { name: 'special-hazard-suppression', alt: 'Special hazard suppression agent cylinder and release piping', sizes: PROJECT_SIZES },
-  { name: 'portable-extinguishers-project', alt: 'Portable fire extinguishers during scheduled servicing', sizes: PROJECT_SIZES },
-  { name: 'portable-extinguishers-install', alt: 'Portable fire extinguisher valve being tested', sizes: INSTALL_SIZES },
+  { name: 'fire-alarm-detection', alt: 'Addressable fire alarm detection and notification system', sizes: PROJECT_SIZES },
+  { name: 'fire-alarm-detection-detector-install', alt: 'Smoke detector being installed into a suspended ceiling', sizes: INSTALL_SIZES },
+  { name: 'sprinkler-systems', alt: 'Sprinkler network installation', sizes: PROJECT_SIZES },
+  { name: 'sprinkler-systems-pipework', alt: 'Sprinkler pipework installed below a suspended ceiling', sizes: INSTALL_SIZES },
+  { name: 'standpipe-hose-systems', alt: 'Standpipe and hose reel system', sizes: PROJECT_SIZES },
+  { name: 'standpipe-hose-systems-landing-valve', alt: 'Standpipe landing valve with hose connection', sizes: INSTALL_SIZES },
+  { name: 'fire-pump-systems-pump-set', alt: 'Fire pump set with pressure gauges and isolation valves', sizes: PROJECT_SIZES },
+  { name: 'fire-pump-systems-plant-room', alt: 'Fire pump and pipework array in a plant room', sizes: INSTALL_SIZES },
+  { name: 'special-hazard-suppression-agent-cylinder', alt: 'Special hazard suppression agent cylinder and release piping', sizes: PROJECT_SIZES },
+  { name: 'portable-extinguishers-project', alt: 'Portable fire extinguisher installation', sizes: PROJECT_SIZES },
+  { name: 'portable-extinguishers-install', alt: 'Portable fire extinguisher service', sizes: INSTALL_SIZES },
 ]
 
 // The hero master is referenced twice: by the target below, and by the OG card

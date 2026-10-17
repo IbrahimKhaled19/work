@@ -57,8 +57,8 @@ export const serviceSections = [
     category: 'suppression',
     title: 'Fire Pump Systems',
     photos: {
-      project: 'service-fire-pump-systems',
-      installation: 'service-fire-pump-systems-install',
+      project: 'service-fire-pump-systems-pump-set',
+      installation: 'service-fire-pump-systems-plant-room',
     },
     text: 'Our core specialty. We supply, install, and commission electric, diesel, and jockey pump systems, sized and tested for acceptance with proper controller setup. Non-compliant installations diagnosed and brought up to code.',
     points: [
@@ -107,7 +107,7 @@ export const serviceSections = [
     title: 'Sprinkler Systems',
     photos: {
       project: 'service-sprinkler-systems',
-      installation: 'service-sprinkler-systems-install',
+      installation: 'service-sprinkler-systems-pipework',
     },
     text: 'Wet pipe, dry pipe, pre-action, deluge, or ESFR, matched to your hazard classification and space, then engineered and installed from header to sprinkler head. Flushed, pressure-tested, and verified before handover.',
     points: [
@@ -144,7 +144,7 @@ export const serviceSections = [
     title: 'Standpipe & Hose Systems',
     photos: {
       project: 'service-standpipe-hose-systems',
-      installation: 'service-standpipe-hose-systems-install',
+      installation: 'service-standpipe-hose-systems-landing-valve',
     },
     text: 'For multi-story buildings: Class I, II, and III standpipe systems, hose cabinets, and Fire Department Connections placed and sized to code, so firefighters and building occupants both have reliable access when it counts.',
     points: [
@@ -180,7 +180,7 @@ export const serviceSections = [
     title: 'Fire Alarm & Detection',
     photos: {
       project: 'service-fire-alarm-detection',
-      installation: 'service-fire-alarm-detection-install',
+      installation: 'service-fire-alarm-detection-detector-install',
     },
     text: 'Smoke and heat detection, addressable control panels, and notification systems integrated with sprinklers, BMS, and Civil Defense monitoring where required. Detection fast enough to matter.',
     points: [
@@ -250,7 +250,7 @@ export const serviceSections = [
     short: 'Suppression',
     category: 'suppression',
     title: 'Special Hazard & Suppression Systems',
-    photos: { project: 'service-special-hazard-suppression' },
+    photos: { project: 'service-special-hazard-suppression-agent-cylinder' },
     text: 'For server rooms, control rooms, commercial kitchens, and flammable storage, standard sprinklers are not enough. We design and install clean agent (FM-200), CO2, kitchen hood, and foam suppression systems built for the specific risk in that space.',
     points: [
       'FM-200 and CO2 clean agent systems: for server rooms, control rooms, and sensitive electronics, suppressing fire without leaving residue or causing water damage',
