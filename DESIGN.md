@@ -39,14 +39,6 @@ typography:
     fontWeight: 700
     lineHeight: 1.4
     letterSpacing: "2px"
-  data:
-    # One role only: literal machine text - a message the site will send, a
-    # manifest entry, a readout. Never for prose or labels, which stay in
-    # Montserrat. System stack, so it costs no download and no webfont.
-    fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
-    fontSize: "0.84rem"
-    fontWeight: 400
-    lineHeight: 1.55
 rounded:
   xs: "6px"
   sm: "10px"

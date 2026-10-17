@@ -3460,7 +3460,8 @@ textarea:focus-visible {
 }
 
 /* The end of the run: where the front arrives. Dark, so the page's only accent
-   is the send button. */
+   is the send button. Nothing here collects anything - it is two routes and one
+   line of advice, so there is no state, no field and nothing to get wrong. */
 .careers-send {
   margin-left: var(--careers-rail);
   background: var(--ink);
@@ -3468,7 +3469,7 @@ textarea:focus-visible {
   border-radius: 14px;
   padding: 44px 48px;
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   gap: 36px 64px;
   align-items: start;
 }
@@ -3490,95 +3491,50 @@ textarea:focus-visible {
   max-width: 46ch;
 }
 
-/* What the message will say, before it is sent. Data, so it is set in the
-   typeface that reads as data rather than dressed in one. */
-.careers-preview {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.84rem;
-  line-height: 1.55;
-  color: rgb(246 246 249 / 0.9);
-  background: rgb(246 246 249 / 0.06);
-  border: 1px solid rgb(246 246 249 / 0.12);
-  border-radius: 10px;
-  padding: 14px 16px;
-  word-break: break-word;
-}
-
-.careers-preview-tag {
-  display: block;
-  font-family: inherit;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgb(246 246 249 / 0.5);
-  margin-bottom: 6px;
-}
-
 .careers-hours {
   font-size: 0.86rem;
   color: rgb(246 246 249 / 0.55);
   margin: 16px 0 0;
 }
 
-.careers-fields {
-  border: 0;
-  padding: 0;
-  margin: 0 0 26px;
+/* The routes sit at the top of their column, level with the heading, so the
+   action is the first thing the eye lands on in this panel. */
+.careers-send-ways {
   display: grid;
-  gap: 10px;
-}
-
-.careers-fields legend {
-  padding: 0;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: rgb(246 246 249 / 0.86);
-  margin-bottom: 4px;
-}
-
-.careers-fields label {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  font-size: 0.97rem;
-  color: rgb(246 246 249 / 0.92);
-  cursor: pointer;
-  padding: 9px 12px;
-  border-radius: 9px;
-  background: rgb(246 246 249 / 0.05);
-  transition: background 0.18s ease;
-}
-
-.careers-fields label:hover {
-  background: rgb(246 246 249 / 0.1);
-}
-
-.careers-fields input {
-  width: 17px;
-  height: 17px;
-  margin: 0;
-  accent-color: var(--red);
-  flex: none;
+  gap: 20px;
 }
 
 .careers-actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 18px 20px;
   flex-wrap: wrap;
 }
 
+/* The second route carries its own address in the words, so the label survives
+   being read aloud, printed, or seen on a phone with no hover. */
 .careers-mailto {
   color: #f6f6f9;
   font-size: 0.95rem;
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
+  overflow-wrap: anywhere;
 }
 
 .careers-mailto:hover {
   text-decoration-thickness: 2px;
+}
+
+/* One line of advice, where the fieldset used to be. It earns the space: a
+   candidate who knows what to send sends a better CV, and it costs no
+   interaction. */
+.careers-send-note {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgb(246 246 249 / 0.62);
+  margin: 0;
+  max-width: 38ch;
 }
 
 .careers-roles {
@@ -3635,6 +3591,15 @@ textarea:focus-visible {
 
   .careers-send {
     padding: 32px 26px;
+  }
+
+  /* Stacked on purpose rather than left to wrap: the second route carries a
+     full email address, and on a 227px column a wrapped address reads as two
+     unrelated lines. */
+  .careers-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
   }
 
   .careers-stage p {

@@ -20,18 +20,16 @@
  * each, and a candidate can see where they would join it. The line down the
  * left is the one authored motion on the page: CSS scroll-driven, so it fills
  * as the stages pass and every browser without support gets the finished static
- * page. Nothing depends on script except the message preview and the two
- * pre-filled links, which are ordinary anchors.
+ * page. Nothing on the page depends on script: the two CV routes are ordinary
+ * anchors with a fixed message in them.
  *
  * It imports serviceIndex rather than services.js, for the reason Navbar and
- * Footer do: the 36 KB of per-service prose is not needed to count disciplines
- * or to name the four fields of work.
+ * Footer do: the 36 KB of per-service prose is not needed to count disciplines.
  */
-import { useState } from 'react'
 import PageHero from '../components/PageHero'
 import Reveal from '../components/Reveal'
 import Picture from '../components/Picture'
-import { serviceIndex as services, disciplines } from '../data/serviceIndex.js'
+import { serviceIndex as services } from '../data/serviceIndex.js'
 import { openRoles } from '../data/careers.js'
 import site from '../seo/site.js'
 
@@ -79,27 +77,16 @@ const STAGES = [
 
 function Careers() {
   const hasRoles = openRoles.length > 0
-  const [fields, setFields] = useState([])
 
-  const chosen = fields.length
-    ? disciplines
-        .filter((d) => fields.includes(d.id))
-        .map((d) => d.label)
-        .join(', ')
-    : 'fire protection'
-
-  const toggle = (id) =>
-    setFields((current) =>
-      current.includes(id) ? current.filter((f) => f !== id) : [...current, id]
-    )
-
-  // Both are plain links, so they work with no script and with the visitor's
-  // mail client or WhatsApp. Nothing is collected or held anywhere.
-  const message = `CV for ALNADA Contracting — ${chosen}. I have attached my CV.`
-  const whatsappHref = `${site.contact.whatsapp}?text=${encodeURIComponent(message)}`
+  // Both routes are plain links with one fixed message in them, so the panel
+  // needs no state and works with no script at all. Nothing is collected or
+  // held anywhere; the CV never touches a server on this site.
+  const whatsappHref = `${site.contact.whatsapp}?text=${encodeURIComponent(
+    'CV for ALNADA Contracting. I have attached my CV.'
+  )}`
   const mailHref = `mailto:${site.contact.email}?subject=${encodeURIComponent(
     'CV — ALNADA Contracting'
-  )}&body=${encodeURIComponent(`Discipline: ${chosen}\n\n`)}`
+  )}&body=${encodeURIComponent('I have attached my CV.\n\n')}`
 
   return (
     <>
@@ -192,13 +179,9 @@ function Careers() {
               <div className="careers-send-ask">
                 <h2>Send us your CV.</h2>
                 <p>
-                  Attach it to either message. What matters is the work:
-                  hydraulic design, pump and sprinkler installation, or
-                  inspection and commissioning.
-                </p>
-                <p className="careers-preview" aria-live="polite">
-                  <span className="careers-preview-tag">message</span>
-                  {message}
+                  Attach it to either message below — a PDF, or a clear photo of
+                  one, is fine. Every CV that arrives goes on file, and that file
+                  is where we go first when a role opens.
                 </p>
                 <p className="careers-hours">
                   Office hours are {site.hours.display}.
@@ -208,19 +191,6 @@ function Careers() {
 
             <Reveal delay={80}>
               <div className="careers-send-ways">
-                <fieldset className="careers-fields">
-                  <legend>What have you worked in?</legend>
-                  {disciplines.map((d) => (
-                    <label key={d.id}>
-                      <input
-                        type="checkbox"
-                        checked={fields.includes(d.id)}
-                        onChange={() => toggle(d.id)}
-                      />
-                      <span>{d.label}</span>
-                    </label>
-                  ))}
-                </fieldset>
                 <div className="careers-actions">
                   <a
                     className="btn btn-solid"
@@ -230,16 +200,22 @@ function Careers() {
                   >
                     Send on WhatsApp
                   </a>
-                  {/* One accent on this screen, so the second route is a link. */}
+                  {/* One accent on this screen, so the second route is a link.
+                      The address is in the words, not behind a hover: on a phone
+                      the label is the only thing that says where it goes. */}
                   <a
                     className="careers-mailto"
                     href={mailHref}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    or send it by email
+                    or email {site.contact.email}
                   </a>
                 </div>
+                <p className="careers-send-note">
+                  Useful in it: what you installed or maintained, the standards
+                  you worked to, and your certifications.
+                </p>
               </div>
             </Reveal>
           </div>
