@@ -172,6 +172,56 @@ const PAGE_HEROES = [
   },
 ]
 
+/**
+ * Careers page photographs. The page's argument is what the work is, so these
+ * are photographs of our own work, held to the width of the column the text
+ * runs in. Nothing here is a stand-in or an illustration.
+ */
+const CAREER_SHOTS = [
+  {
+    id: 'careers-servicing',
+    source: 'services/portable-extinguishers-servicing.jpg',
+    alt: 'Portable fire extinguishers during scheduled servicing',
+    widths: [520, 1040],
+    displayWidth: 520,
+    displayHeight: 347,
+    sizes: '(max-width: 620px) calc(100vw - 48px), 520px',
+    note: 'Careers page photograph, held to the text column.',
+  },
+  {
+    id: 'careers-installation',
+    source: 'services/fire-alarm-detection-detector-install.jpg',
+    alt: 'Smoke detector being installed into a suspended ceiling',
+    widths: [520, 1040],
+    displayWidth: 520,
+    displayHeight: 347,
+    sizes: '(max-width: 620px) calc(100vw - 48px), 520px',
+    note: 'Careers page photograph, held to the text column.',
+  },
+  {
+    id: 'careers-pump-room',
+    source: 'services/fire-pump-systems-pump-set.jpg',
+    alt: 'Fire pump set with pressure gauges and isolation valves',
+    widths: [520, 1040],
+    displayWidth: 520,
+    displayHeight: 347,
+    sizes: '(max-width: 620px) calc(100vw - 48px), 520px',
+    note: 'Careers page photograph, held to the text column.',
+  },
+  {
+    // The small square in the closing band. A fourth photograph rather than a
+    // repeat of one from the list above it.
+    id: 'careers-cylinders',
+    source: 'services/special-hazard-suppression-cylinder-bank.jpg',
+    alt: 'Suppression agent cylinders with pressure gauges and release lines',
+    widths: [336],
+    displayWidth: 168,
+    displayHeight: 168,
+    sizes: '(max-width: 860px) 120px, 168px',
+    note: 'Careers page closing band, 168px square.',
+  },
+]
+
 const TARGETS = [
   {
     id: 'hero',
@@ -264,6 +314,18 @@ const TARGETS = [
     class: PHOTO,
     alt: photo.alt,
     note: 'Service-detail spotlight photo. 4:3 media frame, ~520px wide.',
+  })),
+  ...CAREER_SHOTS.map((shot) => ({
+    id: shot.id,
+    source: shot.source,
+    output: shot.id,
+    widths: shot.widths,
+    displayWidth: shot.displayWidth,
+    displayHeight: shot.displayHeight,
+    sizes: shot.sizes,
+    class: PHOTO,
+    alt: shot.alt,
+    note: shot.note,
   })),
   ...CLIENT_LOGOS.map((logo) => ({
     id: `logo-${logo.name}`,

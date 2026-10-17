@@ -316,6 +316,62 @@ export const images = {
     "sizes": "(max-width: 860px) 100vw, 520px",
     "alt": "Portable fire extinguisher valve being checked during service"
   },
+  "careers-servicing": {
+    "id": "careers-servicing",
+    "src": "/img/careers-servicing-520.webp",
+    "srcSet": {
+      "avif": "/img/careers-servicing-520.avif 520w, /img/careers-servicing-1040.avif 1040w",
+      "webp": "/img/careers-servicing-520.webp 520w, /img/careers-servicing-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 692,
+    "displayWidth": 520,
+    "displayHeight": 347,
+    "sizes": "(max-width: 620px) calc(100vw - 48px), 520px",
+    "alt": "Portable fire extinguishers during scheduled servicing"
+  },
+  "careers-installation": {
+    "id": "careers-installation",
+    "src": "/img/careers-installation-520.webp",
+    "srcSet": {
+      "avif": "/img/careers-installation-520.avif 520w, /img/careers-installation-1040.avif 1040w",
+      "webp": "/img/careers-installation-520.webp 520w, /img/careers-installation-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 692,
+    "displayWidth": 520,
+    "displayHeight": 347,
+    "sizes": "(max-width: 620px) calc(100vw - 48px), 520px",
+    "alt": "Smoke detector being installed into a suspended ceiling"
+  },
+  "careers-pump-room": {
+    "id": "careers-pump-room",
+    "src": "/img/careers-pump-room-520.webp",
+    "srcSet": {
+      "avif": "/img/careers-pump-room-520.avif 520w, /img/careers-pump-room-1040.avif 1040w",
+      "webp": "/img/careers-pump-room-520.webp 520w, /img/careers-pump-room-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 687,
+    "displayWidth": 520,
+    "displayHeight": 347,
+    "sizes": "(max-width: 620px) calc(100vw - 48px), 520px",
+    "alt": "Fire pump set with pressure gauges and isolation valves"
+  },
+  "careers-cylinders": {
+    "id": "careers-cylinders",
+    "src": "/img/careers-cylinders-336.webp",
+    "srcSet": {
+      "avif": "/img/careers-cylinders-336.avif 336w",
+      "webp": "/img/careers-cylinders-336.webp 336w"
+    },
+    "width": 336,
+    "height": 223,
+    "displayWidth": 168,
+    "displayHeight": 168,
+    "sizes": "(max-width: 860px) 120px, 168px",
+    "alt": "Suppression agent cylinders with pressure gauges and release lines"
+  },
   "logo-carina": {
     "id": "logo-carina",
     "src": "/img/logo-carina.avif",
