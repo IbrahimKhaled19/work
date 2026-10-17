@@ -96,25 +96,6 @@ function Careers() {
         </div>
       </section>
 
-      <section className="section section-alt">
-        <div className="container">
-          <SectionHead
-            eyebrow="Disciplines"
-            title={`${disciplineCount} Fire Protection Disciplines`}
-            text="Every one of these is a career here. Each links to what the discipline involves day to day."
-          />
-          <Reveal>
-            <ul className="check-list" aria-label={`Careers across ${disciplineCount} fire protection disciplines`}>
-              {services.map((s) => (
-                <li key={s.id}>
-                  <Link to={`/services/${s.id}`}>{s.title}</Link>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        </div>
-      </section>
-
       <section className="section">
         <div className="container">
           <SectionHead
