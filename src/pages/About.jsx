@@ -201,13 +201,6 @@ function About() {
             title="One Company for the Whole System"
             text="Many facilities have to deal with separate contractors for pumps, sprinklers, alarms and permits, and problems often appear in the gaps between them. We provide all thirteen services ourselves, so each part of the system is designed to work with the others from the start."
           />
-          <Reveal as="ul" className="check-list">
-            {coverage.map((c) => (
-              <li key={c.anchor}>
-                <Link to={`/services/${c.anchor}`}>{c.label}</Link>
-              </li>
-            ))}
-          </Reveal>
         </div>
       </section>
 
