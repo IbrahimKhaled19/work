@@ -185,7 +185,7 @@ const CAREER_SHOTS = [
     widths: [520, 1040],
     displayWidth: 520,
     displayHeight: 347,
-    sizes: '(max-width: 620px) calc(100vw - 48px), 520px',
+    sizes: '(max-width: 620px) calc(100vw - 96px), 520px',
     note: 'Careers page photograph, held to the text column.',
   },
   {
@@ -195,7 +195,7 @@ const CAREER_SHOTS = [
     widths: [520, 1040],
     displayWidth: 520,
     displayHeight: 347,
-    sizes: '(max-width: 620px) calc(100vw - 48px), 520px',
+    sizes: '(max-width: 620px) calc(100vw - 96px), 520px',
     note: 'Careers page photograph, held to the text column.',
   },
   {
@@ -205,7 +205,18 @@ const CAREER_SHOTS = [
     widths: [520, 1040],
     displayWidth: 520,
     displayHeight: 347,
-    sizes: '(max-width: 620px) calc(100vw - 48px), 520px',
+    sizes: '(max-width: 620px) calc(100vw - 96px), 520px',
+    note: 'Careers page photograph, held to the text column.',
+  },
+  {
+    // The testing stage: a hand on the valve of an extinguisher being checked.
+    id: 'careers-valve-test',
+    source: 'services/portable-extinguishers-valve-test.jpg',
+    alt: 'Portable fire extinguisher valve being checked during service',
+    widths: [520, 1040],
+    displayWidth: 520,
+    displayHeight: 347,
+    sizes: '(max-width: 620px) calc(100vw - 96px), 520px',
     note: 'Careers page photograph, held to the text column.',
   },
   {

@@ -3260,248 +3260,384 @@ textarea:focus-visible {
 /* ==========================================================================
    Careers.
 
-   One narrow column, set the way the document this page wants is set: the
-   entries run down it with nothing drawn between them, the photographs sit
-   inside it at its width, and the closing band hangs three things off one
-   top line with open ground between. No cards, no icons, no rules - the
-   alignment and the space are the design.
+   The page is the lifecycle of one system - design, installation, testing,
+   approval and maintenance - with the send at the end of the run. Each stage is
+   two columns: what happens, and the photograph that shows it happening. The
+   stages sit to the right of a rail, and the rail is the page's one authored
+   motion: a pipe with a fill on top of it, driven by a CSS scroll timeline so
+   the fill advances as the stages pass and each stage lamp lights as the front
+   reaches it. Browsers without scroll-driven animation get the whole line
+   filled and the lamps already lit, which is the finished static page rather
+   than a broken one - the same thing prefers-reduced-motion sees.
+
+   Nothing here depends on script. The two CV routes are ordinary anchors with
+   a pre-filled message; script only updates that message as the boxes change.
    ========================================================================== */
 
-.careers-column {
-  max-width: 560px;
-  margin-left: clamp(0px, 7vw, 96px);
+.careers-run-section {
+  --careers-rail: 72px;
+  padding-top: 8px;
 }
 
-/* A statement, not a headline: it stays under 36px and runs three lines. */
-.careers-lead {
-  font-size: clamp(1.3rem, 2.1vw, 1.9rem);
-  line-height: 1.28;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  margin: 0 0 28px;
+/* The hero photograph drifts as the page scrolls past it, so the band has depth
+   instead of sitting flat behind the copy. Transform only, and inside
+   @supports, so every other browser gets the identical static band. */
+.careers-hero .page-hero-bg img {
+  transform: scale(1.09);
 }
 
-/* The one primary action, on the first screen. */
-.careers-jump {
-  margin-bottom: 72px;
-}
-
-.careers-entries {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-/* Running text in the full ink: a page set in soft grey reads unfinished.
-   --ink-soft is 9.6:1 on the page ground, well clear of the body minimum. */
-.careers-entries p {
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--ink-soft);
-  margin: 0;
-}
-
-.careers-entries strong {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-/* Photographs, held to the column. */
-.careers-shots {
-  display: flex;
-  flex-direction: column;
-  gap: 44px;
-}
-
-.careers-shots figure {
-  margin: 0;
-}
-
-.careers-shots img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* One slow drift on the first photograph, so the page has a picture that moves
-   rather than only entrances. The reduced-motion block at the end of this file
-   collapses it to nothing. */
-.careers-shots figure:first-child img {
-  animation: careersDrift 22s ease-in-out infinite alternate;
+@supports (animation-timeline: scroll()) {
+  .careers-hero .page-hero-bg img {
+    animation: careersDrift linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 460px;
+  }
 }
 
 @keyframes careersDrift {
-  from {
+  to {
     transform: scale(1);
   }
+}
 
-  to {
-    transform: scale(1.045);
+@media (prefers-reduced-motion: reduce) {
+  .careers-hero .page-hero-bg img {
+    transform: none;
   }
 }
 
-.careers-shots figcaption {
-  margin-top: 10px;
-  font-size: 0.875rem;
-  color: var(--muted);
+/* The two statements, then the one action that matters. */
+.careers-intro {
+  padding-bottom: 56px;
 }
 
-.careers-column h2 {
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
-  letter-spacing: -0.02em;
-  margin: 0 0 28px;
-}
-
-/* Rendered only when openRoles has entries; the same plain rows either way. */
-.careers-roles {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-}
-
-.careers-roles > li {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.careers-roles strong {
-  font-size: 1.125rem;
-  color: var(--ink);
-}
-
-.careers-roles > li > span {
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-.careers-roles p {
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--muted);
-  margin: 6px 0 0;
-}
-
-.careers-roles ul {
-  margin: 8px 0 0;
-  padding-left: 18px;
-}
-
-.careers-roles ul li {
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: var(--muted);
-}
-
-/* The close: what is wanted, what it looks like, where to send it. */
-.careers-band {
+.careers-intro-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) 168px minmax(0, 1fr);
-  gap: 48px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px 72px;
   align-items: start;
 }
 
-.careers-band-lead {
-  font-size: clamp(1.9rem, 3.2vw, 2.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
-  margin: 0 0 18px;
+.careers-statement {
+  font-size: clamp(1.12rem, 1.7vw, 1.38rem);
+  line-height: 1.38;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0;
 }
 
-.careers-band-note {
-  font-size: 1rem;
-  line-height: 1.55;
+.careers-statement strong {
+  font-weight: 800;
+}
+
+.careers-jump {
+  margin-top: 30px;
+}
+
+/* The run: a rail with a track and a fill, and the stages beside it. */
+.careers-run {
+  position: relative;
+  padding-left: var(--careers-rail);
+}
+
+.careers-run::before,
+.careers-run::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 5px;
+  border-radius: 3px;
+}
+
+/* The pipe itself: 5px, so the lamps and the front read at the same weight as
+   the type rather than as decoration. It ends on the last pixel of the run,
+   which is the top edge of the send panel - the front arrives there. */
+.careers-run::before {
+  bottom: 0;
+  background: var(--bg-alt);
+}
+
+/* The front. Browsers without a scroll timeline leave clip-path alone, so the
+   line arrives filled - the finished page. With one it opens from the top and
+   closes as the stages pass. */
+.careers-run::after {
+  bottom: 0;
+  background: linear-gradient(180deg, var(--red-dark) 0%, var(--red) 78%, #ff6a86 100%);
+}
+
+@supports (animation-timeline: scroll()) {
+  .careers-run::after {
+    clip-path: inset(0 0 100% 0);
+    animation: careersFill linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 3% 62%;
+  }
+}
+
+@keyframes careersFill {
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.careers-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+  gap: 28px 60px;
+  align-items: start;
+  padding-bottom: 76px;
+}
+
+/* The lamp on the rail: a paper collar lets the pipe pass behind it, so the two
+   never read as one lump. */
+.careers-stage::before {
+  content: "";
+  position: absolute;
+  /* Centred on the rail, which sits a full --careers-rail to the left of the
+     stage box - not on the first letter of the heading. */
+  left: calc(-1 * var(--careers-rail) - 6px);
+  top: 9px;
+  width: 17px;
+  height: 17px;
+  border-radius: 999px;
+  background: var(--red);
+  box-shadow: 0 0 0 7px var(--bg);
+}
+
+@supports (animation-timeline: view()) {
+  .careers-stage::before {
+    animation: careersIgnite both;
+    animation-timeline: view();
+    animation-range: entry 12% entry 75%;
+  }
+}
+
+@keyframes careersIgnite {
+  from {
+    background: var(--bg-alt);
+    box-shadow: 0 0 0 7px var(--bg), 0 0 0 0 rgb(var(--red-rgb) / 0%);
+  }
+
+  to {
+    background: var(--red);
+    box-shadow: 0 0 0 7px var(--bg), 0 0 0 7px rgb(var(--red-rgb) / 0.14);
+  }
+}
+
+.careers-stage h2 {
+  font-size: clamp(1.42rem, 2.6vw, 2.05rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+  margin: 0 0 14px;
+}
+
+.careers-stage p {
+  font-size: 1.02rem;
+  line-height: 1.58;
   color: var(--ink-soft);
   margin: 0;
+  max-width: 56ch;
+}
+
+.careers-stage figure {
+  margin: 0;
+}
+
+.careers-stage figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.careers-stage figcaption {
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+/* The end of the run: where the front arrives. Dark, so the page's only accent
+   is the send button. */
+.careers-send {
+  margin-left: var(--careers-rail);
+  background: var(--ink);
+  color: #f6f6f9;
+  border-radius: 14px;
+  padding: 44px 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 36px 64px;
+  align-items: start;
+}
+
+.careers-send h2 {
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #f6f6f9;
+  margin: 0 0 14px;
+}
+
+.careers-send p {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgb(246 246 249 / 0.74);
+  margin: 0 0 18px;
   max-width: 46ch;
 }
 
-/* The second route is a link, not a second red button: one accent a screen. */
-.careers-mailto {
-  color: var(--ink);
-  font-size: 0.95rem;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+/* What the message will say, before it is sent. Data, so it is set in the
+   typeface that reads as data rather than dressed in one. */
+.careers-preview {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: rgb(246 246 249 / 0.9);
+  background: rgb(246 246 249 / 0.06);
+  border: 1px solid rgb(246 246 249 / 0.12);
+  border-radius: 10px;
+  padding: 14px 16px;
+  word-break: break-word;
 }
 
-.careers-mailto:hover {
-  color: var(--red-dark);
-}
-
-.careers-band-shot img {
+.careers-preview-tag {
   display: block;
-  width: 168px;
-  height: 168px;
-  object-fit: cover;
+  font-family: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgb(246 246 249 / 0.5);
+  margin-bottom: 6px;
 }
 
-/* A real fieldset with real checkboxes: four fields of work, and the message
-   the visitor is about to send is pre-filled from them. */
+.careers-hours {
+  font-size: 0.86rem;
+  color: rgb(246 246 249 / 0.55);
+  margin: 16px 0 0;
+}
+
 .careers-fields {
   border: 0;
   padding: 0;
-  margin: 0 0 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  margin: 0 0 26px;
+  display: grid;
+  gap: 10px;
 }
 
 .careers-fields legend {
-  padding: 0 0 8px;
-  font-size: 0.875rem;
-  color: var(--muted);
+  padding: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: rgb(246 246 249 / 0.86);
+  margin-bottom: 4px;
 }
 
 .careers-fields label {
   display: flex;
   align-items: center;
-  gap: 9px;
-  font-size: 0.95rem;
-  color: var(--ink-soft);
+  gap: 11px;
+  font-size: 0.97rem;
+  color: rgb(246 246 249 / 0.92);
   cursor: pointer;
+  padding: 9px 12px;
+  border-radius: 9px;
+  background: rgb(246 246 249 / 0.05);
+  transition: background 0.18s ease;
+}
+
+.careers-fields label:hover {
+  background: rgb(246 246 249 / 0.1);
 }
 
 .careers-fields input {
-  width: 16px;
-  height: 16px;
+  width: 17px;
+  height: 17px;
   margin: 0;
   accent-color: var(--red);
+  flex: none;
 }
 
 .careers-actions {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.careers-hours {
-  margin: 16px 0 0;
-  font-size: 0.875rem;
+.careers-mailto {
+  color: #f6f6f9;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.careers-mailto:hover {
+  text-decoration-thickness: 2px;
+}
+
+.careers-roles {
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 20px;
+}
+
+.careers-roles li {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 22px 24px;
+}
+
+.careers-roles strong {
+  display: block;
+  font-weight: 800;
+}
+
+.careers-roles span {
+  font-size: 0.88rem;
   color: var(--muted);
 }
 
-@media (max-width: 860px) {
-  .careers-column {
+.careers-roles p {
+  margin: 10px 0 0;
+}
+
+/* One column below the two-column breakpoint: the run keeps its rail, the
+   stages put the photograph under the sentence, and the send panel stops being
+   a two-column panel. */
+@media (max-width: 900px) {
+  .careers-run-section {
+    --careers-rail: 46px;
+  }
+
+  .careers-intro-grid,
+  .careers-send {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 26px;
+  }
+
+  .careers-intro-grid {
+    gap: 24px;
+  }
+
+  .careers-stage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    padding-bottom: 60px;
+  }
+
+  .careers-send {
+    padding: 32px 26px;
+  }
+
+  .careers-stage p {
     max-width: none;
-    margin-left: 0;
-  }
-
-  .careers-band {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .careers-band-shot img {
-    width: 120px;
-    height: 120px;
-  }
-
-  .careers-actions {
-    flex-direction: row;
-    flex-wrap: wrap;
   }
 }

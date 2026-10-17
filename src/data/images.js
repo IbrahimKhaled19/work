@@ -327,7 +327,7 @@ export const images = {
     "height": 692,
     "displayWidth": 520,
     "displayHeight": 347,
-    "sizes": "(max-width: 620px) calc(100vw - 48px), 520px",
+    "sizes": "(max-width: 620px) calc(100vw - 96px), 520px",
     "alt": "Portable fire extinguishers during scheduled servicing"
   },
   "careers-installation": {
@@ -341,7 +341,7 @@ export const images = {
     "height": 692,
     "displayWidth": 520,
     "displayHeight": 347,
-    "sizes": "(max-width: 620px) calc(100vw - 48px), 520px",
+    "sizes": "(max-width: 620px) calc(100vw - 96px), 520px",
     "alt": "Smoke detector being installed into a suspended ceiling"
   },
   "careers-pump-room": {
@@ -355,8 +355,22 @@ export const images = {
     "height": 687,
     "displayWidth": 520,
     "displayHeight": 347,
-    "sizes": "(max-width: 620px) calc(100vw - 48px), 520px",
+    "sizes": "(max-width: 620px) calc(100vw - 96px), 520px",
     "alt": "Fire pump set with pressure gauges and isolation valves"
+  },
+  "careers-valve-test": {
+    "id": "careers-valve-test",
+    "src": "/img/careers-valve-test-520.webp",
+    "srcSet": {
+      "avif": "/img/careers-valve-test-520.avif 520w, /img/careers-valve-test-1040.avif 1040w",
+      "webp": "/img/careers-valve-test-520.webp 520w, /img/careers-valve-test-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 588,
+    "displayWidth": 520,
+    "displayHeight": 347,
+    "sizes": "(max-width: 620px) calc(100vw - 96px), 520px",
+    "alt": "Portable fire extinguisher valve being checked during service"
   },
   "careers-cylinders": {
     "id": "careers-cylinders",

@@ -13,10 +13,15 @@ import Picture from './Picture'
  *
  * The photograph is decorative: the title and subtitle above it carry the
  * meaning, so the layer is hidden from assistive tech and the alt is empty.
+ *
+ * `className` is a hook for a page that needs to adjust the band - Careers
+ * moves its photograph as the page scrolls - without a second component.
  */
-function PageHero({ title, subtitle, crumb, imageId }) {
+function PageHero({ title, subtitle, crumb, imageId, className = '' }) {
   return (
-    <section className={`page-hero ${imageId ? 'page-hero--photo' : ''}`}>
+    <section
+      className={`page-hero ${imageId ? 'page-hero--photo' : ''} ${className}`.trim()}
+    >
       {imageId ? (
         <>
           <div className="page-hero-bg" aria-hidden="true">
