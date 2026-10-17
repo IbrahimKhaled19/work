@@ -12,7 +12,6 @@ const links = [
   { to: '/', label: 'Home' },
   { to: '/services', label: 'Services' },
   { to: '/about', label: 'About Us' },
-  { to: '/gallery', label: 'Gallery' },
   { to: '/contact', label: 'Contact' },
   { to: '/careers', label: 'Careers' },
 ]
