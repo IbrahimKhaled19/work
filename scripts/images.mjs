@@ -128,8 +128,13 @@ const SERVICE_PHOTOS = [
   { name: 'fire-pump-systems-pump-set', alt: 'Fire pump set with pressure gauges and isolation valves', sizes: PROJECT_SIZES },
   { name: 'fire-pump-systems-plant-room', alt: 'Fire pump and pipework array in a plant room', sizes: INSTALL_SIZES },
   { name: 'special-hazard-suppression-agent-cylinder', alt: 'Special hazard suppression agent cylinder and release piping', sizes: PROJECT_SIZES },
+  { name: 'special-hazard-suppression-cylinder-bank', alt: 'Bank of suppression agent cylinders with pressure gauges and release lines', sizes: INSTALL_SIZES },
   { name: 'portable-extinguishers-project', alt: 'Portable fire extinguisher installation', sizes: PROJECT_SIZES },
+  // Kept published and no longer shown: the page points its second slot at the
+  // client's valve-test photograph instead, but the branded studio shot stays
+  // in the pipeline and in the manifest rather than being deleted.
   { name: 'portable-extinguishers-install', alt: 'Portable fire extinguisher service', sizes: INSTALL_SIZES },
+  { name: 'portable-extinguishers-valve-test', alt: 'Portable fire extinguisher valve being checked during service', sizes: INSTALL_SIZES },
 ]
 
 // The hero master is referenced twice: by the target below, and by the OG card
@@ -557,12 +562,58 @@ if (!fs.existsSync(heroSource)) {
 // --check discards the staging area instead: public/img and the manifest
 // below are both left exactly as they were.
 // ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// Publish. public/img is replaced whole rather than emptied and refilled, and
+// only after every file above has been written, so a failure anywhere leaves
+// the previous set of images in place instead of a half-populated directory.
+// --check discards the staging area instead: public/img and the manifest
+// below are both left exactly as they were.
+// ---------------------------------------------------------------------------
+/**
+ * Throw away the staging area.
+ *
+ * Scratch space: a refusal to delete it - Windows holding a folder that was
+ * just written to, an indexer mid-scan - is not a reason to stop, and treating
+ * it as fatal left public/img published while the manifest beside it was not.
+ */
+function discardStaging() {
+  try {
+    fs.rmSync(OUT, { recursive: true, force: true })
+  } catch (error) {
+    if (error.code !== 'EPERM') throw error
+    console.log(`\n  note: ${OUT} is held open and could not be deleted - remove it by hand`)
+  }
+}
+
 if (CHECK_ONLY) {
-  fs.rmSync(OUT, { recursive: true, force: true })
+  discardStaging()
   console.log(`\ncheck only: public/img untouched, ${rows.length} targets measured`)
 } else {
-  if (fs.existsSync(FINAL)) fs.rmSync(FINAL, { recursive: true })
-  fs.renameSync(OUT, FINAL)
+  // Windows refuses a directory rename while anything holds the folder - a
+  // file indexer, or the dev server watching public/ - and it refused here
+  // often enough to matter. The old code deleted public/img and then renamed,
+  // so a refusal left the directory gone: the next build shipped a site with
+  // no images at all. Two changes fix that. Retry first, because those locks
+  // clear in well under a second, and copy the staged set in if every attempt
+  // is refused. Either way public/img exists again before the manifest below
+  // is written, so the two can no longer disagree.
+  const attempts = 5
+  for (let attempt = 1; ; attempt++) {
+    if (fs.existsSync(FINAL)) fs.rmSync(FINAL, { recursive: true, force: true })
+    try {
+      fs.renameSync(OUT, FINAL)
+      break
+    } catch (error) {
+      if (error.code !== 'EPERM') throw error
+      if (attempt === attempts) {
+        fs.cpSync(OUT, FINAL, { recursive: true })
+        discardStaging()
+        console.log(`\nrename refused ${attempts} times (EPERM); copied the staged set in instead`)
+        break
+      }
+      await new Promise((resolve) => setTimeout(resolve, 400))
+    }
+  }
   console.log(`\npublic/img replaced: ${fs.readdirSync(FINAL).length} files`)
 }
 

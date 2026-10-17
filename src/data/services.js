@@ -217,7 +217,7 @@ export const serviceSections = [
     title: 'Portable Fire Extinguishers',
     photos: {
       project: 'service-portable-extinguishers-project',
-      installation: 'service-portable-extinguishers-install',
+      installation: 'service-portable-extinguishers-valve-test',
     },
     text: 'Correctly specified, correctly placed, and never left to expire unnoticed. We supply, install, and manage the inspection and recharge schedule so this basic requirement never becomes a compliance gap.',
     points: [
@@ -250,7 +250,10 @@ export const serviceSections = [
     short: 'Suppression',
     category: 'suppression',
     title: 'Special Hazard & Suppression Systems',
-    photos: { project: 'service-special-hazard-suppression-agent-cylinder' },
+    photos: {
+      project: 'service-special-hazard-suppression-agent-cylinder',
+      installation: 'service-special-hazard-suppression-cylinder-bank',
+    },
     text: 'For server rooms, control rooms, commercial kitchens, and flammable storage, standard sprinklers are not enough. We design and install clean agent (FM-200), CO2, kitchen hood, and foam suppression systems built for the specific risk in that space.',
     points: [
       'FM-200 and CO2 clean agent systems: for server rooms, control rooms, and sensitive electronics, suppressing fire without leaving residue or causing water damage',

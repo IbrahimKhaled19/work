@@ -260,6 +260,20 @@ export const images = {
     "sizes": "(max-width: 980px) 100vw, 520px",
     "alt": "Special hazard suppression agent cylinder and release piping"
   },
+  "service-special-hazard-suppression-cylinder-bank": {
+    "id": "service-special-hazard-suppression-cylinder-bank",
+    "src": "/img/service-special-hazard-suppression-cylinder-bank-520.webp",
+    "srcSet": {
+      "avif": "/img/service-special-hazard-suppression-cylinder-bank-520.avif 520w, /img/service-special-hazard-suppression-cylinder-bank-1040.avif 1040w",
+      "webp": "/img/service-special-hazard-suppression-cylinder-bank-520.webp 520w, /img/service-special-hazard-suppression-cylinder-bank-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 692,
+    "displayWidth": 520,
+    "displayHeight": 390,
+    "sizes": "(max-width: 860px) 100vw, 520px",
+    "alt": "Bank of suppression agent cylinders with pressure gauges and release lines"
+  },
   "service-portable-extinguishers-project": {
     "id": "service-portable-extinguishers-project",
     "src": "/img/service-portable-extinguishers-project-520.webp",
@@ -287,6 +301,20 @@ export const images = {
     "displayHeight": 390,
     "sizes": "(max-width: 860px) 100vw, 520px",
     "alt": "Portable fire extinguisher service"
+  },
+  "service-portable-extinguishers-valve-test": {
+    "id": "service-portable-extinguishers-valve-test",
+    "src": "/img/service-portable-extinguishers-valve-test-520.webp",
+    "srcSet": {
+      "avif": "/img/service-portable-extinguishers-valve-test-520.avif 520w, /img/service-portable-extinguishers-valve-test-1040.avif 1040w",
+      "webp": "/img/service-portable-extinguishers-valve-test-520.webp 520w, /img/service-portable-extinguishers-valve-test-1040.webp 1040w"
+    },
+    "width": 1040,
+    "height": 588,
+    "displayWidth": 520,
+    "displayHeight": 390,
+    "sizes": "(max-width: 860px) 100vw, 520px",
+    "alt": "Portable fire extinguisher valve being checked during service"
   },
   "logo-carina": {
     "id": "logo-carina",
