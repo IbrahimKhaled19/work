@@ -1504,6 +1504,24 @@ textarea:focus-visible {
    these photographs are bright plant rooms and white ceilings, and white text
    has to stay legible over all of it; at the lightest stop, a pure-white
    photograph still lands around 6:1 against white. */
+/* The photograph is the point of the top of these three pages, so the band is
+   taller than the graphic one. It also stops the three disagreeing: at the
+   original padding Careers came out 304px against Services' 465px, purely
+   because of how long each subtitle ran. The copy is centred so the extra
+   height sits above and below it rather than all below it - .wave-separator
+   and the two layers are absolutely positioned, so .container is the only
+   thing flex has to place.
+
+   Scoped to the photo variant: About, Gallery and the service detail pages
+   keep the original band. */
+.page-hero--photo {
+  min-height: 520px;
+  padding: 96px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .page-hero-bg {
   position: absolute;
   inset: 0;
