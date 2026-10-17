@@ -22,6 +22,48 @@ export const images = {
     "sizes": "100vw",
     "alt": ""
   },
+  "hero-services": {
+    "id": "hero-services",
+    "src": "/img/hero-services-640.webp",
+    "srcSet": {
+      "avif": "/img/hero-services-640.avif 640w, /img/hero-services-1024.avif 1024w, /img/hero-services-1600.avif 1600w, /img/hero-services-2560.avif 2560w",
+      "webp": "/img/hero-services-640.webp 640w, /img/hero-services-1024.webp 1024w, /img/hero-services-1600.webp 1600w, /img/hero-services-2560.webp 2560w"
+    },
+    "width": 2560,
+    "height": 1707,
+    "displayWidth": 2560,
+    "displayHeight": 1707,
+    "sizes": "100vw",
+    "alt": ""
+  },
+  "hero-contact": {
+    "id": "hero-contact",
+    "src": "/img/hero-contact-640.webp",
+    "srcSet": {
+      "avif": "/img/hero-contact-640.avif 640w, /img/hero-contact-1024.avif 1024w, /img/hero-contact-1600.avif 1600w, /img/hero-contact-2560.avif 2560w",
+      "webp": "/img/hero-contact-640.webp 640w, /img/hero-contact-1024.webp 1024w, /img/hero-contact-1600.webp 1600w, /img/hero-contact-2560.webp 2560w"
+    },
+    "width": 2560,
+    "height": 1707,
+    "displayWidth": 2560,
+    "displayHeight": 1707,
+    "sizes": "100vw",
+    "alt": ""
+  },
+  "hero-careers": {
+    "id": "hero-careers",
+    "src": "/img/hero-careers-640.webp",
+    "srcSet": {
+      "avif": "/img/hero-careers-640.avif 640w, /img/hero-careers-1024.avif 1024w",
+      "webp": "/img/hero-careers-640.webp 640w, /img/hero-careers-1024.webp 1024w"
+    },
+    "width": 1024,
+    "height": 768,
+    "displayWidth": 1024,
+    "displayHeight": 768,
+    "sizes": "100vw",
+    "alt": ""
+  },
   "cta": {
     "id": "cta",
     "src": "/img/cta-640.webp",

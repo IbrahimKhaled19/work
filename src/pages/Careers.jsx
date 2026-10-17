@@ -80,6 +80,7 @@ function Careers() {
     <>
       <PageHero
         crumb="Careers"
+      imageId="hero-careers"
         title="Careers at ALNADA Contracting"
         subtitle="Engineering, installation, commissioning and maintenance of fire protection systems across Egypt. Civil Defense approved, established 1993."
       />

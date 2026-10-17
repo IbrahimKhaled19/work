@@ -137,6 +137,36 @@ const SERVICE_PHOTOS = [
 // same photograph. One constant so the two cannot drift apart.
 const HERO_SOURCE = 'hero.jpg'
 
+/**
+ * Page-hero photographs. The homepage keeps hero.jpg and the pre-footer band
+ * keeps cta.jpg; these three give the Services, Contact and Careers heroes a
+ * photograph of the work instead of the flat graphic band the .page-hero
+ * section draws when it has none.
+ *
+ * Careers-Hero.jpg is only 1024x768, so it emits two widths. Asking for four
+ * would encode the same 1024px image twice per format.
+ */
+const PAGE_HEROES = [
+  {
+    id: 'hero-services',
+    source: 'Services-Hero.jpg',
+    widths: [640, 1024, 1600, 2560],
+    note: 'Page-hero photograph on /services. Full-bleed cover at 100vw.',
+  },
+  {
+    id: 'hero-contact',
+    source: 'Contact-Hero.jpg',
+    widths: [640, 1024, 1600, 2560],
+    note: 'Page-hero photograph on /contact. Full-bleed cover at 100vw.',
+  },
+  {
+    id: 'hero-careers',
+    source: 'Careers-Hero.jpg',
+    widths: [640, 1024],
+    note: 'Page-hero photograph on /careers. The source is 1024x768, so there is nothing to upscale to.',
+  },
+]
+
 const TARGETS = [
   {
     id: 'hero',
@@ -148,6 +178,16 @@ const TARGETS = [
     alt: '',
     note: 'LCP element. Full-bleed cover background at 100vw.',
   },
+  ...PAGE_HEROES.map((pageHero) => ({
+    id: pageHero.id,
+    source: pageHero.source,
+    output: pageHero.id,
+    widths: pageHero.widths,
+    sizes: '100vw',
+    class: PHOTO,
+    alt: '',
+    note: pageHero.note,
+  })),
   {
     id: 'cta',
     source: 'cta.jpg',
