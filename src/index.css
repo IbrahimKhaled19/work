@@ -3300,9 +3300,20 @@ textarea:focus-visible {
   }
 }
 
+/* Less motion means the rail never moves. The site-wide reduced-motion rule
+   sets animation-duration to nothing, which a scroll-driven animation ignores -
+   it is driven by scroll progress, not by time - so the front and the lamps
+   have to be switched off explicitly or they keep advancing for a reader who
+   asked them not to. Cold and static is the same thing they get on a browser
+   without scroll timelines. */
 @media (prefers-reduced-motion: reduce) {
   .careers-hero .page-hero-bg img {
     transform: none;
+  }
+
+  .careers-run::after,
+  .careers-stage::before {
+    animation: none;
   }
 }
 
@@ -3358,20 +3369,29 @@ textarea:focus-visible {
   background: var(--bg-alt);
 }
 
-/* The front. Browsers without a scroll timeline leave clip-path alone, so the
-   line arrives filled - the finished page. With one it opens from the top and
-   closes as the stages pass. */
+/* The front. Cold by default: an empty pipe and unlit lamps, which is the
+   honest static state and what a browser without scroll timelines, or a reader
+   who asked for less motion, gets instead of a pipe pretending to be finished.
+
+   Its timeline is the run, not the document. Driving it from `scroll(root)`
+   over a range of the whole page made the front finish hundreds of pixels
+   before the last stage - by the time the reader arrived at stage three the
+   pipe was already full. Tying it to the run's own view progress means the
+   front advances in step with the stages and reaches the panel as the panel
+   arrives. */
 .careers-run::after {
   bottom: 0;
   background: linear-gradient(180deg, var(--red-dark) 0%, var(--red) 78%, #ff6a86 100%);
+  clip-path: inset(0 0 100% 0);
 }
 
-@supports (animation-timeline: scroll()) {
+@supports (animation-timeline: view()) {
   .careers-run::after {
-    clip-path: inset(0 0 100% 0);
     animation: careersFill linear both;
-    animation-timeline: scroll(root block);
-    animation-range: 3% 62%;
+    animation-timeline: view(block);
+    /* Starts as the first stage comes up, complete as the panel reaches the
+       bottom of the screen. Measured at 700, 984 and 1400px viewports. */
+    animation-range: cover 15% cover 72%;
   }
 }
 
@@ -3391,7 +3411,13 @@ textarea:focus-visible {
 }
 
 /* The lamp on the rail: a paper collar lets the pipe pass behind it, so the two
-   never read as one lump. */
+   never read as one lump.
+
+   Unlit by default, for the same reason the pipe is empty by default - a browser
+   without a view timeline should see a diagram of the run, not a run that has
+   already happened. Unlit still has to be *visible*: at --bg-alt on --bg the dot
+   measures 1.06:1 and simply disappears, so the cold state uses a mid grey that
+   clears 3:1 against the paper. */
 .careers-stage::before {
   content: "";
   position: absolute;
@@ -3402,7 +3428,7 @@ textarea:focus-visible {
   width: 17px;
   height: 17px;
   border-radius: 999px;
-  background: var(--red);
+  background: #9a9aa8;
   box-shadow: 0 0 0 7px var(--bg);
 }
 
@@ -3416,7 +3442,7 @@ textarea:focus-visible {
 
 @keyframes careersIgnite {
   from {
-    background: var(--bg-alt);
+    background: #9a9aa8;
     box-shadow: 0 0 0 7px var(--bg), 0 0 0 0 rgb(var(--red-rgb) / 0%);
   }
 
