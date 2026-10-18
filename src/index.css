@@ -3317,6 +3317,17 @@ textarea:focus-visible {
   }
 }
 
+/* In-page anchors on this page. The navbar is sticky and 77px tall, so a target
+   with no offset lands flush with the top of the screen and disappears behind
+   the header - and the send panel cannot scroll further up than this page
+   allows, so it stays buried rather than merely grazing the top. 100px is the
+   offset the service detail anchors already use, so every landing on this site
+   puts its target the same distance down the screen. */
+.careers-send,
+.careers-stage {
+  scroll-margin-top: 100px;
+}
+
 /* The two statements, then the one action that matters. */
 .careers-intro {
   padding-bottom: 56px;
