@@ -20,3 +20,10 @@ lighthouse-*.json
 # (.opencode/skills/ stays tracked - it is shared reference material.)
 .opencode/command/
 .opencode/plugins/
+
+# Python bytecode caches. The skill scripts under .opencode/skills/ compile
+# themselves on first run, and the three .pyc files that land in their
+# __pycache__ were being committed - so every repo that ran them produced a diff
+# containing nothing but regenerated binary.
+__pycache__/
+*.py[cod]
