@@ -3370,19 +3370,17 @@ textarea:focus-visible {
 }
 
 /* The front. Cold by default: an empty pipe and unlit lamps, which is the
-   honest static state and what a browser without scroll timelines, or a reader
-   who asked for less motion, gets instead of a pipe pretending to be finished.
+   honest static state and what a reader who asked for less motion gets.
 
-   Its timeline is the run, not the document. Driving it from `scroll(root)`
-   over a range of the whole page made the front finish hundreds of pixels
-   before the last stage - by the time the reader arrived at stage three the
-   pipe was already full. Tying it to the run's own view progress means the
-   front advances in step with the stages and reaches the panel as the panel
-   arrives. */
+   `--careers-front` is the one number both paths write: the CSS animation where
+   scroll timelines exist (below, where the keyframes override this), and
+   ScrollFront.jsx by hand where they do not. With no property set the pipe is
+   empty, so a page with no script and no timeline support still reads as a
+   diagram rather than as a broken animation. */
 .careers-run::after {
   bottom: 0;
   background: linear-gradient(180deg, var(--red-dark) 0%, var(--red) 78%, #ff6a86 100%);
-  clip-path: inset(0 0 100% 0);
+  clip-path: inset(0 0 calc(100% - var(--careers-front, 0) * 100%) 0);
 }
 
 @supports (animation-timeline: view()) {
@@ -3390,7 +3388,8 @@ textarea:focus-visible {
     animation: careersFill linear both;
     animation-timeline: view(block);
     /* Starts as the first stage comes up, complete as the panel reaches the
-       bottom of the screen. Measured at 700, 984 and 1400px viewports. */
+       bottom of the screen. Measured at 700, 984 and 1400px viewports.
+       ScrollFront.jsx uses the same two numbers by hand. */
     animation-range: cover 15% cover 72%;
   }
 }
@@ -3438,6 +3437,13 @@ textarea:focus-visible {
     animation-timeline: view();
     animation-range: entry 12% entry 75%;
   }
+}
+
+/* The same lit state, written by ScrollFront.jsx where the animation above does
+   not exist. Two implementations of one idea, so both are declared together. */
+.careers-stage.is-lit::before {
+  background: var(--red);
+  box-shadow: 0 0 0 7px var(--bg), 0 0 0 7px rgb(var(--red-rgb) / 0.14);
 }
 
 @keyframes careersIgnite {

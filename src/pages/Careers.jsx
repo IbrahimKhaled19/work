@@ -28,6 +28,7 @@
  */
 import PageHero from '../components/PageHero'
 import Reveal from '../components/Reveal'
+import ScrollFront from '../components/ScrollFront'
 import Picture from '../components/Picture'
 import { serviceIndex as services } from '../data/serviceIndex.js'
 import { openRoles } from '../data/careers.js'
@@ -154,7 +155,7 @@ function Careers() {
 
       <section className="section careers-run-section">
         <div className="container">
-          <div className="careers-run">
+          <ScrollFront className="careers-run">
             {STAGES.map((stage) => (
               <article className="careers-stage" id={stage.id} key={stage.id}>
                 <Reveal>
@@ -169,7 +170,7 @@ function Careers() {
                 </Reveal>
               </article>
             ))}
-          </div>
+          </ScrollFront>
 
           {/* Where the rail arrives. A sibling of the run, not a child: the line
               has to end at this panel's top edge, and it can only do that if the
