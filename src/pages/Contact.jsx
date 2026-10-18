@@ -33,7 +33,7 @@ function Contact() {
   return (
     <>
       <PageHero
-        crumb="Contact"
+        crumbs={[{ label: 'Contact' }]}
       imageId="hero-contact"
         title="Contact Us"
         subtitle="Need an inspection, installation or Annual Maintenance Contract (AMC) quote? Fill out the form and our engineers will contact you."

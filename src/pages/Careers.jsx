@@ -86,13 +86,13 @@ function Careers() {
     'CV for ALNADA Contracting. I have attached my CV.'
   )}`
   const mailHref = `mailto:${site.contact.email}?subject=${encodeURIComponent(
-    'CV — ALNADA Contracting'
+    'CV â€” ALNADA Contracting'
   )}&body=${encodeURIComponent('I have attached my CV.\n\n')}`
 
   return (
     <>
       <PageHero
-        crumb="Careers"
+        crumbs={[{ label: 'Careers' }]}
         imageId="hero-careers"
         className="careers-hero"
         title="Careers at ALNADA Contracting"
@@ -105,7 +105,7 @@ function Careers() {
             <Reveal>
               <p className="careers-statement">
                 No published vacancies at the moment. We would rather say so
-                than advertise a role that is not open — and every CV that
+                than advertise a role that is not open â€” and every CV that
                 arrives goes on file, because that list is where we go first
                 when one does.
               </p>
@@ -180,7 +180,7 @@ function Careers() {
               <div className="careers-send-ask">
                 <h2>Send us your CV.</h2>
                 <p>
-                  Attach it to either message below — a PDF, or a clear photo of
+                  Attach it to either message below â€” a PDF, or a clear photo of
                   one, is fine. Every CV that arrives goes on file, and that file
                   is where we go first when a role opens.
                 </p>

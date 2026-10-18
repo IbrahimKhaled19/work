@@ -1579,13 +1579,51 @@ textarea:focus-visible {
   margin-top: 10px;
 }
 
+/* The breadcrumb trail.
+
+   A list, not a sentence: `<nav><ol>` with one `<li>` per level, which is the
+   WAI-ARIA breadcrumb pattern and lets a screen reader announce "list of 3
+   items" and step through the levels. The separators are drawn here rather
+   than typed into the markup, so the trail is links and a page name instead of
+   slash characters the reader has to step over. */
+
 .page-crumb {
   font-size: 0.88rem;
   opacity: 0.85;
 }
 
+.page-crumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-crumb li + li::before {
+  content: "/";
+  margin-right: 8px;
+  color: rgb(255 255 255 / 0.55);
+}
+
 .page-crumb a:hover {
   text-decoration: underline;
+}
+
+.page-crumb a:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* The level the visitor is on. It is not a link - no pointer, not focusable,
+   no underline - and that is the whole signal, so it keeps the same colour as
+   the levels that are. Dimming it read as "greyed out" rather than "you are
+   here". */
+.page-crumb [aria-current="page"] {
+  color: rgb(255 255 255 / 0.85);
 }
 
 .page-subtitle {

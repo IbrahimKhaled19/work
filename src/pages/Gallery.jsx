@@ -42,7 +42,7 @@ function Gallery() {
   return (
     <>
       <PageHero
-        crumb="Gallery"
+        crumbs={[{ label: 'Gallery' }]}
         title="Our Work"
         subtitle="Illustrative panels for the systems we design, install and maintain across Egypt. Filter by discipline, open a panel for system detail."
       />
@@ -94,7 +94,7 @@ function Gallery() {
                   <div className="gallery-caption">
                     <span className="gallery-cat">{g.cat}</span>
                     <h3>{g.title}</h3>
-                    <span className="card-link">View system detail →</span>
+                    <span className="card-link">View system detail â†’</span>
                   </div>
                 </Link>
               )

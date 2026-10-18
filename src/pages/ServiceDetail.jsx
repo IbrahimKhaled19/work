@@ -62,7 +62,7 @@ function ServiceDetail() {
   return (
     <>
       <PageHero
-        crumb={`Services / ${service.title}`}
+        crumbs={[{ label: 'Services', to: '/services' }, { label: service.title }]}
         title={service.title}
         subtitle={blurbs[service.id]}
       />

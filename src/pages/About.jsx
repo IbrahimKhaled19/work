@@ -67,7 +67,7 @@ function About() {
   return (
     <>
       <PageHero
-        crumb="About Us"
+        crumbs={[{ label: 'About Us' }]}
         title="About ALNADA Contracting"
         subtitle="ALNADA Contracting designs, installs and maintains fire protection systems for factories, warehouses and commercial buildings across Egypt."
       />

@@ -7,7 +7,7 @@ function NotFound() {
   return (
     <>
       <PageHero
-        crumb="Not found"
+        crumbs={[{ label: 'Not found' }]}
         title="Page not found"
         subtitle="The page you asked for does not exist or was moved. Choose a path below to keep going."
       />
