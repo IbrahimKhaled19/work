@@ -3427,7 +3427,14 @@ textarea:focus-visible {
    without a view timeline should see a diagram of the run, not a run that has
    already happened. Unlit still has to be *visible*: at --bg-alt on --bg the dot
    measures 1.06:1 and simply disappears, so the cold state uses a mid grey that
-   clears 3:1 against the paper. */
+   clears 3:1 against the paper.
+
+   No paper collar behind it. The collar was there so the pipe would not read as
+   one lump with the dot, but it painted paper 7px around a 17px dot sitting on a
+   5px pipe, which cut a 31px break in the rail at every lamp - the line looked
+   snapped rather than piped. Without it the pipe runs unbroken through the node,
+   the dot is 17px against a 5px pipe so it still reads as a node, and the front
+   arrives *through* it instead of stopping short. */
 .careers-stage::before {
   content: "";
   position: absolute;
@@ -3439,7 +3446,6 @@ textarea:focus-visible {
   height: 17px;
   border-radius: 999px;
   background: #9a9aa8;
-  box-shadow: 0 0 0 7px var(--bg);
 }
 
 @supports (animation-timeline: view()) {
@@ -3451,21 +3457,22 @@ textarea:focus-visible {
 }
 
 /* The same lit state, written by ScrollFront.jsx where the animation above does
-   not exist. Two implementations of one idea, so both are declared together. */
+   not exist. Two implementations of one idea, so both are declared together.
+   The halo is the only thing the dot adds to the rail. */
 .careers-stage.is-lit::before {
   background: var(--red);
-  box-shadow: 0 0 0 7px var(--bg), 0 0 0 7px rgb(var(--red-rgb) / 0.14);
+  box-shadow: 0 0 0 7px rgb(var(--red-rgb) / 0.14);
 }
 
 @keyframes careersIgnite {
   from {
     background: #9a9aa8;
-    box-shadow: 0 0 0 7px var(--bg), 0 0 0 0 rgb(var(--red-rgb) / 0%);
+    box-shadow: 0 0 0 0 rgb(var(--red-rgb) / 0%);
   }
 
   to {
     background: var(--red);
-    box-shadow: 0 0 0 7px var(--bg), 0 0 0 7px rgb(var(--red-rgb) / 0.14);
+    box-shadow: 0 0 0 7px rgb(var(--red-rgb) / 0.14);
   }
 }
 
