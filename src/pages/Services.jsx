@@ -48,8 +48,8 @@ function Services() {
             {serviceSections.map((svc) => {
               const { Icon, proof } = serviceVisuals[svc.id]
               const isOpen = expanded === svc.id
-                      return (
-                      <Reveal as="article" className="service-acc" id={svc.id} key={svc.id}>
+              return (
+                <Reveal as="article" className="service-acc" id={svc.id} key={svc.id}>
                   <button
                     type="button"
                     className="service-acc-head"
@@ -74,8 +74,8 @@ function Services() {
                     aria-labelledby={`${svc.id}-button`}
                     hidden={!isOpen}
                   >
-                    <p>{svc.text}</p>
-                    <ul className="check-list" aria-label="Service inclusions">
+                    <p className="service-acc-lede">{svc.text}</p>
+                    <ul className="check-list" aria-label={`${svc.title} inclusions`}>
                       {svc.points.map((p) => (
                         <li key={p}>{p}</li>
                       ))}
@@ -85,26 +85,34 @@ function Services() {
                         <strong>Standards:</strong> {svc.standards}
                       </p>
                     )}
+                    {/* One primary action and two quiet links.
+
+                        The WhatsApp route used to be an outline button, and
+                        .btn-outline is a dark-surface component - white text on
+                        a transparent fill - so on this light panel it measured
+                        1.21:1 against the section and was invisible to anyone
+                        who could not pick out the faint white border. The route
+                        is worth keeping; that component was not. */}
                     <div className="acc-actions">
-                      <Link to={`/services/${svc.id}`} className="card-link">
-                        View full page →
-                      </Link>
                       <Link to="/contact" className="btn btn-solid">
-                        Request Quote for {svc.short}
+                        Request a quote for {svc.short}
+                      </Link>
+                      <Link to={`/services/${svc.id}`} className="acc-link">
+                        View the full page &rarr;
                       </Link>
                       <a
                         href={site.contact.whatsapp}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-outline"
+                        className="acc-link acc-link-whatsapp"
                       >
-                        <WhatsappLogo size={14} aria-hidden="true" />
-                        WhatsApp Us
+                        <WhatsappLogo size={15} aria-hidden="true" />
+                        WhatsApp us
                       </a>
                     </div>
-                    </div>
-                  </Reveal>
-                    )
+                  </div>
+                </Reveal>
+              )
             })}
           </div>
         </div>

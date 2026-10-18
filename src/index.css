@@ -1595,11 +1595,19 @@ textarea:focus-visible {
   font-size: 1.05rem;
 }
 
-/* Services page */
+/* Services page
+
+   One column, and this is the change that made the accordion feel wrong. It was
+   a two-column grid, so thirteen disclosure rows sat side by side at 556px each.
+   Every row then fought its partner: grid rows align, so the shorter accordion
+   in each pair stretched to match the taller one, an expanded panel pushed its
+   neighbour down, and the right half of the section sat empty beside it. A list
+   of collapsible rows is one column of reading order - cards are what go two-up,
+   and these are not cards. */
 .services-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 48px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
   align-items: start;
 }
 
@@ -1611,8 +1619,10 @@ textarea:focus-visible {
     transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
 }
 
+/* Every row slides in from the left. The even/odd alternation that went with the
+   two columns has nothing to alternate against now. */
 .js .services-list > .reveal:nth-child(even) {
-  transform: translateX(32px);
+  transform: translateX(-32px);
 }
 
 .js .services-list > .reveal.is-visible {
@@ -1642,10 +1652,17 @@ textarea:focus-visible {
 
 .service-acc {
   border-bottom: 1px solid var(--line);
-  scroll-margin-top: 152px;
+  /* 100px, like every other in-page anchor on the site: the navbar is 77px and
+     the extra 23px is the gap under it. This was the one that said 152px, for a
+     sticky chip TOC that no component renders any more. */
+  scroll-margin-top: 100px;
   transition: background 0.2s ease;
 }
 
+/* Two hover signals, not four. The row tints and the title takes the brand
+   colour; the icon used to lift 2px as well, and the red underline swept in on
+   hover as well as on expansion - so hovering competed with the open state
+   instead of supporting it. The underline now marks state only. */
 .service-acc:hover {
   background: rgb(var(--red-rgb) / );
 }
@@ -1679,7 +1696,6 @@ textarea:focus-visible {
   pointer-events: none;
 }
 
-.service-acc-head:hover::after,
 .service-acc-head[aria-expanded="true"]::after {
   transform: scaleX(1);
 }
@@ -1717,19 +1733,21 @@ textarea:focus-visible {
   display: grid;
   place-items: center;
   transition:
-    transform 0.2s ease,
     background 0.2s ease,
     color 0.2s ease;
 }
 
 .service-acc-head:hover .service-acc-icon {
-  transform: translateY(-2px);
   background: rgb(var(--red-rgb) / );
   color: var(--red);
 }
 
 .service-acc-title {
   flex: 1;
+  /* A long service title has to be able to shrink, or it pushes the standards
+     chip past the edge of the row instead of wrapping inside it. */
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 1.12rem;
   font-weight: 800;
 }
@@ -1751,23 +1769,57 @@ textarea:focus-visible {
   color: var(--red);
 }
 
+/* The disclosure panel.
+
+   It used to be loose text on the section background, indented 64px, with a
+   two-column check-list inside a ~700px panel - so each item wrapped to four or
+   five lines at a 28-character measure, and the right column ran out long
+   before the left, leaving a hole. It now reads as a sheet of specification:
+   a white surface on the grey section, a signal-red rule down its leading edge,
+   and one column of inclusions at a readable width. */
 .service-acc-panel {
-  padding: 0 4px 28px 64px;
+  background: #fff;
+  border-left: 2px solid var(--red);
+  border-radius: 0 12px 12px 0;
+  padding: 26px 28px 28px;
+  /* Bounded, because the row is now the full container. A sheet of
+     specification wants a measure, not 1100px of it. */
+  max-width: 820px;
+  margin: 0 0 10px 20px;
 }
 
 .service-acc-panel:not([hidden]) {
   animation: panelIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.service-acc-panel > p {
-  color: var(--muted);
+/* The opening paragraph: ink-soft rather than muted, because this is the reason
+   to care about the service, not a caption. */
+.service-acc-lede {
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.55;
+  max-width: 62ch;
+  margin: 0 0 4px;
 }
 
+/* One column here, whatever the shared .check-list does on the service detail
+   pages - those items are short card labels, these are full sentences. */
+.service-acc-panel .check-list {
+  grid-template-columns: 1fr;
+  gap: 10px;
+  max-width: 64ch;
+  margin-top: 16px;
+}
+
+/* One primary action, two quiet links. They used to be a red text link, a solid
+   button and an outline button - three treatments for three routes, and the
+   outline one was invisible on this light background. */
 .service-acc-panel .acc-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 20px;
+  align-items: center;
+  gap: 14px 20px;
+  margin-top: 24px;
 }
 
 .service-acc-panel .acc-actions .btn {
@@ -1776,8 +1828,36 @@ textarea:focus-visible {
   gap: 8px;
 }
 
+.acc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: rgb(var(--red-rgb) / 0.35);
+  text-underline-offset: 4px;
+  transition: color 0.18s ease;
+}
+
+.acc-link:hover {
+  color: var(--red);
+  text-decoration-color: currentColor;
+}
+
+.acc-link-whatsapp {
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.acc-link-whatsapp:hover {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+}
+
 .service-standards {
-  margin-top: 18px;
+  margin-top: 20px;
   padding-top: 16px;
   border-top: 1px solid var(--line);
   color: var(--muted);
@@ -1813,47 +1893,10 @@ textarea:focus-visible {
   font-weight: 900;
 }
 
-/* Services sticky chip TOC */
-.services-toc-bar {
-  position: sticky;
-  top: 76px;
-  z-index: 40;
-  background: #fff;
-  border-bottom: 1px solid var(--line);
-  box-shadow: 0 1px 3px rgba(34, 31, 31, 0.05);
-}
-
-.services-toc {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 12px 0;
-  scrollbar-width: thin;
-}
-
-.toc-chip {
-  flex: 0 0 auto;
-  padding: 10px 16px;
-  border-radius: 999px;
-  border: 1px solid transparent;
-  font-weight: 600;
-  font-size: 0.88rem;
-  line-height: 1.4;
-  color: var(--ink-soft);
-  white-space: nowrap;
-  transition: 0.15s ease;
-}
-
-.toc-chip:hover {
-  color: var(--red);
-  background: rgb(var(--red-rgb) / );
-}
-
-.toc-chip.is-active {
-  color: var(--red);
-  background: rgb(var(--red-rgb) / );
-  border-color: rgb(var(--red-rgb) / );
-}
+/* The sticky chip TOC (.services-toc-bar, .services-toc, .toc-chip) was removed
+   when the tabs became the page's discipline navigation, and nothing rendered
+   these rules any more. 42 lines of dead CSS for a component that does not
+   exist. */
 
 /* Sentinel for the back-to-top observer (Layout, every page).
    Sits 600px down the document: visible while near the top, scrolled
@@ -3024,8 +3067,12 @@ textarea:focus-visible {
     transform: none;
   }
 
+  /* The panel is a surface now, not loose text indented under the icon, so on a
+   narrow screen it keeps the surface and loses the left inset instead. */
   .service-acc-panel {
-    padding-left: 4px;
+    margin-left: 0;
+    border-radius: 0 10px 10px 0;
+    padding: 22px 20px 24px;
   }
 
   .about-layout,
