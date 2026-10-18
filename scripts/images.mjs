@@ -635,13 +635,6 @@ if (!fs.existsSync(heroSource)) {
 // --check discards the staging area instead: public/img and the manifest
 // below are both left exactly as they were.
 // ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// Publish. public/img is replaced whole rather than emptied and refilled, and
-// only after every file above has been written, so a failure anywhere leaves
-// the previous set of images in place instead of a half-populated directory.
-// --check discards the staging area instead: public/img and the manifest
-// below are both left exactly as they were.
-// ---------------------------------------------------------------------------
 /**
  * Throw away the staging area.
  *

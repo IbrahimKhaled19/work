@@ -16,6 +16,8 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { getRouteMeta, notFoundMeta } from '../seo/routeMeta.js'
+import { jsonLdFor } from '../seo/jsonld.js'
+import { notFoundPath } from '../routes.manifest.js'
 import site, { canonicalFor } from '../seo/site.js'
 
 function setMeta(attr, key, content) {
@@ -39,6 +41,24 @@ function setCanonical(href) {
   link.setAttribute('href', href)
 }
 
+/**
+ * Rewrite the JSON-LD block the prerenderer wrote, with the same escaping it
+ * used: a `</script>` inside the JSON would close the block early.
+ */
+function setJsonLd(jsonLd) {
+  let script = document.querySelector('script[type="application/ld+json"]')
+  if (!jsonLd) {
+    script?.remove()
+    return
+  }
+  if (!script) {
+    script = document.createElement('script')
+    script.type = 'application/ld+json'
+    document.head.appendChild(script)
+  }
+  script.textContent = jsonLd.replace(/</g, '\\u003c')
+}
+
 export default function Seo() {
   const { pathname } = useLocation()
 
@@ -59,6 +79,11 @@ export default function Seo() {
     setMeta('name', 'twitter:title', meta.title)
     setMeta('name', 'twitter:description', meta.description)
     setCanonical(meta.canonical)
+    // The one head element this used to leave behind: after a client-side
+    // navigation the page said "About us" while the structured data still
+    // described the Service page the visitor had just left. og:image is the
+    // same on every route, so it needed nothing.
+    setJsonLd(pathname === notFoundPath ? null : jsonLdFor(pathname))
   }, [pathname])
 
   return null

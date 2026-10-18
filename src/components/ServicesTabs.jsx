@@ -1,107 +1,59 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Reveal from './Reveal'
+import { serviceIndex, disciplines } from '../data/serviceIndex'
 
-const serviceGroups = [
-  {
-    id: 'engineering',
-    label: 'Engineering',
-    services: [
-      {
-        title: 'Design & Engineering',
-        desc: 'Hydraulic calculations, pump sizing, shop drawings, and code review before a single pipe goes in.',
-        anchor: 'design-engineering',
-      },
-      {
-        title: 'Passive Fire Protection',
-        desc: 'Fire-rated doors, dampers, firestopping, and coatings that contain fire and protect escape routes.',
-        anchor: 'passive-fire-protection',
-      },
-    ],
-  },
-  {
-    id: 'suppression',
-    label: 'Suppression',
-    services: [
-      {
-        title: 'Fire Pump Systems',
-        desc: 'Electric, diesel, and jockey pumps sized, installed, and acceptance-tested to NFPA 20.',
-        anchor: 'fire-pump-systems',
-      },
-      {
-        title: 'Sprinkler Systems',
-        desc: 'Wet, dry, pre-action, deluge, and ESFR systems matched to your hazard classification.',
-        anchor: 'sprinkler-systems',
-      },
-      {
-        title: 'Standpipe & Hose Systems',
-        desc: 'Class I-III standpipes, hose cabinets, and Fire Department Connections sized to code.',
-        anchor: 'standpipe-hose-systems',
-      },
-      {
-        title: 'Portable Fire Extinguishers',
-        desc: 'Correct type, correct placement, inspected and recharged on schedule.',
-        anchor: 'portable-extinguishers',
-      },
-      {
-        title: 'Special Hazard & Suppression',
-        desc: 'FM-200, CO2, kitchen hood, and foam systems for server rooms, kitchens, and flammable storage.',
-        anchor: 'special-hazard-suppression',
-      },
-    ],
-  },
-  {
-    id: 'detection',
-    label: 'Detection',
-    services: [
-      {
-        title: 'Fire Alarm & Detection',
-        desc: 'Addressable detection, notification, and BMS integration that alerts fast enough to matter.',
-        anchor: 'fire-alarm-detection',
-      },
-    ],
-  },
-  {
-    id: 'maintenance',
-    label: 'Maintenance',
-    services: [
-      {
-        title: 'Inspection, Testing & Maintenance',
-        desc: 'Scheduled pump, sprinkler, alarm, and extinguisher testing with documented deficiency reports.',
-        anchor: 'inspection-testing-maintenance',
-      },
-      {
-        title: 'Civil Defense Compliance & Permitting',
-        desc: 'Approval drawings, Civil Defense liaison, certificates, and license renewal, end to end.',
-        anchor: 'civil-defense-compliance',
-      },
-      {
-        title: 'Retrofit & Upgrade',
-        desc: 'Code-edition upgrades, non-compliant remediation, and capacity expansion for growing facilities.',
-        anchor: 'retrofit-upgrade',
-      },
-      {
-        title: 'Emergency & Repair Services',
-        desc: 'Emergency dispatch, pump and piping repair, and spare parts availability.',
-        anchor: 'emergency-repair-services',
-      },
-      {
-        title: 'Training & Consulting',
-        desc: 'Extinguisher training, evacuation drills, and ongoing consulting for facility managers.',
-        anchor: 'training-consulting',
-      },
-    ],
-  },
-]
+/**
+ * The disciplines and their services, read from the taxonomy.
+ *
+ * This list used to be hand-copied here: four groups, thirteen titles and a
+ * description each, about ninety lines beside the real data in services.js. It
+ * could not drift without anything failing - verify:taxonomy checked that the
+ * same ids appeared in the same groups, never that the words matched - so a
+ * service renamed in the catalogue kept its old name on the homepage.
+ *
+ * Now it is derived, the same way Navbar derives its dropdown from the same
+ * array. `text` is the sentence the service pages already use for their meta
+ * descriptions, so the tab and the page it links to say the same thing.
+ */
+const serviceGroups = disciplines.map((d) => ({
+  id: d.id,
+  label: d.label,
+  services: serviceIndex
+    .filter((s) => s.category === d.id)
+    .map((s) => ({ title: s.title, desc: s.text, anchor: s.id })),
+}))
 
 export default function ServicesTabs({ className = '', delay = 100 }) {
   const [active, setActive] = useState(serviceGroups[0].id)
   const group = serviceGroups.find((g) => g.id === active)
+  const tabRefs = useRef({})
+
+  /**
+   * The ARIA tabs pattern. `role="tab"` promises arrow keys move between tabs
+   * and that only the selected tab is in the tab order; without this the promise
+   * is not kept and a keyboard user has to Tab through every tab.
+   * https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
+   */
+  const onKeyDown = (event, index) => {
+    const last = serviceGroups.length - 1
+    let next = null
+    if (event.key === 'ArrowRight') next = index === last ? 0 : index + 1
+    else if (event.key === 'ArrowLeft') next = index === 0 ? last : index - 1
+    else if (event.key === 'Home') next = 0
+    else if (event.key === 'End') next = last
+    if (next === null) return
+
+    event.preventDefault()
+    const target = serviceGroups[next]
+    setActive(target.id)
+    tabRefs.current[target.id]?.focus()
+  }
 
   return (
     <Reveal className={`services-tabs ${className}`} delay={delay}>
       <div className="tab-list" role="tablist" aria-label="Service disciplines">
-        {serviceGroups.map((g) => (
+        {serviceGroups.map((g, i) => (
           <button
             key={g.id}
             type="button"
@@ -109,8 +61,13 @@ export default function ServicesTabs({ className = '', delay = 100 }) {
             id={`tab-${g.id}`}
             aria-selected={active === g.id}
             aria-controls={`panel-${g.id}`}
+            tabIndex={active === g.id ? 0 : -1}
+            ref={(el) => {
+              tabRefs.current[g.id] = el
+            }}
             className="tab-btn"
             onClick={() => setActive(g.id)}
+            onKeyDown={(e) => onKeyDown(e, i)}
           >
             {g.label}
           </button>
@@ -124,7 +81,7 @@ export default function ServicesTabs({ className = '', delay = 100 }) {
         key={group.id}
       >
         {group.services.map((s) => (
-          <Link to={`/services/${s.anchor}`} className="tab-service" key={s.title}>
+          <Link to={`/services/${s.anchor}`} className="tab-service" key={s.anchor}>
             <h3>{s.title}</h3>
             <p>{s.desc}</p>
             <span className="card-link">View detail &rarr;</span>

@@ -16,14 +16,26 @@ import ServicesTabs from '../components/ServicesTabs'
 import WhyList from '../components/WhyList'
 import CTA from '../components/CTA'
 import site from '../seo/site.js'
+import { serviceIndex } from '../data/serviceIndex.js'
 
 // Three tiles, not four. The fourth was "24/7 Emergency Support", withdrawn
 // with the rest of the availability claims. `.stats-grid` uses auto-fit, so
 // this array's length drives the layout and adding a tile back needs no CSS.
+//
+// Both numbers are read from their source: the service count from the taxonomy
+// (the same array Careers counts, so the two pages cannot disagree) and the
+// experience/project figures from site.js. Only this array used to hardcode the
+// service count, and a fourteenth service made the homepage and the careers page
+// state different numbers with nothing failing.
+//
+// The middle tile is deliberately NOT a link. It used to point at /gallery,
+// which is a page of illustrative icons that says outright it has no project
+// photography yet - so a visitor who believed the "100+ projects" number landed
+// on the one page that could not show it.
 const stats = [
   { target: site.yearsExperience, suffix: '+', label: 'Years in Fire Protection', duration: 1100 },
-  { target: site.projectsDelivered, suffix: '+', label: 'Fire Protection Projects', to: '/gallery', aria: `View project gallery: ${site.projectsDelivered}+ projects delivered`, duration: 1400 },
-  { target: 13, suffix: '', label: 'Services Under One Roof', duration: 1200 },
+  { target: site.projectsDelivered, suffix: '+', label: 'Fire Protection Projects', duration: 1400 },
+  { target: serviceIndex.length, suffix: '', label: 'Services Under One Roof', duration: 1200 },
 ]
 
 const pathSteps = [

@@ -106,6 +106,33 @@ if (!isSiteUrlConfigured) {
   try {
     assertSiteUrl()
     console.log(`site url: ${site.url}`)
+
+    // A set-but-wrong origin is worse than an unset one. Canonical tags, og:url,
+    // every JSON-LD @id and every sitemap line would point at a host that does
+    // not serve the site, and Google would be told to consolidate onto it - with
+    // nothing in the build complaining, because assertSiteUrl() only checks that
+    // a value exists. These are the values that reach a build by accident:
+    // copying the placeholder out of .env.example, or a typo.
+    const host = new URL(site.url).hostname
+    const PLACEHOLDER_HOSTS = [
+      /^localhost$/i,
+      /^127\./,
+      /^0\.0\.0\.0$/,
+      /(^|\.)example\.(com|org|net)$/i,
+      /^your-?/i,
+      /^placeholder/i,
+      /yourdomain/i,
+      /^changeme/i,
+      /^example-/i,
+    ]
+    const placeholder = PLACEHOLDER_HOSTS.find((re) => re.test(host))
+    if (placeholder) {
+      fail(
+        `VITE_SITE_URL is set to "${site.url}", which is a placeholder rather than a real ` +
+          `host (matched ${placeholder}). Every canonical, og:url, JSON-LD @id and sitemap ` +
+          'entry would be built from it. Set it in .env.production.'
+      )
+    }
   } catch (error) {
     fail(error.message)
   }

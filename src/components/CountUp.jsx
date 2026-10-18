@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 function easeOutExpo(t) {
   return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t)
@@ -15,12 +15,37 @@ function showFinalValue() {
   return typeof IntersectionObserver === 'undefined'
 }
 
+/**
+ * A number that counts up when it comes into view.
+ *
+ * WHY THE INITIAL STATE IS THE FINAL VALUE
+ * ----------------------------------------
+ * This component renders on the server too (scripts/prerender.mjs), and the two
+ * sides disagreed. `showFinalValue()` is true on the server - there is no window
+ * there - so the prerendered HTML shipped 10+ / 100+ / 13, while the browser's
+ * first render started from 0. The client therefore never matched the markup it
+ * was hydrating: React threw the prerendered subtree away and re-rendered it,
+ * and every visitor saw the stat row flash zeros before it counted up.
+ *
+ * So both sides render `target` first. The count-up, when it is wanted, is a
+ * *layout* effect: it runs after hydration and before the browser paints, so
+ * the number goes to zero in the same frame it was drawn and nobody ever sees
+ * the final value drop backwards. A visitor with no JavaScript, or with
+ * prefers-reduced-motion, keeps the real number and never sees the animation.
+ */
 function CountUp({ target, prefix = '', suffix = '', duration = 1200 }) {
-  const [display, setDisplay] = useState(() => (showFinalValue() ? target : 0))
-  const [started, setStarted] = useState(() => showFinalValue())
+  const calm = showFinalValue()
+  const [display, setDisplay] = useState(target)
+  const [started, setStarted] = useState(false)
   const liveRef = useRef(null)
   const rafRef = useRef(0)
   const finalText = `${prefix}${target}${suffix}`
+
+  useLayoutEffect(() => {
+    // Zero it before paint, so the count-up starts from zero without a visible
+    // jump from the prerendered value.
+    if (!calm) setDisplay(0)
+  }, [calm, target])
 
   useEffect(() => {
     const el = liveRef.current
@@ -37,10 +62,10 @@ function CountUp({ target, prefix = '', suffix = '', duration = 1200 }) {
     )
     io.observe(el)
     return () => io.disconnect()
-  }, [started, target])
+  }, [started])
 
   useEffect(() => {
-    if (!started || showFinalValue()) return
+    if (!started || calm) return
 
     let start = null
     const tick = (now) => {
@@ -54,7 +79,7 @@ function CountUp({ target, prefix = '', suffix = '', duration = 1200 }) {
     }
     rafRef.current = requestAnimationFrame(tick)
     return () => cancelAnimationFrame(rafRef.current)
-  }, [started, target, duration])
+  }, [started, calm, target, duration])
 
   return (
     <>

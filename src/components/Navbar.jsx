@@ -29,10 +29,24 @@ function Navbar() {
   const toggleRef = useRef(null)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    onScroll()
+    // One read per frame at most. The scroll event can fire several times
+    // between frames, and the only thing this state does is add a class to the
+    // header - the dropdown beside it never changes, so it should not be part
+    // of the render that flips that class.
+    let frame = 0
+    const update = () => {
+      frame = 0
+      setScrolled(window.scrollY > 8)
+    }
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update)
+    }
+    update()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
   }, [])
 
   const closeMenu = (returnFocus = false) => {
