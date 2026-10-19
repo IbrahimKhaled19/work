@@ -3418,23 +3418,16 @@ textarea:focus-visible {
   padding-bottom: 56px;
 }
 
-.careers-intro-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 28px 72px;
-  align-items: start;
-}
-
+/* One statement, so the measure holds the line length: this was a two-column
+   grid and the text no longer needs to be half a container wide. 62ch is what
+   the rest of the site's prose uses. */
 .careers-statement {
   font-size: clamp(1.12rem, 1.7vw, 1.38rem);
   line-height: 1.38;
   letter-spacing: -0.015em;
   color: var(--ink);
+  max-width: 62ch;
   margin: 0;
-}
-
-.careers-statement strong {
-  font-weight: 800;
 }
 
 .careers-jump {
@@ -3708,14 +3701,9 @@ textarea:focus-visible {
     --careers-rail: 46px;
   }
 
-  .careers-intro-grid,
   .careers-send {
     grid-template-columns: minmax(0, 1fr);
     gap: 26px;
-  }
-
-  .careers-intro-grid {
-    gap: 24px;
   }
 
   .careers-stage {

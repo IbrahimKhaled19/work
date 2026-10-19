@@ -1,13 +1,13 @@
 /**
  * Careers.
  *
- * Claim safety still decides what may be printed. Every number here is
- * countable from the data - the discipline count is read from the service
- * taxonomy, so a twelfth or fourteenth service moves it on its own rather than
- * quietly making a sentence false - and the sentences about the work are the
- * ones PRODUCT.md already supports. There are no invented openings, no
- * benefits, no salary and no team size. src/data/careers.js explains why
- * openRoles is empty and what adding a role looks like.
+ * Claim safety still decides what may be printed: the sentences about the work
+ * are the ones PRODUCT.md already supports, and there is no invented opening,
+ * benefit, salary or team size. The intro used to state the service count too
+ * ("thirteen disciplines, one employer", read from the taxonomy so it could
+ * not go stale); it is gone, so nothing on this page has to be counted to stay
+ * true. src/data/careers.js explains why openRoles is empty and what adding a
+ * role looks like.
  *
  * The page has one job: get a CV to the engineering team. So it says that once,
  * in the last stage, with two routes that actually work. The previous build sent
@@ -22,19 +22,13 @@
  * as the stages pass and every browser without support gets the finished static
  * page. Nothing on the page depends on script: the two CV routes are ordinary
  * anchors with a fixed message in them.
- *
- * It imports serviceIndex rather than services.js, for the reason Navbar and
- * Footer do: the 36 KB of per-service prose is not needed to count disciplines.
  */
 import PageHero from '../components/PageHero'
 import Reveal from '../components/Reveal'
 import ScrollFront from '../components/ScrollFront'
 import Picture from '../components/Picture'
-import { serviceIndex as services } from '../data/serviceIndex.js'
 import { openRoles } from '../data/careers.js'
 import site from '../seo/site.js'
-
-const disciplineCount = services.length
 
 /**
  * The stages a system goes through, in the order it happens. Each one carries
@@ -86,7 +80,7 @@ function Careers() {
     'CV for ALNADA Contracting. I have attached my CV.'
   )}`
   const mailHref = `mailto:${site.contact.email}?subject=${encodeURIComponent(
-    'CV â€” ALNADA Contracting'
+    'CV for ALNADA Contracting'
   )}&body=${encodeURIComponent('I have attached my CV.\n\n')}`
 
   return (
@@ -101,29 +95,22 @@ function Careers() {
 
       <section className="section careers-intro">
         <div className="container">
-          <div className="careers-intro-grid">
-            <Reveal>
-              <p className="careers-statement">
-                No published vacancies at the moment. We would rather say so
-                than advertise a role that is not open â€” and every CV that
-                arrives goes on file, because that list is where we go first
-                when one does.
-              </p>
-            </Reveal>
-            <Reveal delay={80}>
-              <p className="careers-statement">
-                <strong>{disciplineCount} disciplines, one employer.</strong> A
-                career here follows one system from its first calculation to its
-                annual inspection, instead of handing it to a stranger at the
-                end of every stage.
-              </p>
-              {/* The one primary action, on the first screen. It goes to the
-                  close of the page, where the two ways to send it live. */}
-              <a className="btn btn-solid careers-jump" href="#apply">
-                Send your CV
-              </a>
-            </Reveal>
-          </div>
+          {/* One statement and one action. This was a two-column grid: the
+              vacancies notice on the left, the service count and the button on
+              the right. The count is gone, so the action now sits under the
+              sentence it answers. */}
+          <Reveal>
+            <p className="careers-statement">
+              No published vacancies at the moment. We would rather say so than
+              advertise a role that is not open, and every CV that arrives goes
+              on file, because that list is where we go first when one does.
+            </p>
+            {/* The one primary action, on the first screen. It goes to the
+                close of the page, where the two ways to send it live. */}
+            <a className="btn btn-solid careers-jump" href="#apply">
+              Send your CV
+            </a>
+          </Reveal>
         </div>
       </section>
 
@@ -180,7 +167,7 @@ function Careers() {
               <div className="careers-send-ask">
                 <h2>Send us your CV.</h2>
                 <p>
-                  Attach it to either message below â€” a PDF, or a clear photo of
+                  Attach it to either message below. A PDF, or a clear photo of
                   one, is fine. Every CV that arrives goes on file, and that file
                   is where we go first when a role opens.
                 </p>

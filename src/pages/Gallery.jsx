@@ -94,7 +94,7 @@ function Gallery() {
                   <div className="gallery-caption">
                     <span className="gallery-cat">{g.cat}</span>
                     <h3>{g.title}</h3>
-                    <span className="card-link">View system detail â†’</span>
+                    <span className="card-link">View system detail &rarr;</span>
                   </div>
                 </Link>
               )
