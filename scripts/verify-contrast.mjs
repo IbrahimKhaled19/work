@@ -39,12 +39,13 @@ if (!fs.existsSync(CSS)) {
 const css = fs.readFileSync(CSS, 'utf8')
 
 // --- malformed tint declarations -------------------------------------------
-// `rgb(var(--red-rgb) / )` is not a colour: the alpha is missing, so the
-// browser drops the whole declaration and the tint silently disappears. A
-// global rewrite once replaced 25 rgba() tints with this empty form, and every
-// one stopped painting without failing anything. The contrast table cannot see
-// them because the token itself still resolves, so check the syntax here.
-for (const m of css.matchAll(/rgb\(\s*var\([^)]*\)\s*\/\s*\)/g)) {
+// `rgb(var(--red-rgb) / )` and `rgb(246 246 249 / )` are not colours: the
+// alpha is missing, so the browser drops the whole declaration and the tint
+// silently disappears. A global rewrite once replaced 25 rgba() tints with
+// this empty form, and every one stopped painting without failing anything.
+// The contrast table cannot see them because the token itself still resolves,
+// so check both the token and the literal-channel shapes here.
+for (const m of css.matchAll(/rgba?\(\s*(?:var\([^)]*\)|\d+\s+\d+\s+\d+)\s*\/\s*\)/g)) {
   const line = css.slice(0, m.index).split('\n').length
   failures.push(`src/index.css:${line}: ${m[0]} has no alpha, so the declaration is dropped`)
 }
@@ -95,6 +96,19 @@ function resolve(name) {
   resolving.delete(name)
   if (hex) tokens.set(name, hex)
   return hex
+}
+
+// --- index.html mirrors --red in the theme-color meta ----------------------
+// The meta tints the browser chrome on mobile and is a hard copy of the token,
+// so it can rot silently the moment --red moves. index.html names this check.
+const meta = fs
+  .readFileSync(path.join(process.cwd(), 'index.html'), 'utf8')
+  .match(/name="theme-color"\s+content="#([0-9a-fA-F]{6})"/)
+const redHex = resolve('--red')
+if (!meta) {
+  failures.push('index.html: no theme-color meta with a #hex content found')
+} else if (!redHex || `#${meta[1].toLowerCase()}` !== redHex.toLowerCase()) {
+  failures.push(`index.html: theme-color #${meta[1]} does not match --red ${redHex ?? 'unresolved'}`)
 }
 
 // --- contrast maths (WCAG 2.1 relative luminance) --------------------------
@@ -188,4 +202,4 @@ console.log(
 )
 console.log('')
 
-finish('every declared token pair meets WCAG AA for body text')
+finish('declared token pairs meet WCAG AA, and index.html mirrors --red')

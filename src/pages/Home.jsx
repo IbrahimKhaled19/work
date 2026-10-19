@@ -163,7 +163,7 @@ function Home() {
         </div>
       </section>
 
-      <section className="section section-alt why cv-skip">
+      <section className="section section-alt cv-skip">
         <div className="container">
           <SectionHead title="Reliable Protection, Backed by Experience" />
           <WhyList items={whyUs} />

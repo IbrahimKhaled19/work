@@ -13,7 +13,7 @@ function Footer() {
   return (
     <footer className="footer">
       <div className="container footer-grid">
-        <div className="footer-col">
+        <div>
           <h3>ALNADA Contracting</h3>
           <p>
             Egypt's trusted Civil Defense approved partner for fire fighting and
@@ -39,7 +39,7 @@ function Footer() {
           </ul>
         </div>
 
-        <div className="footer-col">
+        <div>
           <h4>Quick Links</h4>
           <ul>
             {navLinks.map((l) => (
@@ -50,7 +50,7 @@ function Footer() {
           </ul>
         </div>
 
-        <div className="footer-col">
+        <div>
           <h4>Our Services</h4>
           <ul className="footer-services">
             {serviceSections.map((s) => (
@@ -61,7 +61,7 @@ function Footer() {
           </ul>
         </div>
 
-        <div className="footer-col">
+        <div>
           <h4>Contact Us</h4>
           <ul className="footer-contact">
             <li>Serving industrial and commercial facilities across Egypt</li>

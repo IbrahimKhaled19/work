@@ -2,9 +2,8 @@
 name: ALNADA Contracting
 description: Civil Defense-approved fire protection partner for the UAE.
 colors:
-  signal-red: "#CC2643"
+  signal-red: "#C32240"
   signal-dark: "#B81F39"
-  signal-deep: "#000000"
   ink: "#221F1F"
   ink-soft: "#404040"
   muted: "#666666"
@@ -158,7 +157,7 @@ Layered and tonal by default: depth comes from paper versus Paper Alt bands, 1px
 
 ## Shapes
 
-Engineered roundness with one decisive gesture: pill actions (999px) against gently curved surfaces (14px). Supporting radii step down deliberately — contact icon wells (12px), text fields and brand badge (10px), inline code chips (6px), toggle bars (2px). Hero and visual wells use the same 14px language, with one perfect circle reserved for the service icon medallion (96px disc with a 14px red halo ring). Borders are 1px hairlines, thickening only as intent: 2px button outlines, 4px milestone top seals.
+Engineered roundness with one decisive gesture: pill actions (999px) against gently curved surfaces (14px). Supporting radii step down deliberately — contact icon wells (12px), text fields (10px), inline code chips (6px), toggle bars (2px). Hero and visual wells use the same 14px language, with one perfect circle reserved for the service icon medallion (96px disc with a 14px red halo ring). Borders are 1px hairlines, thickening only as intent: 2px button outlines.
 
 ## Components
 
@@ -188,7 +187,7 @@ Engineered roundness with one decisive gesture: pill actions (999px) against gen
 - Black band with hairline dividers (4-up desktop, 2-up tablet, stacked mobile): oversized white figures (2.3rem, 900) over mist labels (0.88rem); figures turn red on hover only. Dividers are hairlines, never shadows.
 
 ### Milestones
-- White cards with a 4px red top seal (14px radius, ambient lift, 24px padding): red year (1.2rem, 900) over muted copy. The top border is the brand — never remove it.
+- White cards (14px radius, ambient lift, 24px padding): red year (1.2rem, 900) over muted copy.
 
 ## Do's and Don'ts
 

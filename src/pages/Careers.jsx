@@ -162,7 +162,7 @@ function Careers() {
               panel is not inside the thing the line measures. */}
           <div className="careers-send" id="apply">
             <Reveal>
-              <div className="careers-send-ask">
+              <div>
                 <h2>Send us your CV.</h2>
                 <p>
                   Attach it to either message below. A PDF, or a clear photo of

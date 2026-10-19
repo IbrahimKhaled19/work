@@ -73,7 +73,6 @@ export const site = {
 
   lang: 'en',
   locale: 'en_EG',
-  themeColor: '#CC2643',
 
   // Navbar brand mark. The SVG is the canonical reference - it is what goes
   // into JSON-LD, since a vector is both smaller and resolution-independent.

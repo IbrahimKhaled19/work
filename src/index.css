@@ -14,7 +14,6 @@
   --red-rgb: 195 34 64;
   --red: rgb(var(--red-rgb));
   --red-dark: #b81f39;
-  --red-deep: #000000;
   --ink: #221f1f;
   --ink-soft: #404040;
   --muted: #666666;
@@ -33,6 +32,13 @@
   --shadow: 0 10px 30px rgba(34, 31, 31, 0.08);
   --shadow-lg: 0 20px 50px rgba(34, 31, 31, 0.16);
   --radius: 14px;
+  /*
+   * The sticky bar's height, in one place: the bar, the mobile menu and its
+   * backdrop all derive from it, and --anchor-offset clears it with air to
+   * spare for in-page anchor landings.
+   */
+  --nav-h: 76px;
+  --anchor-offset: 100px;
   --sans: Montserrat, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 
   font: 16px/1.6 var(--sans);
@@ -334,7 +340,6 @@ select:focus-visible,
 textarea:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 2px;
-  border-radius: 6px;
 }
 
 .btn:focus-visible,
@@ -350,9 +355,16 @@ textarea:focus-visible {
   box-shadow: 0 0 0 4px rgb(var(--red-rgb) / 0.15);
 }
 
-/* Keep pill geometry on keyboard focus: global focus sets 6px radius */
-.nav-links a:not(.btn):focus-visible {
-  border-radius: 999px;
+/* The red ring clears 3:1 against the light surfaces, but not against the
+   dark ones: 2.82:1 on ink and down to 1.2:1 over the hero photograph. On
+   those surfaces the ring goes white, which clears 7:1 wherever it sits. */
+.footer :focus-visible,
+.cta :focus-visible,
+.hero :focus-visible,
+.page-hero :focus-visible,
+.careers-send :focus-visible {
+  outline-color: #fff;
+  box-shadow: 0 0 0 4px rgb(255 255 255 / 0.22);
 }
 
 /* Actionable contact links inherit surrounding type */
@@ -365,8 +377,7 @@ textarea:focus-visible {
   text-decoration-color: rgb(var(--red-rgb) / 0.55);
 }
 
-.footer-contact a:hover,
-.contact-list a:hover {
+.footer-contact a:hover {
   color: #fff;
   text-decoration-color: #fff;
 }
@@ -427,7 +438,7 @@ textarea:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 76px;
+  min-height: var(--nav-h);
 }
 
 .brand {
@@ -444,77 +455,6 @@ textarea:focus-visible {
   height: 50px;
 }
 
-.brand-seal {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: var(--red);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  position: relative;
-  transition: transform 0.25s ease;
-}
-
-.brand:hover .brand-seal {
-  transform: rotate(-6deg) scale(1.06);
-}
-
-.brand-seal::after {
-  content: "";
-  position: absolute;
-  inset: 3px;
-  border: 1.5px solid rgba(255, 255, 255, 0.65);
-  border-radius: 6px;
-  pointer-events: none;
-}
-
-.brand-seal img {
-  width: 24px;
-  height: 24px;
-  display: block;
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.25;
-}
-
-.brand-text strong {
-  color: var(--ink);
-  font-size: 1.05rem;
-}
-
-.brand-text small {
-  color: var(--muted);
-  font-size: 0.75rem;
-}
-
-.brand-dcd {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 2px;
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  line-height: 1.4;
-  white-space: nowrap;
-}
-
-.brand-dcd-dot {
-  width: 6px;
-  height: 6px;
-  flex-shrink: 0;
-  border-radius: 999px;
-  background: var(--red);
-  display: inline-block;
-}
-
 .nav-links {
   display: flex;
   align-items: center;
@@ -526,7 +466,9 @@ textarea:focus-visible {
   border-radius: 999px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.72);
-  transition: 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
 }
 
 .nav-links a:not(.btn):hover {
@@ -678,7 +620,9 @@ textarea:focus-visible {
   height: 3px;
   border-radius: 2px;
   background: #fff;
-  transition: 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .nav-toggle.open span:nth-child(1) {
@@ -857,17 +801,6 @@ textarea:focus-visible {
   }
 }
 
-@keyframes navPanelIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 @keyframes successPop {
   0% {
     opacity: 0;
@@ -922,7 +855,9 @@ textarea:focus-visible {
   position: relative;
   z-index: 2;
   max-width: 720px;
-  margin-left: max(24px, calc((100vw - 1160px) / 2));
+  /* 100% of the section, not 100vw: vw includes the scrollbar on Windows, so
+     the copy sat a few pixels right of the container every other section uses. */
+  margin-left: max(24px, calc((100% - 1160px) / 2));
   padding: 80px 24px;
 }
 
@@ -930,10 +865,6 @@ textarea:focus-visible {
   color: #fff;
   font-size: clamp(2.1rem, 5vw, 3.4rem);
   margin: 16px 0 20px;
-}
-
-.hero h1 span {
-  color: #fff;
 }
 
 .hero-lead {
@@ -1020,15 +951,12 @@ textarea:focus-visible {
 
 .logo-item:hover {
   transform: translateY(-4px);
+  color: var(--ink);
 }
 
 .logo-item img {
   height: 44px;
   width: auto;
-}
-
-.logo-item:hover {
-  color: var(--ink);
 }
 
 @keyframes logoScroll {
@@ -1160,7 +1088,7 @@ textarea:focus-visible {
 }
 
 .stat-link:focus-visible {
-  outline: 2px solid var(--red);
+  outline: 2px solid #fff;
   outline-offset: -2px;
 }
 
@@ -1540,13 +1468,11 @@ textarea:focus-visible {
   content: none;
 }
 
-.page-hero--photo .container {
-  z-index: 2;
-}
-
+/* Above the scrim and the wave, both z-index 1. The photo variant used to
+   raise this to 2 from a rule this declaration always overrode. */
 .page-hero .container {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .page-hero .container > * {
@@ -1603,7 +1529,6 @@ textarea:focus-visible {
 .page-crumb a:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 3px;
-  border-radius: 2px;
 }
 
 /* The level the visitor is on. It is not a link - no pointer, not focusable,
@@ -1645,12 +1570,6 @@ textarea:focus-visible {
     transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
 }
 
-/* Every row slides in from the left. The even/odd alternation that went with the
-   two columns has nothing to alternate against now. */
-.js .services-list > .reveal:nth-child(even) {
-  transform: translateX(-32px);
-}
-
 .js .services-list > .reveal.is-visible {
   opacity: 1;
   transform: none;
@@ -1662,26 +1581,12 @@ textarea:focus-visible {
   transition: none;
 }
 
-.discipline-title {
-  font-size: clamp(1.4rem, 2.8vw, 1.9rem);
-  margin-bottom: 6px;
-}
-
-.discipline-blurb {
-  color: var(--muted);
-  margin-bottom: 16px;
-}
-
-.discipline-items {
-  border-top: 1px solid var(--line);
-}
-
 .service-acc {
   border-bottom: 1px solid var(--line);
-  /* 100px, like every other in-page anchor on the site: the navbar is 77px and
-     the extra 23px is the gap under it. This was the one that said 152px, for a
-     sticky chip TOC that no component renders any more. */
-  scroll-margin-top: 100px;
+  /* --anchor-offset, like every other in-page anchor on the site. This was the
+     one that said 152px, for a sticky chip TOC that no component renders any
+     more. */
+  scroll-margin-top: var(--anchor-offset);
   transition: background 0.2s ease;
 }
 
@@ -1959,7 +1864,10 @@ textarea:focus-visible {
   font-weight: 700;
   font-size: 0.92rem;
   cursor: pointer;
-  transition: 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .tab-btn:hover {
@@ -2067,12 +1975,14 @@ textarea:focus-visible {
   font-size: 0.95rem;
 }
 
-/* Global back-to-top (rendered by Layout on every page) */
+/* Global back-to-top (rendered by Layout on every page). Below the mobile
+   menu's backdrop (z-index 40) so an open menu dims it and intercepts its taps
+   instead of leaving a live button over a locked page. */
 .back-to-top {
   position: fixed;
   right: 24px;
   bottom: 24px;
-  z-index: 55;
+  z-index: 35;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2085,7 +1995,12 @@ textarea:focus-visible {
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
   cursor: pointer;
-  transition: 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .back-to-top:hover {
@@ -2320,7 +2235,7 @@ textarea:focus-visible {
 #coverage,
 #approach,
 #why-alnada {
-  scroll-margin-top: 100px;
+  scroll-margin-top: var(--anchor-offset);
 }
 
 .service-detail-layout {
@@ -2786,7 +2701,9 @@ textarea:focus-visible {
   font: inherit;
   color: var(--ink);
   background: #fff;
-  transition: 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .quote-form input:focus,
@@ -2848,15 +2765,14 @@ textarea:focus-visible {
     white-space: nowrap;
   }
 
-  .brand-text strong {
-    font-size: 1rem;
-  }
-
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .stat:nth-child(2) {
+  /* Two columns. Even tiles sit on the right edge, so they drop the right
+     divider whatever the tile count is. The bottom rule below is only right
+     for the 3-4 tiles in the data today - it draws under the first row. */
+  .stat:nth-child(even) {
     border-right: none;
   }
 
@@ -2882,8 +2798,7 @@ textarea:focus-visible {
     transform: none;
   }
 
-  .js .services-list > .reveal,
-  .js .services-list > .reveal:nth-child(even) {
+  .js .services-list > .reveal {
     transform: none;
   }
 
@@ -2946,18 +2861,18 @@ textarea:focus-visible {
   .nav-backdrop {
     display: block;
     position: fixed;
-    top: 76px;
+    top: var(--nav-h);
     left: 0;
     right: 0;
     bottom: 0;
     background: rgba(28, 28, 40, 0.35);
     z-index: 40;
-    animation: navPanelIn 0.2s ease both;
+    animation: panelIn 0.2s ease both;
   }
 
   .nav-links {
     position: absolute;
-    top: 76px;
+    top: var(--nav-h);
     left: 0;
     right: 0;
     flex-direction: column;
@@ -2972,7 +2887,7 @@ textarea:focus-visible {
 
   .nav-links.open {
     display: flex;
-    animation: navPanelIn 0.25s ease both;
+    animation: panelIn 0.25s ease both;
   }
 
   .nav-dropdown,
@@ -2981,7 +2896,7 @@ textarea:focus-visible {
   }
 
   .nav-links.open > * {
-    animation: navPanelIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: panelIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .nav-links.open > :nth-child(2) {
@@ -2998,10 +2913,6 @@ textarea:focus-visible {
 
   .nav-links.open > :nth-child(5) {
     animation-delay: 160ms;
-  }
-
-  .nav-links.open > :nth-child(6) {
-    animation-delay: 200ms;
   }
 
   .nav-links a:not(.btn) {
@@ -3186,12 +3097,12 @@ textarea:focus-visible {
 /* In-page anchors on this page. The navbar is sticky and 77px tall, so a target
    with no offset lands flush with the top of the screen and disappears behind
    the header - and the send panel cannot scroll further up than this page
-   allows, so it stays buried rather than merely grazing the top. 100px is the
-   offset the service detail anchors already use, so every landing on this site
-   puts its target the same distance down the screen. */
+   allows, so it stays buried rather than merely grazing the top. --anchor-offset
+   is the offset the service detail anchors already use, so every landing on
+   this site puts its target the same distance down the screen. */
 .careers-send,
 .careers-stage {
-  scroll-margin-top: 100px;
+  scroll-margin-top: var(--anchor-offset);
 }
 
 /* The two statements, then the one action that matters. */

@@ -91,7 +91,7 @@ function Contact() {
             </ul>
           </div>
 
-          <div className="contact-form-wrap">
+          <div>
             {submitted ? (
               <div className="form-success">
                 <span className="form-success-icon" aria-hidden="true"><CheckCircle size={40} /></span>
