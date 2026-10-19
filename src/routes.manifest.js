@@ -4,7 +4,7 @@
  * Single source of truth. scripts/prerender.mjs and scripts/sitemap.mjs both
  * read this, so the set of prerendered HTML files and the set of URLs in
  * sitemap.xml cannot drift apart. Route metadata (title/description/canonical)
- * comes from src/seo/routeMeta.js, which derives the 13 service paths from
+ * comes from src/seo/routeMeta.js, which derives the service paths from
  * serviceSections in src/data/services.js - so adding a service there
  * automatically produces a route, an HTML file and a sitemap entry.
  */

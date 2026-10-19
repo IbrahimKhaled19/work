@@ -5,7 +5,11 @@
 # with a real 404 status for anything unmatched.
 #
 # Do NOT add "/* /index.html 200" here. That is the SPA rewrite, and it would
-# serve the homepage for all 19 routes, destroying the prerendered pages.
+# serve the homepage for every route, destroying the prerendered pages.
+
+# The gallery page is retired. A 301 keeps inbound links and bookmarks working
+# and points them at the closest replacement rather than the homepage.
+/gallery  /services  301
 
 # Hashed filenames: safe to cache forever.
 /assets/*

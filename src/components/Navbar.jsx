@@ -6,20 +6,8 @@ import { CaretDown } from '@phosphor-icons/react/CaretDown'
 // would otherwise be downloaded by every visitor on every page. See
 // src/data/serviceIndex.js and `npm run measure:services`.
 import { serviceIndex as serviceSections, disciplines } from '../data/serviceIndex'
+import { navLinks } from '../seo/routeMeta'
 import Picture from './Picture'
-
-// Ordered by intent rather than alphabet: the offering first because it is what
-// visitors come for and it owns the dropdown, then who the company is, then the
-// two audiences - candidates, and the visitor who wants to talk to us. Contact
-// is last because it is the action every other link leads to; it sat in the
-// middle, which made Careers look like an afterthought.
-const links = [
-  { to: '/', label: 'Home' },
-  { to: '/services', label: 'Services' },
-  { to: '/about', label: 'About Us' },
-  { to: '/careers', label: 'Careers' },
-  { to: '/contact', label: 'Contact' },
-]
 
 const serviceGroups = disciplines.map((d) => ({
   ...d,
@@ -102,7 +90,7 @@ function Navbar() {
         </button>
 
         <nav id={NAV_ID} aria-label="Primary" className={`nav-links ${open ? 'open' : ''}`}>
-          {links.map((l) =>
+          {navLinks.map((l) =>
             l.to === '/services' ? (
               <div className="nav-item" key={l.to}>
                 <NavLink

@@ -610,32 +610,32 @@ its own decision.
 Reclassifying two services (Passive Fire Protection → Engineering, Portable Fire
 Extinguishers → Suppression) exposed a structural gap rather than a bug.
 `services.js` holds one authoritative `category` per service, and the Navbar
-derives from it. But `ServicesTabs.jsx` and `Gallery.jsx` **re-state the same
-taxonomy by hand** — the tabs because they need tab-specific descriptions, the
-gallery because it needs project titles. Deriving was abandoned twice, for
+derives from it. At the time, `ServicesTabs.jsx` **re-stated the same taxonomy
+by hand** because it needed tab-specific descriptions, and a second page kept a
+hand-written project list beside it. Deriving was abandoned twice, for
 legitimate reasons, and a copied taxonomy is a second source of truth with no
 compiler.
 
-So the edit was necessarily a three-file change, and **nothing would have failed
+So the edit was necessarily a multi-file change, and **nothing would have failed
 if I had found only one of them.** The navbar and the service detail eyebrows
-move automatically; `/services` and `/gallery` would have kept the old grouping.
-The build would succeed, the pages would be non-empty, titles would stay unique,
-and all eleven other checks would pass — because none of them read those files.
+moved automatically; `/services` would have kept the old grouping. The build
+would succeed, the pages would be non-empty, titles would stay unique, and all
+eleven other checks would pass — because none of them read those files.
 
-`verify:taxonomy` (check 12) compares all three directly: every service appears
-in exactly one tab group and that group equals its `category`; every gallery
-project's `group` equals its service's `category`; every group id is a declared
-discipline; and no discipline is left empty, which would render a blank tab.
-Measured: 13 services, 13 tab entries, 13 gallery projects, 0 disagreements.
+The tabs now derive from `serviceIndex`. `verify:taxonomy` (check 12) is the
+structural guard: it fails if `ServicesTabs.jsx` stops importing `serviceIndex`
+or carries hand-written anchors, if `Home.jsx` hardcodes the service count, if
+a category is not a declared discipline, or if a discipline is left empty and
+would render a blank tab. Measured: 13 services, 13 tab entries, 0
+disagreements.
 
-Negative-tested in five directions — a source category changed without the tabs,
-a gallery group changed without the source, a gallery item pointing at a
-deleted service, a typo'd group id, and a discipline emptied of its last
-service. All five reported, exit 1, files restored.
+Negative-tested in three directions — a hardcoded homepage count, an anchor
+list creeping back into the tabs, and a discipline emptied of its last service.
+All three reported, exit 1, files restored.
 
 ### Carried forward from the live report
 
-Two items, neither a regression:
+One item, not a regression:
 
 - **Security headers are absent.** `csp-xss` (no CSP in enforcement mode),
   `origin-isolation` (no COOP) and `clickjacking-mitigation` (no frame control)
@@ -643,11 +643,6 @@ Two items, neither a regression:
   score. `has-hsts` is not-applicable — Vercel sets HSTS itself. Adding a CSP
   needs care: every prerendered page inlines its CSS by design, and
   `style-src 'unsafe-inline'` would be required, weakening the benefit.
-- **Pre-existing, weight 0.** `label-content-name-mismatch` on the homepage
-  stats link — `src/pages/Home.jsx:21`, where `aria-label` is
-  "View project gallery: 100+ projects delivered" against visible text
-  "100+ Projects Delivered". Cosmetic for screen readers; the visible label
-  does not lead the accessible name.
 
 ---
 

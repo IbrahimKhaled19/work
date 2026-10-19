@@ -3,10 +3,8 @@
  *
  * Claim safety still decides what may be printed: the sentences about the work
  * are the ones PRODUCT.md already supports, and there is no invented opening,
- * benefit, salary or team size. The intro used to state the service count too
- * ("thirteen disciplines, one employer", read from the taxonomy so it could
- * not go stale); it is gone, so nothing on this page has to be counted to stay
- * true. src/data/careers.js explains why openRoles is empty and what adding a
+ * benefit, salary or team size. The intro no longer states a service count, so
+ * nothing on this page has to be counted to stay true. src/data/careers.js explains why openRoles is empty and what adding a
  * role looks like.
  *
  * The page has one job: get a CV to the engineering team. So it says that once,

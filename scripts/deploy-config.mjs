@@ -6,11 +6,11 @@
  *
  * THE ONE THING THAT MATTERS
  * -------------------------
- * This is a prerendered site. Its 18 routes exist as real files in dist/. If a
+ * This is a prerendered site. Its routes exist as real files in dist/. If a
  * host is configured with a catch-all rewrite - `/* -> /index.html`, the
  * standard SPA rule - then every route serves the *homepage* instead: the
  * visitor sees the wrong page, and the homepage's title and canonical are
- * served for all 19 URLs. SEO collapses back to a single page with no error
+ * served for every URL. SEO collapses back to a single page with no error
  * anywhere to notice it by.
  *
  * The correct rule is the opposite of the SPA rule: resolve real files first,
@@ -42,7 +42,11 @@ files['_redirects'] = `# ALNADA Contracting - Netlify / Cloudflare Pages
 # with a real 404 status for anything unmatched.
 #
 # Do NOT add "/* /index.html 200" here. That is the SPA rewrite, and it would
-# serve the homepage for all 19 routes, destroying the prerendered pages.
+# serve the homepage for every route, destroying the prerendered pages.
+
+# The gallery page is retired. A 301 keeps inbound links and bookmarks working
+# and points them at the closest replacement rather than the homepage.
+/gallery  /services  301
 
 # Hashed filenames: safe to cache forever.
 /assets/*
@@ -65,11 +69,11 @@ files['vercel.json'] = `${JSON.stringify(
     // Declared explicitly rather than relying on Vercel's framework detection.
     // This project is NOT a plain SPA build: `npm run build` runs four steps
     // (client -> ssr -> prerender -> crawl), and the prerender is what produces
-    // the 19 static HTML files. If Vercel guessed the framework and ran
+    // the static HTML files. If Vercel guessed the framework and ran
     // something else, it would deploy a client-only bundle and every SEO gain
     // from the prerender would silently be lost - with a green build and a site
     // that appears to work.
-    // The 13 verifiers run as part of the deploy, not just when a human
+    // The verifiers run as part of the deploy, not just when a human
     // remembers to. Without them here a green Vercel build only proves the
     // bundle compiled: duplicate meta, a wrong canonical, or a withdrawn claim
     // would all ship unnoticed. verify reads dist/, so it must run after the
@@ -90,6 +94,12 @@ files['vercel.json'] = `${JSON.stringify(
     // One canonical URL form. Every page emits a rel=canonical that assumes
     // no trailing slash.
     trailingSlash: false,
+    // The gallery page is retired. A 308 keeps inbound links and bookmarks
+    // working, and points them at the closest replacement rather than the
+    // homepage.
+    redirects: [
+      { source: '/gallery', destination: '/services', permanent: true },
+    ],
     headers: [
       {
         source: '/assets/(.*)',
@@ -121,6 +131,11 @@ DirectoryIndex index.html index.htm
 # directory. Unlike a mod_rewrite fallback, this only applies when the
 # request matched nothing, so real routes are never intercepted.
 FallbackResource /404.html
+
+# Retired page: a permanent redirect so inbound links do not 404.
+<IfModule mod_alias.c>
+  Redirect permanent /gallery /services
+</IfModule>
 
 # Never serve the Windows-style deny files, and keep directory listings off.
 Options -Indexes -MultiViews

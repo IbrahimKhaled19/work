@@ -5,15 +5,15 @@ import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 
 // Only the landing page is eager. Every other route is split, so a visitor
-// landing on the homepage does not download the services catalogue, the gallery
-// or the contact form.
+// landing on the homepage does not download the services catalogue or the
+// contact form.
 //
 // Why this matters more than it looks: the prerendered HTML already contains
 // the full text of every page, so the page is *readable* and crawlable before
 // any of this JavaScript runs. The bundle is only needed for interactivity -
 // the mobile nav, the tabs, the form. Loading it lazily therefore costs the
 // visitor nothing they can perceive, and saves every visitor who lands on one
-// route from paying for the other five.
+// route from paying for the others.
 //
 // Home stays eager deliberately. It is the entry point for most traffic, and
 // deferring it would delay hydration of the page most people see.
@@ -24,7 +24,6 @@ import NotFound from './pages/NotFound'
 const Services = lazy(() => import('./pages/Services'))
 const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
 const About = lazy(() => import('./pages/About'))
-const Gallery = lazy(() => import('./pages/Gallery'))
 const Contact = lazy(() => import('./pages/Contact'))
 const Careers = lazy(() => import('./pages/Careers'))
 
@@ -60,7 +59,6 @@ function App() {
           <Route path="/services" element={<Services />} />
           <Route path="/services/:serviceId" element={<ServiceDetail />} />
           <Route path="/about" element={<About />} />
-          <Route path="/gallery" element={<Gallery />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="*" element={<NotFound />} />

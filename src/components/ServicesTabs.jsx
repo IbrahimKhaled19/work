@@ -6,7 +6,7 @@ import { serviceIndex, disciplines } from '../data/serviceIndex'
 /**
  * The disciplines and their services, read from the taxonomy.
  *
- * This list used to be hand-copied here: four groups, thirteen titles and a
+ * This list used to be hand-copied here: the groups, the titles and a
  * description each, about ninety lines beside the real data in services.js. It
  * could not drift without anything failing - verify:taxonomy checked that the
  * same ids appeared in the same groups, never that the words matched - so a

@@ -13,7 +13,7 @@
  * -------------------------------
  * App.jsx code-splits its routes with React.lazy for the browser, and
  * renderToString cannot await a lazy component - it would emit the Suspense
- * fallback for every route and prerender 19 empty pages. Rewriting React.lazy
+ * fallback for every route and prerender empty pages. Rewriting React.lazy
  * globally is not possible from an ES module, because the binding is read-only.
  *
  * So the SSR build renders its own equivalent route table with eager imports.
@@ -22,7 +22,7 @@
  *
  * scripts/verify-prerender-lazy.mjs asserts this table and App.jsx declare the
  * same set of routes, so a route added to one without the other fails the build.
- * The failure mode being guarded against is 19 pages of empty markup, which is
+ * The failure mode being guarded against is pages of empty markup, which is
  * precisely the bug prerendering was introduced to prevent.
  */
 
@@ -35,7 +35,6 @@ import Home from './pages/Home'
 import Services from './pages/Services'
 import ServiceDetail from './pages/ServiceDetail'
 import About from './pages/About'
-import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
 import Careers from './pages/Careers'
 import NotFound from './pages/NotFound'
@@ -53,7 +52,6 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/services/:serviceId" element={<ServiceDetail />} />
         <Route path="/about" element={<About />} />
-        <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/careers" element={<Careers />} />
         <Route path="*" element={<NotFound />} />

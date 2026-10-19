@@ -54,7 +54,7 @@ html {
 }
 
 ::selection {
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.18);
 }
 
 body {
@@ -314,7 +314,7 @@ h4 {
 }
 
 .btn-ghost-dark:hover {
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.08);
 }
 
 .btn-outline-dark {
@@ -323,7 +323,7 @@ h4 {
 }
 
 .btn-outline-dark:hover {
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.08);
 }
 
 /* Keyboard focus: signal-red ring on interactive surfaces */
@@ -338,17 +338,16 @@ textarea:focus-visible {
 }
 
 .btn:focus-visible,
-.tab-service:focus-visible,
-.gallery-item:focus-visible {
+.tab-service:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 3px;
-  box-shadow: 0 0 0 4px rgb(var(--red-rgb) / );
+  box-shadow: 0 0 0 4px rgb(var(--red-rgb) / 0.15);
 }
 
 .nav-toggle:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 3px;
-  box-shadow: 0 0 0 4px rgb(var(--red-rgb) / );
+  box-shadow: 0 0 0 4px rgb(var(--red-rgb) / 0.15);
 }
 
 /* Keep pill geometry on keyboard focus: global focus sets 6px radius */
@@ -363,7 +362,7 @@ textarea:focus-visible {
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgb(var(--red-rgb) / );
+  text-decoration-color: rgb(var(--red-rgb) / 0.55);
 }
 
 .footer-contact a:hover,
@@ -537,7 +536,7 @@ textarea:focus-visible {
 
 .nav-links a:not(.btn).active {
   color: #fff;
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.28);
 }
 
 @media (min-width: 861px) {
@@ -858,17 +857,6 @@ textarea:focus-visible {
   }
 }
 
-@keyframes galleryIn {
-  from {
-    opacity: 0;
-    transform: translateY(14px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 @keyframes navPanelIn {
   from {
     opacity: 0;
@@ -1098,7 +1086,7 @@ textarea:focus-visible {
 }
 
 .stat:hover {
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.035);
   transform: translateY(-2px);
 }
 
@@ -1156,14 +1144,14 @@ textarea:focus-visible {
 }
 
 .stat-link:hover {
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.04);
 }
 
 .stat-link:hover .stat-label {
   color: var(--red);
   text-decoration: underline;
   text-underline-offset: 3px;
-  text-decoration-color: rgb(var(--red-rgb) / );
+  text-decoration-color: rgb(var(--red-rgb) / 0.55);
 }
 
 .stats .stat-link:hover .stat-label {
@@ -1512,8 +1500,8 @@ textarea:focus-visible {
    and the two layers are absolutely positioned, so .container is the only
    thing flex has to place.
 
-   Scoped to the photo variant: About, Gallery and the service detail pages
-   keep the original band. */
+   Scoped to the photo variant: About and the service detail pages keep the
+   original band. */
 .page-hero--photo {
   min-height: 520px;
   padding: 96px 0;
@@ -1702,7 +1690,7 @@ textarea:focus-visible {
    hover as well as on expansion - so hovering competed with the open state
    instead of supporting it. The underline now marks state only. */
 .service-acc:hover {
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.03);
 }
 
 .service-acc-head {
@@ -1776,7 +1764,7 @@ textarea:focus-visible {
 }
 
 .service-acc-head:hover .service-acc-icon {
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.12);
   color: var(--red);
 }
 
@@ -2007,7 +1995,7 @@ textarea:focus-visible {
 
 .tab-service:hover {
   transform: translateY(-3px);
-  border-color: rgb(var(--red-rgb) / );
+  border-color: rgb(var(--red-rgb) / 0.25);
   box-shadow: var(--shadow-lg);
 }
 
@@ -2040,7 +2028,7 @@ textarea:focus-visible {
 }
 
 .why-row:hover {
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.04);
   transform: translateX(4px);
 }
 
@@ -2065,7 +2053,7 @@ textarea:focus-visible {
 
 .why-row:hover .why-row-icon {
   transform: translateY(-2px) rotate(-4deg);
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.12);
   color: var(--red);
 }
 
@@ -2152,20 +2140,6 @@ textarea:focus-visible {
   z-index: 1;
   display: grid;
   place-items: center;
-}
-
-.visual-inner {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  background: var(--red);
-  display: grid;
-  place-items: center;
-  box-shadow: 0 0 0 14px rgb(var(--red-rgb) / ), var(--shadow-lg);
-}
-
-.visual-inner svg {
-  display: block;
 }
 
 .visual-proof {
@@ -2440,7 +2414,7 @@ textarea:focus-visible {
   display: grid;
   place-items: center;
   font-size: 0.8rem;
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.1);
   border-radius: 50%;
 }
 
@@ -2716,194 +2690,6 @@ textarea:focus-visible {
   margin: 0;
 }
 
-/* Gallery */
-.services-filter-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-
-.services-filter {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-
-.filter-chip {
-  flex-shrink: 0;
-  padding: 12px 22px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: #fff;
-  color: var(--ink-soft);
-  font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition:
-    transform 0.18s ease,
-    border-color 0.18s ease,
-    color 0.18s ease,
-    background 0.18s ease,
-    box-shadow 0.18s ease;
-}
-
-.filter-chip:hover {
-  border-color: var(--red);
-  color: var(--red);
-  transform: translateY(-2px);
-}
-
-.filter-chip.is-active {
-  background: var(--red);
-  border-color: var(--red);
-  color: #fff;
-  box-shadow: var(--shadow);
-}
-
-.services-count {
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.gallery-item {
-  display: block;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease,
-    border-color 0.22s ease;
-  color: inherit;
-  animation: galleryIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-}
-
-.gallery-item:nth-child(2) {
-  animation-delay: 60ms;
-}
-
-.gallery-item:nth-child(3) {
-  animation-delay: 120ms;
-}
-
-.gallery-item:nth-child(4) {
-  animation-delay: 180ms;
-}
-
-.gallery-item:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
-  border-color: var(--red);
-}
-
-.gallery-visual {
-  position: relative;
-  min-height: 200px;
-  background:
-    radial-gradient(200px 120px at 75% 20%, rgba(255, 255, 255, 0.45), transparent 60%),
-    linear-gradient(160deg, #000000, #221f1f);
-  display: grid;
-  place-items: center;
-  padding: 24px 20px;
-  overflow: hidden;
-}
-
-.gallery-visual::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.1), transparent 65%);
-  transform: translateX(-120%);
-  transition: transform 0.7s ease;
-  pointer-events: none;
-}
-
-.gallery-item:hover .gallery-visual::after {
-  transform: translateX(120%);
-}
-
-.gallery-medallion {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--ink);
-  display: grid;
-  place-items: center;
-  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.08);
-  transition:
-    transform 0.25s ease,
-    background 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.gallery-item:hover .gallery-medallion {
-  background: var(--red);
-  box-shadow: 0 0 0 10px rgb(var(--red-rgb) / );
-  transform: scale(1.08) rotate(4deg);
-}
-
-.gallery-visual .visual-stack {
-  display: grid;
-  justify-items: center;
-  gap: 14px;
-}
-
-.gallery-item .gallery-caption {
-  padding: 18px 20px 22px;
-}
-
-.gallery-cat {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-weight: 700;
-  color: var(--red);
-}
-
-.gallery-item h3 {
-  font-size: 1.05rem;
-  margin-top: 6px;
-  min-height: 2.6em;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-wrap: balance;
-}
-
-.gallery-note {
-  margin-top: 32px;
-  color: var(--muted);
-  font-size: 0.9rem;
-  text-align: center;
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.gallery-note a {
-  color: var(--red);
-  font-weight: 700;
-  text-underline-offset: 3px;
-}
-
-.gallery-note a:hover {
-  text-decoration: underline;
-  text-decoration-color: rgb(var(--red-rgb) / );
-}
-
 /* Contact */
 .contact-layout {
   display: grid;
@@ -2945,7 +2731,7 @@ textarea:focus-visible {
 
 .contact-list li:hover .contact-icon {
   transform: translateY(-2px);
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.12);
   color: var(--red);
 }
 
@@ -3008,7 +2794,7 @@ textarea:focus-visible {
 .quote-form textarea:focus {
   outline: none;
   border-color: var(--red);
-  box-shadow: 0 0 0 3px rgb(var(--red-rgb) / );
+  box-shadow: 0 0 0 3px rgb(var(--red-rgb) / 0.12);
 }
 
 .quote-form textarea {
@@ -3029,7 +2815,7 @@ textarea:focus-visible {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: rgb(var(--red-rgb) / );
+  background: rgb(var(--red-rgb) / 0.08);
   color: var(--red);
   display: grid;
   place-items: center;
@@ -3076,10 +2862,6 @@ textarea:focus-visible {
 
   .stat:nth-child(-n + 2) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  }
-
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .proof-grid {
@@ -3229,7 +3011,6 @@ textarea:focus-visible {
 }
 
 @media (max-width: 720px) {
-  .gallery-grid,
   .milestones,
   .stats-grid,
   .check-list,

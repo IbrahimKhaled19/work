@@ -133,14 +133,14 @@ A single-signal palette: authoritative Civil Defense reds over a clean ink-on-pa
 - **Headline** (800, clamp(1.8rem, 3.4vw, 2.4rem), 1.2): centered section titles and inner page heroes (inner heroes use clamp(2rem, 4.4vw, 2.8rem)).
 - **Title** (800, 1.1rem–1.9rem, 1.2): card titles (1.1rem), service block titles (clamp(1.4rem, 2.8vw, 1.9rem)), footer brand (1.15rem).
 - **Body** (400, 16px/1.6, Ink Soft): default reading text; muted variant for descriptions (0.9–1.05rem).
-- **Label** (700, 0.82rem, 2px tracking, uppercase): red eyebrows, service numerals (0.85rem, 800), gallery categories (0.75rem, 1.5px tracking), footer subheads (0.95rem, 1px tracking).
+- **Label** (700, 0.82rem, 2px tracking, uppercase): red eyebrows, service numerals (0.85rem, 800), footer subheads (0.95rem, 1px tracking).
 
 ### Named Rules
 **The Eyebrow-First Rule.** Every major section opens with a red uppercase eyebrow before the headline — no bare headlines.
 
 ## Layout
 
-Centered-container engineering with tonal banding: a narrow content measure (min(1160px, 100% − 48px) centered) inside full-bleed bands. Vertical rhythm is generous and fixed — generous section padding (84px desktop, 56px mobile), 48px below centered headers (640px max measure), 24px card and gallery gaps, 40–56px split gaps.
+Centered-container engineering with tonal banding: a narrow content measure (min(1160px, 100% − 48px) centered) inside full-bleed bands. Vertical rhythm is generous and fixed — generous section padding (84px desktop, 56px mobile), 48px below centered headers (640px max measure), 24px card gaps, 40–56px split gaps.
 
 Responsive behavior is two-step: at 980px three- and four-column grids collapse to two columns and splits stack; at 720px everything goes single column, the nav collapses to a dropdown panel, and stats lose side dividers for stacked dividers. Density stays airy on desktop, compact but never cramped on mobile.
 
@@ -151,7 +151,7 @@ Layered and tonal by default: depth comes from paper versus Paper Alt bands, 1px
 ### Shadow Vocabulary
 - **Resting hairline** (`box-shadow: 0 1px 3px rgba(20, 20, 40, 0.05)`): sticky nav separation only.
 - **Ambient lift** (`box-shadow: 0 10px 30px rgba(20, 20, 40, 0.08)`): resting quote form, success panel, milestone cards.
-- **Hover surge** (`box-shadow: 0 20px 50px rgba(20, 20, 40, 0.16)`): card and gallery lift on hover with a 4–5px rise.
+- **Hover surge** (`box-shadow: 0 20px 50px rgba(20, 20, 40, 0.16)`): card lift on hover with a 4–5px rise.
 
 ### Named Rules
 **The Flat-By-Default Rule.** Surfaces are flat at rest. Shadow appears only as a response to state (hover, focus, sticky proof card).

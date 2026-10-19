@@ -2,8 +2,8 @@
  * Single source of truth for brand, NAP and factual claims.
  *
  * Every phone number, email, and hours string previously hardcoded across
- * Home, About, Contact, Footer, CTA, NotFound, Gallery, Services and
- * ServiceDetail should be imported from here instead.
+ * Home, About, Contact, Footer, CTA, NotFound, Services and ServiceDetail
+ * should be imported from here instead.
  *
  * PROVENANCE / CLAIM SAFETY
  * -------------------------
@@ -62,6 +62,10 @@ export function assertSiteUrl() {
   return SITE_URL
 }
 
+// The number is written once. The display form is presentation; the wa.me URL
+// is derived from the dialable form, so a changed number reaches both.
+const PHONE = '+201003620490'
+
 export const site = {
   name: 'ALNADA Contracting',
   legalName: null, // UNCONFIRMED - not supplied by the business
@@ -93,9 +97,9 @@ export const site = {
   // ---- CONFIRMED contact facts (PRODUCT.md: "01003620490 verified and
   // unified as the single call/WhatsApp number across the site") ----
   contact: {
-    phone: '+201003620490',
+    phone: PHONE,
     phoneDisplay: '+20 100 362 0490',
-    whatsapp: 'https://wa.me/201003620490',
+    whatsapp: `https://wa.me/${PHONE.replace(/\D/g, '')}`,
 
     // LEGACY. This is the domain of the previous UAE entity
     // (Universal Fire Fighting, Abu Dhabi) and does not match the
@@ -110,9 +114,9 @@ export const site = {
     //
     // This block was dead until now: it was declared here as the intended
     // single source for the hours string, but nothing read it, so Home, About,
-    // Contact, Footer, CTA and Gallery each hardcoded their own copy and
-    // jsonld.js hardcoded a third. Changing the hours meant finding all six by
-    // hand, and nothing would have failed if one was missed.
+    // Contact, Footer and CTA each hardcoded a copy and jsonld.js hardcoded
+    // another. Changing the hours meant finding all six by hand, and nothing
+    // would have failed if one was missed.
     //
     // Stored structured rather than as a ready-made Schema.org string, because
     // two consumers need different shapes: the JSON-LD needs the explicit

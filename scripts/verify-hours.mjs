@@ -18,7 +18,7 @@
  * -----------------------------------
  * src/seo/site.js declared them as the intended single source, but nothing
  * read that block, so jsonld.js hardcoded its own dayOfWeek list and
- * opens/closes, and Home, Contact, Footer, CTA, About and Gallery each
+ * opens/closes, and Home, Contact, Footer, CTA and About each
  * hardcoded a prose copy. Changing the hours meant finding all six by hand,
  * and missing one failed nothing - it just published a contradiction.
  *

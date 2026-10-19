@@ -7,7 +7,7 @@
  * WHY
  * ---
  * src/data/services.js is 41 KB of prose. It was imported by Navbar, Footer,
- * Services, Gallery, ServiceDetail and the whole SEO layer, so every visitor
+ * Services, ServiceDetail and the whole SEO layer, so every visitor
  * downloaded all 13 services' full descriptions, standards lists, "why choose
  * us" copy and CTAs - on every page, including the homepage - to render a
  * dropdown of links that needs four fields.

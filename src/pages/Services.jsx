@@ -20,7 +20,7 @@ function Services() {
         crumbs={[{ label: 'Services' }]}
       imageId="hero-services"
         title="Complete Fire Protection Systems: Engineered for Compliance, Built for Reliability"
-        subtitle={`For ${site.yearsExperience} years, ALNADA Contracting has designed, installed, and maintained fire protection systems for factories, warehouses, and commercial facilities across Egypt. Fire protection is not one system. It is thirteen disciplines working together, from the earliest hydraulic calculation to the last annual inspection, and a gap in any one of them is a gap in the whole facility's safety.`}
+        subtitle={`For ${site.yearsExperience} years, ALNADA Contracting has designed, installed, and maintained fire protection systems for factories, warehouses, and commercial facilities across Egypt. Fire protection is not one system. It is ${serviceSections.length} services working together, from the earliest hydraulic calculation to the last annual inspection, and a gap in any one of them is a gap in the whole facility's safety.`}
       />
 
       <section className="section">
@@ -34,10 +34,10 @@ function Services() {
         </div>
       </section>
 
-      {/* cv-skip: 13 accordion rows, several thousand pixels below the fold on
-          any viewport. The tall placeholder matters most here - 13 rows of
-          text is far more than --cv-medium, and understating it would move
-          the scrollbar when the section renders. */}
+      {/* cv-skip: one accordion row per service, several thousand pixels below
+          the fold on any viewport. The tall placeholder matters most here - the
+          rows run far past --cv-medium, and understating it would move the
+          scrollbar when the section renders. */}
       <section className="section section-alt cv-skip cv-tall">
         <div className="container">
           <SectionHead

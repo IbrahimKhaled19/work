@@ -38,6 +38,17 @@ if (!fs.existsSync(CSS)) {
 
 const css = fs.readFileSync(CSS, 'utf8')
 
+// --- malformed tint declarations -------------------------------------------
+// `rgb(var(--red-rgb) / )` is not a colour: the alpha is missing, so the
+// browser drops the whole declaration and the tint silently disappears. A
+// global rewrite once replaced 25 rgba() tints with this empty form, and every
+// one stopped painting without failing anything. The contrast table cannot see
+// them because the token itself still resolves, so check the syntax here.
+for (const m of css.matchAll(/rgb\(\s*var\([^)]*\)\s*\/\s*\)/g)) {
+  const line = css.slice(0, m.index).split('\n').length
+  failures.push(`src/index.css:${line}: ${m[0]} has no alpha, so the declaration is dropped`)
+}
+
 // --- read the tokens -------------------------------------------------------
 // Values come in two shapes: a literal `#hex`, or `rgb(var(--name-rgb))`
 // referring to a space-separated channel triple. The second form exists so the

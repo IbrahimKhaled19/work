@@ -188,7 +188,7 @@ and `verify:seo` asserts their absence so a later edit cannot reintroduce them:
 ### 2. `src/seo/routeMeta.js` — per-route metadata
 
 `getRouteMeta(pathname)` returns `{ title, description, canonical, robots, ... }`
-for each of the 19 routes. Service-page descriptions are derived from copy that
+for each route. Service-page descriptions are derived from copy that
 already ships in `src/data/services.js` — no invented marketing text.
 
 **Adding a route?** Add it to `staticRoutes` in `routeMeta.js`, then run
@@ -217,14 +217,14 @@ npm run verify:deploy    # check dist/ before shipping
 ```
 
 Deploy the **contents of `dist/`** — not the repository, and not `public/`.
-`dist/` contains the 19 prerendered routes, the 404 document, hashed assets,
+`dist/` contains the prerendered routes, the 404 document, hashed assets,
 `sitemap.xml`, `robots.txt` and the host configs.
 
 ### The one rule that matters
 
 This is a **prerendered** site: `/about` exists as a real file. If your host has
 a catch-all SPA rewrite — `/* → /index.html` — then every route silently serves
-the **homepage**, with the homepage's title and canonical on all 20 URLs. SEO
+the **homepage**, with the homepage's title and canonical on every URL. SEO
 collapses to a single page and nothing errors to warn you.
 
 You want the opposite: resolve real files first, let anything unmatched fall
@@ -271,8 +271,8 @@ Every check exits non-zero on failure, so they work as CI gates. In CI, run
 | `verify:contrast` | A colour token falling below WCAG AA. Reads `:root` and resolves `rgb(var(--x))`, so it cannot drift from the stylesheet |
 | `verify:fonts` | A render-blocking font `<link>` reappearing, a third-party font origin surviving into `dist/`, an `@font-face` src that does not exist |
 | `verify:preloads` | The LCP preload drifting from the image manifest — the failure that made the hero *slower* |
-| `verify:prerender:lazy` | A route lazy in `App.jsx` but missing from the SSR table, which would prerender 19 pages with correct metadata and an empty body |
-| `verify:taxonomy` | `ServicesTabs.jsx` or `Gallery.jsx` disagreeing with `services.js` about which discipline a service belongs to — a hand-copied taxonomy with no compiler, so the navbar and the services page would show two different ones |
+| `verify:prerender:lazy` | A route lazy in `App.jsx` but missing from the SSR table, which would prerender every route with correct metadata and an empty body |
+| `verify:taxonomy` | `ServicesTabs.jsx` or `Home.jsx` restating the service list or count instead of reading `serviceIndex`, or a service whose category is not a declared discipline — a hand-copied taxonomy with no compiler |
 | `verify:cv` | `content-visibility` on the hero (stops the LCP painting) or without `contain-intrinsic-size` (trades one layout shift for another) |
 | `verify:images` | An `<img>` in the built site with no explicit `width`/`height`. Lighthouse's `unsized-images` audit catches this but is **weight 0**, so `audit:all` — which gates on category scores only — can never fail on it |
 | `verify:hours` | The opening hours re-hardcoded anywhere, the JSON-LD disagreeing with `site.hours`, or a withdrawn claim (the 1-hour response, the old Mon-Sat range) still published |
@@ -433,10 +433,9 @@ Tracked in `SEO_PERF_PLAN.md`. These are content/business problems, not code:
    `assets-src/services/` and targets in `scripts/images.mjs`; `FeatureSplit`
    reads the `imageId` and the responsive pipeline does the rest, so further
    photos need no component change. Portable extinguishers fills both its slots;
-   the other four still show one empty "installation photo". The gallery panels,
-   the About visual and the remaining eight services still use illustrated
-   medallions (`TODO` comments in `src/pages/Gallery.jsx` and
-   `src/pages/About.jsx`).
+   the other four still show one empty "installation photo". The About visual
+   and the remaining eight services still use illustrated medallions (`TODO`
+   comments in `src/pages/About.jsx`).
 
 ---
 
@@ -451,7 +450,7 @@ src/
   App.jsx             route table
   seo/                site facts, route metadata, JSON-LD
   components/         Layout, Navbar, Footer, Seo, Reveal, ...
-  pages/              Home, Services, ServiceDetail, About, Gallery, Contact
+  pages/              Home, Services, ServiceDetail, About, Contact
   data/services.js    all 13 service lines + disciplines
   index.css           design tokens and all component styles
 public/               static assets, copied verbatim to dist/
@@ -464,5 +463,5 @@ SEO_PERF_PLAN.md      the SEO/performance plan currently in progress
 
 Service content lives in `src/data/services.js` as a single `serviceSections`
 array. Adding a service there automatically generates its route, its navbar and
-footer entries, its gallery panel, its metadata, and its sitemap URL. See
+footer entries, its metadata, and its sitemap URL. See
 `PRODUCT.md` for the schema of each entry.

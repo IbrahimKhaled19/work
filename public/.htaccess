@@ -7,6 +7,11 @@ DirectoryIndex index.html index.htm
 # request matched nothing, so real routes are never intercepted.
 FallbackResource /404.html
 
+# Retired page: a permanent redirect so inbound links do not 404.
+<IfModule mod_alias.c>
+  Redirect permanent /gallery /services
+</IfModule>
+
 # Never serve the Windows-style deny files, and keep directory listings off.
 Options -Indexes -MultiViews
 

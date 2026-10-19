@@ -5,7 +5,7 @@
  *
  * Phase 5 Task 5.3 is explicitly gated on measurement rather than effort:
  * `src/data/services.js` is 42 KB of prose imported by Navbar, Footer,
- * Services, Gallery, ServiceDetail AND the SEO layer, so all 13 services'
+ * Services, ServiceDetail AND the SEO layer, so all 13 services'
  * descriptions are in the critical path of every page. The plan's own note is
  * that prose compresses well, so the win should be confirmed before
  * restructuring anything.

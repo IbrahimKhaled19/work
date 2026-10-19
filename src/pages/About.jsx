@@ -11,28 +11,18 @@ import WhyList from '../components/WhyList'
 import Milestones from '../components/Milestones'
 import Picture from '../components/Picture'
 import CTA from '../components/CTA'
+import { serviceIndex } from '../data/serviceIndex.js'
 
 const milestones = [
-  { year: '1993', text: 'Founded as a general contracting company, delivering large projects including water desalination plants, schools and post offices.' },
-  { year: '2016', text: 'Added fire protection to the company\u2019s work, while continuing as a general contracting company. It has offered fire protection for the past 10 years.' },
-  { year: 'Today', text: `${site.projectsDelivered}+ fire protection projects completed across Egypt, with 13 services delivered under one roof.` },
+  { year: site.founded, text: 'Founded as a general contracting company, delivering large projects including water desalination plants, schools and post offices.' },
+  { year: '2016', text: `Added fire protection to the company\u2019s work, while continuing as a general contracting company. It has offered fire protection for the past ${site.yearsExperience} years.` },
+  { year: 'Today', text: `${site.projectsDelivered}+ fire protection projects completed across Egypt, with ${serviceIndex.length} services delivered under one roof.` },
 ]
 
-const coverage = [
-  { label: 'Design & Engineering', anchor: 'design-engineering' },
-  { label: 'Fire Pump Systems', anchor: 'fire-pump-systems' },
-  { label: 'Sprinkler Systems', anchor: 'sprinkler-systems' },
-  { label: 'Standpipe & Hose Systems', anchor: 'standpipe-hose-systems' },
-  { label: 'Fire Alarm & Detection', anchor: 'fire-alarm-detection' },
-  { label: 'Portable Fire Extinguishers', anchor: 'portable-extinguishers' },
-  { label: 'Special Hazard & Suppression', anchor: 'special-hazard-suppression' },
-  { label: 'Passive Fire Protection', anchor: 'passive-fire-protection' },
-  { label: 'Inspection, Testing & Maintenance', anchor: 'inspection-testing-maintenance' },
-  { label: 'Civil Defense Compliance & Permitting', anchor: 'civil-defense-compliance' },
-  { label: 'Retrofit & Upgrade', anchor: 'retrofit-upgrade' },
-  { label: 'Emergency & Repair Services', anchor: 'emergency-repair-services' },
-  { label: 'Training & Consulting', anchor: 'training-consulting' },
-]
+// The coverage list is the taxonomy, not a copy of it. This used to repeat all
+// the titles and slugs by hand, so renaming a service left a stale link here
+// until somebody noticed; the list now moves with serviceIndex.
+const coverage = serviceIndex.map((s) => ({ label: s.title, anchor: s.id }))
 
 const principles = [
   { title: 'Design from calculations', desc: 'Pump size, pipe size, sprinkler spacing and water supply are all determined by hydraulic calculations and the hazard classification of each area.', Icon: ShieldCheck },
@@ -94,7 +84,7 @@ function About() {
             <h2>Abdalatty Mohamed Abdalatty</h2>
             <p className="founder-role">Founder, ALNADA Contracting</p>
             <p className="founder-bio">
-              Abdalatty founded ALNADA Contracting in 1993 as a general
+              Abdalatty founded ALNADA Contracting in {site.founded} as a general
               contracting company, delivering water desalination plants, schools
               and post offices. Those projects were built to detailed
               specifications, run on demanding schedules, and had to pass formal
@@ -122,11 +112,12 @@ function About() {
             needed.
           </p>
           <p>
-            The company was established in 1993 and has offered fire
-            protection for the past 10 years. In that time we have completed
-            more than 100 fire protection projects. We cover every part of a
-            fire protection system ourselves, so you work with one company
-            from the first site visit to the last inspection.
+            The company was established in {site.founded} and has offered fire
+            protection for the past {site.yearsExperience} years. In that time we
+            have completed more than {site.projectsDelivered} fire protection
+            projects. We cover every part of a fire protection system ourselves,
+            so you work with one company from the first site visit to the last
+            inspection.
           </p>
           <ul className="check-list" aria-label="Fire protection coverage">
             {coverage.map((c) => (
@@ -199,7 +190,7 @@ function About() {
           <SectionHead
             eyebrow="One Company"
             title="One Company for the Whole System"
-            text="Many facilities have to deal with separate contractors for pumps, sprinklers, alarms and permits, and problems often appear in the gaps between them. We provide all thirteen services ourselves, so each part of the system is designed to work with the others from the start."
+            text={`Many facilities have to deal with separate contractors for pumps, sprinklers, alarms and permits, and problems often appear in the gaps between them. We provide all ${serviceIndex.length} services ourselves, so each part of the system is designed to work with the others from the start.`}
           />
         </div>
       </section>
@@ -210,15 +201,15 @@ function About() {
             <p className="eyebrow">Our Experience</p>
             <h2>Built on Contracting, Focused on Fire Protection</h2>
             <p>
-              Over the past 10 years of fire protection work, and in contracting
-              before that, we have worked in factories, warehouses and
-              commercial buildings across Egypt. That work has given us
-              practical knowledge of how pump rooms are built on real sites,
-              what Civil Defense inspectors check, and where older installations
-              tend to fail.
+              Over the past {site.yearsExperience} years of fire protection
+              work, and in contracting before that, we have worked in
+              factories, warehouses and commercial buildings across Egypt. That
+              work has given us practical knowledge of how pump rooms are built
+              on real sites, what Civil Defense inspectors check, and where
+              older installations tend to fail.
             </p>
             <p>
-              ALNADA Contracting was established in 1993 as a general
+              ALNADA Contracting was established in {site.founded} as a general
               contracting company, delivering large projects such as water
               desalination plants, schools and post offices. The company later
               added fire protection to its work, while continuing as a

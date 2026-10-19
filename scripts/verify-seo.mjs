@@ -32,10 +32,10 @@ const STRICT = process.argv.includes('--strict')
 // Object.keys(staticRoutes).length would make the assertion unable to fail,
 // which is the opposite of what it is for: this is here to fail when a route
 // is removed from staticRoutes without anyone noticing. It therefore has to be
-// bumped by hand when a page is legitimately added - /careers took it from 5
-// to 6. If you are here because this failed, check which route went missing
-// before you edit the number.
-const EXPECTED_ROUTE_COUNT = 6 + serviceSections.length
+// bumped by hand when the page count legitimately changes - /careers took it
+// from 5 to 6. If you are here because this failed, check which route went
+// missing before you edit the number.
+const EXPECTED_ROUTE_COUNT = 5 + serviceSections.length
 
 const warnings = []
 const warn = (msg) => warnings.push(msg)

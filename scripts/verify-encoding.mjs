@@ -7,7 +7,7 @@
  * ---------------
  * One misplaced encoding turns one character into three that look like noise:
  * an em dash arrived as U+00E2 U+20AC U+201D on the careers page and an arrow
- * as U+00E2 U+2020 U+2019 on the gallery cards, and both shipped. The bytes are
+ * as U+00E2 U+2020 U+2019 on a card link, and both shipped. The bytes are
  * valid UTF-8 and the markup is valid HTML, so nothing else in the gate notices;
  * the build stays green and the page reads "View system detail" followed by
  * three glyphs nobody can name. A diff shows the run as a smudge rather than as
@@ -111,7 +111,7 @@ function doubleDecoded(run) {
 // Known answers: [text, what it hides or null when it hides nothing].
 const FIXTURES = [
   [damaged('\u2014'), '\u2014'], // the em dash from the careers page
-  [damaged('\u2192'), '\u2192'], // the arrow from the gallery cards
+  [damaged('\u2192'), '\u2192'], // the arrow from a card link
   [damaged('\u00b7'), '\u00b7'], // a middle dot
   [damaged('\u2019'), '\u2019'], // a curly apostrophe
   ['\u00b7', null], // ·  as the file means it

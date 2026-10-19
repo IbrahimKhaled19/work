@@ -7,13 +7,20 @@ import { CheckCircle } from '@phosphor-icons/react/CheckCircle'
 import PageHero from '../components/PageHero'
 import Reveal from '../components/Reveal'
 import site from '../seo/site.js'
+import { serviceIndex } from '../data/serviceIndex.js'
+
+// The form's service list is the taxonomy, not a copy of it. "Fire Pump
+// Systems" is the default because it is the most common enquiry; the rest are
+// read from serviceIndex so a renamed service cannot leave a stale option here.
+const defaultService =
+  serviceIndex.find((s) => s.id === 'fire-pump-systems') ?? serviceIndex[0]
 
 const initialForm = {
   name: '',
   email: '',
   phone: '',
   company: '',
-  service: 'Fire Pump Systems',
+  service: defaultService.title,
   message: '',
 }
 
@@ -68,8 +75,8 @@ function Contact() {
                 <div>
                   <strong>Email</strong>
                   <p>
-                    <a href="mailto:info@universalfirefighting.com">
-                      info@universalfirefighting.com
+                    <a href={`mailto:${site.contact.email}`}>
+                      {site.contact.email}
                     </a>
                   </p>
                 </div>
@@ -157,19 +164,9 @@ function Contact() {
                 <label>
                   <span>Service Required *</span>
                   <select name="service" value={form.service} onChange={handleChange}>
-                    <option>Design &amp; Engineering</option>
-                    <option>Fire Pump Systems</option>
-                    <option>Sprinkler Systems</option>
-                    <option>Standpipe &amp; Hose Systems</option>
-                    <option>Fire Alarm &amp; Detection</option>
-                    <option>Portable Fire Extinguishers</option>
-                    <option>Special Hazard &amp; Suppression</option>
-                    <option>Passive Fire Protection</option>
-                    <option>Inspection, Testing &amp; Maintenance</option>
-                    <option>Civil Defense Compliance &amp; Permitting</option>
-                    <option>Retrofit &amp; Upgrade</option>
-                    <option>Emergency &amp; Repair Services</option>
-                    <option>Training &amp; Consulting</option>
+                    {serviceIndex.map((s) => (
+                      <option key={s.id}>{s.title}</option>
+                    ))}
                     <option>Other / Inspection</option>
                   </select>
                 </label>

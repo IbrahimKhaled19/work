@@ -28,10 +28,9 @@ import { serviceIndex } from '../data/serviceIndex.js'
 // service count, and a fourteenth service made the homepage and the careers page
 // state different numbers with nothing failing.
 //
-// The middle tile is deliberately NOT a link. It used to point at /gallery,
-// which is a page of illustrative icons that says outright it has no project
-// photography yet - so a visitor who believed the "100+ projects" number landed
-// on the one page that could not show it.
+// The middle tile is deliberately NOT a link: there is no project page behind
+// it, and a visitor who believed the "100+ projects" number should not land on
+// a page that cannot show them.
 const stats = [
   { target: site.yearsExperience, suffix: '+', label: 'Years in Fire Protection', duration: 1100 },
   { target: site.projectsDelivered, suffix: '+', label: 'Fire Protection Projects', duration: 1400 },

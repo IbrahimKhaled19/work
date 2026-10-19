@@ -6,6 +6,7 @@ import { LinkedinLogo } from '@phosphor-icons/react/LinkedinLogo'
 // of prose in services.js has no business in the critical path. See
 // src/data/serviceIndex.js.
 import { serviceIndex as serviceSections } from '../data/serviceIndex'
+import { navLinks } from '../seo/routeMeta'
 import site from '../seo/site.js'
 
 function Footer() {
@@ -41,12 +42,11 @@ function Footer() {
         <div className="footer-col">
           <h4>Quick Links</h4>
           <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/services">Services</Link></li>
-            <li><Link to="/about">About Us</Link></li>
-            <li><Link to="/gallery">Gallery</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
-            <li><Link to="/careers">Careers</Link></li>
+            {navLinks.map((l) => (
+              <li key={l.to}>
+                <Link to={l.to}>{l.label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -71,8 +71,8 @@ function Footer() {
               </a>
             </li>
             <li>
-              <a href="mailto:info@universalfirefighting.com">
-                info@universalfirefighting.com
+              <a href={`mailto:${site.contact.email}`}>
+                {site.contact.email}
               </a>
             </li>
             <li>{site.hours.display}</li>

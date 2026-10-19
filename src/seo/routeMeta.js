@@ -1,8 +1,8 @@
 /**
  * Per-route <title> / meta description / canonical.
  *
- * Replaces the single static title in index.html, which every one of the 19
- * routes previously inherited. Descriptions for service pages are derived
+ * Replaces the single static title in index.html, which every route previously
+ * inherited. Descriptions for service pages are derived
  * from copy that already ships in src/data/services.js - nothing here is
  * newly invented marketing text.
  *
@@ -54,14 +54,16 @@ const staticRoutes = {
       'detection, suppression and compliance to NFPA and Egyptian code. Est. 1993.',
     priority: 1.0,
     changefreq: 'monthly',
+    nav: { label: 'Home', order: 1 },
   },
   '/services': {
     title: 'Fire Protection Services in Egypt | ALNADA Contracting',
     description:
-      'Thirteen fire protection disciplines in Egypt: pumps, sprinklers, standpipes, ' +
-      'detection, extinguishers, suppression and Civil Defense permitting.',
+      `${serviceSections.length} fire protection services in Egypt: pumps, sprinklers, ` +
+      'standpipes, detection, extinguishers, suppression and Civil Defense permitting.',
     priority: 0.9,
     changefreq: 'monthly',
+    nav: { label: 'Services', order: 2 },
   },
   '/about': {
     title: 'About ALNADA Contracting | Fire Protection Company in Egypt',
@@ -76,14 +78,7 @@ const staticRoutes = {
     preloadImage: 'founder',
     priority: 0.7,
     changefreq: 'yearly',
-  },
-  '/gallery': {
-    title: 'Fire Protection Systems & Projects | ALNADA Contracting',
-    description:
-      'Fire protection systems we design, install and maintain across Egypt: pump sets, ' +
-      'sprinkler networks, standpipes and addressable detection.',
-    priority: 0.6,
-    changefreq: 'monthly',
+    nav: { label: 'About Us', order: 3 },
   },
   '/contact': {
     title: 'Contact ALNADA Contracting | Fire Protection Quote in Egypt',
@@ -91,6 +86,7 @@ const staticRoutes = {
       `Request a free site assessment or AMC quote in Egypt. WhatsApp ${site.contact.phoneDisplay}.`,
     priority: 0.8,
     changefreq: 'yearly',
+    nav: { label: 'Contact', order: 5 },
   },
   // Indexable, not noindex. A careers page that is reachable only from a
   // footer link is findable by nobody, and it is the sort of page that
@@ -104,11 +100,28 @@ const staticRoutes = {
     title: 'Careers at ALNADA Contracting | Fire Protection Jobs in Egypt',
     description:
       'Careers in fire protection engineering, installation and maintenance ' +
-      'across Egypt. Civil Defense approved, thirteen disciplines, since 1993.',
+      'across Egypt. Civil Defense approved, since 1993.',
     priority: 0.5,
     changefreq: 'weekly',
+    nav: { label: 'Careers', order: 4 },
   },
 }
+
+/**
+ * The primary navigation, in one place for the bar and the footer.
+ *
+ * Ordered by intent rather than alphabet: the offering first because it is what
+ * visitors come for and it owns the dropdown, then who the company is, then the
+ * two audiences - candidates, and the visitor who wants to talk to us. Contact
+ * is last because it is the action every other link leads to.
+ *
+ * A route joins the navigation by carrying `nav`, so adding a page means adding
+ * it to staticRoutes once; there is no second list for the footer to drift from.
+ */
+export const navLinks = Object.entries(staticRoutes)
+  .filter(([, meta]) => meta.nav)
+  .sort((a, b) => a[1].nav.order - b[1].nav.order)
+  .map(([to, meta]) => ({ to, label: meta.nav.label }))
 
 export const notFoundMeta = {
   title: `Page Not Found | ${BRAND_SUFFIX}`,
