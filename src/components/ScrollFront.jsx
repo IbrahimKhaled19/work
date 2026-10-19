@@ -39,7 +39,7 @@ const calm =
   typeof window.matchMedia === 'function' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-function ScrollFront({ targetRef, className = '', as: Tag = 'div', children, ...rest }) {
+function ScrollFront({ className = '', as: Tag = 'div', children, ...rest }) {
   const ref = useRef(null)
 
   useEffect(() => {

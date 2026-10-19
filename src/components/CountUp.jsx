@@ -43,7 +43,10 @@ function CountUp({ target, prefix = '', suffix = '', duration = 1200 }) {
 
   useLayoutEffect(() => {
     // Zero it before paint, so the count-up starts from zero without a visible
-    // jump from the prerendered value.
+    // jump from the prerendered value. The synchronous setState is deliberate:
+    // initialising the zero instead would reintroduce the hydration flash the
+    // note above explains, so the rule is told to stand down here.
+    // eslint-disable-next-line react/set-state-in-effect
     if (!calm) setDisplay(0)
   }, [calm, target])
 

@@ -44,6 +44,9 @@ import NotFound from './pages/NotFound'
  *
  * Keep in step with App.jsx - `npm run verify` fails if they diverge.
  */
+// This module is executed by scripts/prerender.mjs and never hot-reloaded, so
+// the fast-refresh rule has nothing to guard here.
+// eslint-disable-next-line react/only-export-components
 function App() {
   return (
     <Routes>

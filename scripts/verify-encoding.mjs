@@ -154,7 +154,7 @@ let runs = 0
 for (const file of files) {
   const text = fs.readFileSync(file, 'utf8')
   const relative = path.relative(ROOT, file).replace(/\\/g, '/')
-  for (const match of text.matchAll(/[^\x00-\x7f]+/g)) {
+  for (const match of text.matchAll(/\P{ASCII}+/gu)) {
     runs++
     const hidden = doubleDecoded(match[0])
     if (!hidden) continue
