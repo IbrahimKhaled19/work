@@ -8,12 +8,17 @@ import { CaretDown } from '@phosphor-icons/react/CaretDown'
 import { serviceIndex as serviceSections, disciplines } from '../data/serviceIndex'
 import Picture from './Picture'
 
+// Ordered by intent rather than alphabet: the offering first because it is what
+// visitors come for and it owns the dropdown, then who the company is, then the
+// two audiences - candidates, and the visitor who wants to talk to us. Contact
+// is last because it is the action every other link leads to; it sat in the
+// middle, which made Careers look like an afterthought.
 const links = [
   { to: '/', label: 'Home' },
   { to: '/services', label: 'Services' },
   { to: '/about', label: 'About Us' },
-  { to: '/contact', label: 'Contact' },
   { to: '/careers', label: 'Careers' },
+  { to: '/contact', label: 'Contact' },
 ]
 
 const serviceGroups = disciplines.map((d) => ({
