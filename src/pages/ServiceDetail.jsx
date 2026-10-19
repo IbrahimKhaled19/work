@@ -8,11 +8,6 @@ import NotFound from './NotFound'
 import { serviceSections, disciplineLabels } from '../data/services'
 import serviceVisuals from '../data/serviceVisuals'
 
-// Expected size of the photograph that fills a spotlight slot. Recorded in
-// PRODUCT.md as the standard for the detail spotlights, so it is a production
-// brief rather than a product claim.
-const PHOTO_SLOT = '1200 × 800'
-
 /**
  * Badge phrases for the spotlight, taken from copy that already exists.
  *
@@ -51,13 +46,16 @@ function ServiceDetail() {
   const service = serviceSections[index]
   const prev = serviceSections[(index - 1 + serviceSections.length) % serviceSections.length]
   const next = serviceSections[(index + 1) % serviceSections.length]
-  const { Icon, proof } = serviceVisuals[service.id]
+  const { proof } = serviceVisuals[service.id]
   // `spotlight` exists to override the approach split's badge with hand-written
   // commissioning steps (only fire-pump-systems declares one today). A service
   // that gains real photography declares a `photos` block of manifest image ids
   // instead - `project` fills the sticky media slot, `installation` fills the
-  // approach split - so the other twelve need no edit to stay in step.
+  // approach split - and a service with no photographs renders its sections
+  // alone: no placeholder frame stands in for an image that does not exist.
   const spotlight = service.spotlight ?? {}
+  const projectPhoto = service.photos?.project ?? null
+  const installationPhoto = service.photos?.installation ?? null
 
   return (
     <>
@@ -68,7 +66,11 @@ function ServiceDetail() {
       />
 
       <section className="section" id="overview">
-        <div className="container service-detail-layout">
+        <div
+          className={`container service-detail-layout${
+            projectPhoto ? '' : ' service-detail-layout-solo'
+          }`}
+        >
           <Reveal className="service-detail-main">
             <p className="eyebrow">{disciplineLabels[service.category]}</p>
             {service.overview.map((p, i) => (
@@ -82,20 +84,21 @@ function ServiceDetail() {
 
           {/* Media-only split, sitting to the right of the why-section, and
               sticky so the photograph holds position while the prose scrolls
-              past it. Sticky sits on this Reveal rather than on the split
-              inside it: the Reveal is the grid item, so its containing block is
-              the full-height grid area. A sticky descendant would be bounded by
-              this box, which is only as tall as the photograph, and would have
-              almost no room to travel. */}
-          <Reveal className="service-detail-sticky" delay={100}>
-            <FeatureSplit
-              imageId={service.photos?.project ?? null}
-              imageAlt={`${service.title} project photo`}
-              placeholderLabel={`${service.title} project photo`}
-              dimensionsLabel={PHOTO_SLOT}
-              FallbackIcon={Icon}
-            />
-          </Reveal>
+              past it. Rendered only where a project photograph exists; with
+              none the layout runs solo rather than hold a track open for a slot
+              that will not be shown. Sticky sits on this Reveal rather than on
+              the split inside it: the Reveal is the grid item, so its
+              containing block is the full-height grid area. A sticky descendant
+              would be bounded by this box, which is only as tall as the
+              photograph, and would have almost no room to travel. */}
+          {projectPhoto && (
+            <Reveal className="service-detail-sticky" delay={100}>
+              <FeatureSplit
+                imageId={projectPhoto}
+                imageAlt={`${service.title} project photo`}
+              />
+            </Reveal>
+          )}
         </div>
       </section>
 
@@ -121,15 +124,11 @@ function ServiceDetail() {
             <FeatureSplit
               heading="Installation & Maintenance Excellence"
               body={service.approach}
-              imageId={service.photos?.installation ?? null}
-              image={spotlight.image ?? null}
+              imageId={installationPhoto}
               imageAlt={`${service.title} installation photo`}
-              placeholderLabel={spotlight.placeholder ?? `${service.title} installation photo`}
-              dimensionsLabel={spotlight.dimensions ?? PHOTO_SLOT}
               badgeTitle={spotlight.badgeTitle ?? proof}
               badgeItems={spotlight.badgeItems ?? badgeLabels(service.points)}
               flip={spotlight.flip ?? false}
-              FallbackIcon={Icon}
             />
             {service.compliance && (
               <>

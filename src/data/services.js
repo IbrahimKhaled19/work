@@ -81,9 +81,6 @@ export const serviceSections = [
     approach: 'Every pump installation from ALNADA Contracting includes full controller setup for either flooded-suction or lift-condition design, followed by flow and churn testing and pump curve verification before we consider the job complete. We do not sign off on a pump system until it has demonstrated it performs at its rated duty point, not just that it powers on. If a facility already has a pump system in place that is underperforming, poorly documented, or was never properly commissioned, our team diagnoses the actual cause, a controller misconfiguration, an undersized impeller, a suction issue, and brings the system up to code rather than defaulting to a full and unnecessary replacement.',
     compliance: 'Installed and tested to NFPA 20 acceptance testing requirements, with NFPA 25 periodic testing available as an ongoing maintenance service to keep the system certified year after year.',
     spotlight: {
-      image: null,
-      placeholder: 'Pump room installation photo',
-      dimensions: '1200 × 800',
       badgeTitle: 'System Commissioning',
       badgeItems: ['Flow & churn testing', 'Pump curve verification', 'Controller configuration'],
       flip: false,

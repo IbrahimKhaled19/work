@@ -4,23 +4,28 @@ import Picture from './Picture'
 /**
  * `imageId` refers to an entry in src/data/images.js, so real photography
  * dropped into assets-src/ gets responsive AVIF/WebP variants automatically.
- * `image` remains as a fallback for a plain URL.
+ *
+ * The media column exists only when there is a photograph. A service whose
+ * photography has not arrived yet renders its text alone, with
+ * `feature-split-solo` so the band does not hold a media track open beside
+ * empty space. The badge rides with the frame - it is positioned to overlap the
+ * photograph - so a split with no photograph shows no badge either.
  */
 function FeatureSplit({
   heading = null,
   body = null,
   imageId = null,
-  image = null,
   imageAlt = '',
-  placeholderLabel = 'Installation photo',
-  dimensionsLabel = '',
   badgeTitle = null,
   badgeItems = [],
   flip = false,
-  FallbackIcon = null,
 }) {
+  const classes = `feature-split${flip ? ' feature-split-flip' : ''}${
+    imageId ? '' : ' feature-split-solo'
+  }`
+
   return (
-    <div className={`feature-split${flip ? ' feature-split-flip' : ''}`}>
+    <div className={classes}>
       {/* Both are optional, and the whole block is omitted when neither is given.
           A split that exists only to carry a photograph is a real case here - an
           empty <h2> and an empty <p> are worse than no text column, and an empty
@@ -31,33 +36,25 @@ function FeatureSplit({
           {body && <p className="service-detail-text">{body}</p>}
         </Reveal>
       )}
-      <Reveal className="feature-media" variant="scale" delay={120}>
-        <div className="feature-frame">
-          {imageId ? (
+      {imageId && (
+        <Reveal className="feature-media" variant="scale" delay={120}>
+          <div className="feature-frame">
             <Picture id={imageId} alt={imageAlt} loading="lazy" />
-          ) : image ? (
-            <img src={image} alt={imageAlt} loading="lazy" decoding="async" />
-          ) : (
-            <div className="feature-placeholder" role="img" aria-label={placeholderLabel}>
-              {FallbackIcon && <FallbackIcon size={44} aria-hidden="true" />}
-              <p>{placeholderLabel}</p>
-              {dimensionsLabel && <span>{dimensionsLabel}</span>}
+          </div>
+          {badgeTitle && (
+            <div className="feature-badge">
+              <p>{badgeTitle}</p>
+              {badgeItems.length > 0 && (
+                <ul>
+                  {badgeItems.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              )}
             </div>
           )}
-        </div>
-        {badgeTitle && (
-          <div className="feature-badge">
-            <p>{badgeTitle}</p>
-            {badgeItems.length > 0 && (
-              <ul>
-                {badgeItems.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            )}
-          </div>
-        )}
-      </Reveal>
+        </Reveal>
+      )}
     </div>
   )
 }

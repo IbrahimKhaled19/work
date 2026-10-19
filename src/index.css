@@ -2248,6 +2248,14 @@ textarea:focus-visible {
   align-items: start;
 }
 
+/* Services with no project photograph render the prose alone. Collapsing the
+   grid gives the prose its full width instead of holding a second track open
+   for a media slot that is not drawn; the measures are capped on the text
+   itself (65ch/68ch/62ch), so no line stretches with the track. */
+.service-detail-layout-solo {
+  grid-template-columns: 1fr;
+}
+
 /* The split is a 1.05fr/0.95fr two-column band in its own right, which is far
    too narrow for a second column pair plus a 4:3 media frame. Collapsed to one
    column it stacks, and .feature-split-flip puts the media above the text. */
@@ -2354,6 +2362,13 @@ textarea:focus-visible {
   margin: 8px 0;
 }
 
+/* A split whose service has no photograph renders its text alone: the band
+   collapses rather than hold a media track open beside empty space. The body
+   copy keeps its own 68ch measure via .service-detail-text. */
+.feature-split-solo {
+  grid-template-columns: 1fr;
+}
+
 .feature-split-flip > .feature-text {
   order: 2;
 }
@@ -2437,40 +2452,11 @@ textarea:focus-visible {
      bytes arrive, and that height attribute is a presentational hint that
      outranks `aspect-ratio`. Without this reset the frame takes each image's
      intrinsic pixel height - a portrait master stands ~1500px tall and the
-     landscape ones are taller than wide - instead of the 4:3 box the
-     placeholder has always used. Same guard as .proof-badge-frame img. */
+     landscape ones are taller than wide - instead of the 4:3 box every
+     spotlight frame uses. Same guard as .proof-badge-frame img. */
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-}
-
-.feature-placeholder {
-  display: grid;
-  justify-items: center;
-  align-content: center;
-  gap: 12px;
-  aspect-ratio: 4 / 3;
-  padding: 32px;
-  text-align: center;
-  color: #fff;
-}
-
-.feature-placeholder svg {
-  color: var(--red);
-}
-
-.feature-placeholder p {
-  font-weight: 800;
-  font-size: 1rem;
-  margin: 0;
-}
-
-.feature-placeholder span {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #b9b9c6;
 }
 
 .feature-badge {
