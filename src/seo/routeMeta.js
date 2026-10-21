@@ -105,6 +105,21 @@ const staticRoutes = {
     changefreq: 'weekly',
     nav: { label: 'Careers', order: 4 },
   },
+  // The privacy policy. No `nav` entry on purpose: it is reached from the
+  // footer legal row, not from the navigation bar, which is where a visitor
+  // looks for a legal notice and never for a service.
+  //
+  // It is indexable rather than noindex because a policy nobody can find is
+  // not a policy, and because a search for "ALNADA privacy policy" should land
+  // here rather than on a third party's copy of it.
+  '/privacy': {
+    title: 'Privacy Policy | ALNADA Contracting',
+    description:
+      'How ALNADA Contracting handles the information you send through the ' +
+      'contact form or as a CV, and how to ask for a copy, a correction or deletion.',
+    priority: 0.2,
+    changefreq: 'yearly',
+  },
 }
 
 /**

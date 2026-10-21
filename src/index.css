@@ -741,6 +741,21 @@ textarea:focus-visible {
   text-align: center;
 }
 
+.footer-bottom p {
+  margin: 0 0 8px;
+}
+
+/* The legal link sits under the copyright line, in white at lower weight: it
+   is a notice a visitor looks for, not a call to action. */
+.footer-legal-link {
+  color: rgb(255 255 255 / 0.72);
+  font-weight: 600;
+}
+
+.footer-legal-link:hover {
+  color: #fff;
+}
+
 /* Hero */
 .hero {
   position: relative;
@@ -2094,6 +2109,76 @@ textarea:focus-visible {
 .about-text p:not(.eyebrow) {
   color: var(--muted);
   margin-bottom: 16px;
+}
+
+/* Privacy policy page.
+   A policy is read rather than scanned, so the measure is capped, the headings
+   step down a size, and the lists - which carry most of the content - are
+   marked and spaced rather than left as bare lines. The global `ul { list-style:
+   none }` is undone here on purpose: a list of rights with no markers reads as
+   one long sentence. */
+.legal {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.legal-meta {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 26px;
+}
+
+.legal h2 {
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  margin: 44px 0 14px;
+}
+
+.legal h3 {
+  font-size: 1.05rem;
+  margin: 26px 0 8px;
+}
+
+.legal p {
+  color: var(--ink-soft);
+  margin-bottom: 16px;
+}
+
+.legal ul {
+  list-style: disc;
+  margin: 0 0 20px;
+  padding-left: 22px;
+  color: var(--ink-soft);
+}
+
+.legal li {
+  margin-bottom: 10px;
+}
+
+/* The marker carries the brand colour, so the list reads as part of the site
+   rather than as a browser default pasted into a policy. */
+.legal li::marker {
+  color: var(--red);
+}
+
+.legal strong {
+  color: var(--ink);
+}
+
+/* Links inherit the paragraph colour globally (`a { color: inherit }`), which
+   would leave a link indistinguishable from the text around it. */
+.legal a {
+  color: var(--red);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(var(--red-rgb) / 0.5);
+}
+
+.legal a:hover {
+  text-decoration-color: var(--red);
 }
 
 .about-card {

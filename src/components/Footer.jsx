@@ -82,6 +82,12 @@ function Footer() {
 
       <div className="container footer-bottom">
         <p>© {new Date().getFullYear()} ALNADA Contracting. All rights reserved.</p>
+        {/* The legal notice lives in the bottom row rather than in Quick Links:
+            it is something a visitor looks for at the end of a page, not
+            something they navigate to. */}
+        <Link className="footer-legal-link" to="/privacy">
+          Privacy Policy
+        </Link>
       </div>
     </footer>
   )

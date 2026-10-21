@@ -26,6 +26,7 @@ const ServiceDetail = lazy(() => import('./pages/ServiceDetail'))
 const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
 const Careers = lazy(() => import('./pages/Careers'))
+const Privacy = lazy(() => import('./pages/Privacy'))
 
 /**
  * Route table only - no router.
@@ -61,6 +62,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/careers" element={<Careers />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
